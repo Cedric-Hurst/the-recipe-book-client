@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import {v4 as uuid} from 'uuid'
 export default function Recipe({ recipe }) {
     const { recipeTitle, servings, timing, ingredients, instructions, notes } = recipe;
 
@@ -32,41 +33,17 @@ export default function Recipe({ recipe }) {
             <h3>Ingredients</h3>
             <ul>
                 {ingredients.map(ingredient =>
-                    <li>{`${ingredient.qty} ${ingredient.measure} ${ingredient.name}${ingredient.des.length >1 ? ',': ''} ${ingredient.des}`}</li>
+                    <li key={uuid()}>{`${ingredient.qty} ${ingredient.measure} ${ingredient.name}${ingredient.des.length >1 ? ',': ''} ${ingredient.des}`}</li>
                 )}
             </ul>
             <h4>Instructions</h4>
             <ul>
-                {instructions.map((step, i) => <li>{`${i+1}. ${step}`}</li>)}
+                {instructions.map((step, i) => <li key={uuid()}>{`${i+1}. ${step}`}</li>)}
             </ul>
             <h5>Notes</h5>
             <ul>
-                {notes.map(note => <li>note</li>)}
+                {notes.map(note => <li key={uuid()}>note</li>)}
             </ul>
         </div>
     )
 }
-
-/* 
-recipeTitle: "Crock Pot Teriyaki Pulled Pork",
-id: 1,
-favorite: true,
-servings: 8,
-timing: {prep: 5, cook: 480}, // mins convert to hours if >=60
-ingredients: [
-    {name: "pork shoulder butt roast", qty: "3", measure: "lb", des: ""},
-    {name: "teriyaki sauce", qty: "1", measure: "cup", des: ""},
-    {name: "honey", qty: "1/3", measure: "cup", des: ""},
-    {name: "apple cider vinegar", qty: "1/3", measure: "cup", des: ""},
-    {name: "garlic powder", qty: "2", measure: "tsp", des: ""},
-    {name: "black pepper", qty: "1", measure: "tsp", des: ""},
-    {name: "crushed red pepper flakes", qty: "1", measure: "tsp", des: ""},
-],
-instructions: [
-    "Place pork roast in slow cooker",
-    "Add all ingredients",
-    "Cover and cook on LOW for 8 to 10 hours or HIGH for 5 to 6 hours.",
-    "Shred with 2 forks"
-],
-notes:[] 
-*/

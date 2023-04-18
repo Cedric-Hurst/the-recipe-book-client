@@ -3,6 +3,7 @@ import { Routes, Route, useParams, Navigate, useLocation } from 'react-router-do
 import SeedRecipes from "./SeedRecipes";
 import FrontPage from "./FrontPage";
 import RecipeBook from "./RecipeBook";
+import RecipeForm from "./RecipeForm";
 import Recipe from "./Recipe";
 function App() {
   const [recipes, setRecipes] = useState(SeedRecipes);
@@ -12,6 +13,12 @@ function App() {
     const recipe = findRecipe(parseInt(id));
     return <Recipe recipe={recipe} />
   }
+  const addRecipe = (newRecipe) => {
+    setRecipes([...recipes, newRecipe]);
+  }
+  const deleteRecipe = (id) => {
+    setRecipes(recipes.filter(recipe => recipe.id !== id));
+  }
   const location = useLocation();
   return (
     <div className="App">
@@ -19,7 +26,7 @@ function App() {
           <Route index element={<FrontPage/>} />
           <Route path='/recipes'>
           <Route index element={<RecipeBook recipes={recipes} />} />
-            {/* <Route path='new' element={}/> */}
+            <Route path='new' element={<RecipeForm addRecipe={addRecipe} />}/>
             <Route path=':id' element={<GetRecipe/>}/>
           </Route>
         <Route path='*' element={<FrontPage />} />

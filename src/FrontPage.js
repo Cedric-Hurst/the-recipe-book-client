@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom"
 export default function FrontPage() {
     return (
         <div>
-            <h1>Link to recipe book</h1>
-            <h2>Link to Pantry</h2>
-            <h3>random recipes</h3>
+            <p><Link to='/recipes'>Recipe Book</Link></p>
+            <p>Pantry</p>
+            <p>random recipes</p>
+            <p>Drink Book?</p>
+            <p>Dry Bar?</p>
         </div>
     )
 }
