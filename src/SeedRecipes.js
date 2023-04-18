@@ -4,12 +4,13 @@ const SeedRecipes = [
         id: 1,
         favorite: true,
         servings: 8,
+        catagories: ["crock pot", "pork", "easy"],
         timing: {prep: 5, cook: 480}, // mins convert to hours if >=60
         ingredients: [
             {name: "pork shoulder butt roast", qty: "3", measure: "lb", des: ""},
-            {name: "teriyaki sauce", qty: "1", measure: "cup", des: ""},
-            {name: "honey", qty: "1/3", measure: "cup", des: ""},
-            {name: "apple cider vinegar", qty: "1/3", measure: "cup", des: ""},
+            {name: "teriyaki sauce", qty: "1", measure: "C.", des: ""},
+            {name: "honey", qty: "1/3", measure: "C.", des: ""},
+            {name: "apple cider vinegar", qty: "1/3", measure: "C.", des: ""},
             {name: "garlic powder", qty: "2", measure: "tsp", des: ""},
             {name: "black pepper", qty: "1", measure: "tsp", des: ""},
             {name: "crushed red pepper flakes", qty: "1", measure: "tsp", des: ""},
@@ -27,6 +28,7 @@ const SeedRecipes = [
         id: 2,
         favorite: false,
         servings: 4,
+        catagories: ["shrimp", "pork", "soup", "chowder"],
         timing: {prep: 10, cook: 30}, 
         ingredients: [
             {name: "chorizo", qty: "4", measure: "oz", des:"Spanish dry-cured chorizo preferred" },
@@ -36,10 +38,10 @@ const SeedRecipes = [
             {name: "garlic clove", qty: "2", measure: "", des:"minced"},
             {name: "russet potato", qty: "1", measure: "", des:"peeled and diced"},
             {name: "canned diced tomatoes", qty: "15", measure: "oz", des:""},
-            {name: "frozen corn", qty: "1", measure: "cup", des:"no need to defrost"},
+            {name: "frozen corn", qty: "1", measure: "C.", des:"no need to defrost"},
             {name: "olive oil", qty: "1", measure: "tbsp", des:""},
-            {name: "chicken stock", qty: "4", measure: "cup", des:""},
-            {name: "half and half", qty: "1", measure: "cup", des:""},
+            {name: "chicken stock", qty: "4", measure: "C.", des:""},
+            {name: "half and half", qty: "1", measure: "C.", des:""},
             {name: "paprika", qty: "2", measure: "tsp", des:"spanish smoked paprika preferred"},
             {name: "kosher salt", qty: "1/2", measure: "tsp", des:""},
             {name: "black pepper", qty: "1/4", measure: "tsp", des:""},
@@ -59,6 +61,7 @@ const SeedRecipes = [
         id: 3,
         favorite: false,
         servings: 8,
+        catagories: ["burger", "bison"],
         timing: {prep: 15, cook: 70},
         ingredients: [
             {name: "ground bison", qty: "2", measure: "lb", des: ""},
@@ -74,7 +77,7 @@ const SeedRecipes = [
             {name: "sliced white cheddar cheese", qty: "8", measure: "", des: ""},
             {name: "hamburger buns", qty: "8", measure: "", des: ""},
             {name: "romaine lettuce", qty: "", measure: "", des: " for serving"},
-            {name: "mayonnaise", qty: "1/2", measure: "cup", des: ""},
+            {name: "mayonnaise", qty: "1/2", measure: "C.", des: ""},
             {name: "dijon mustard", qty: "1", measure: "tbsp", des: ""},
             {name: "dried oregano", qty: "1/2", measure: "tsp", des: ""}
         ],
@@ -91,6 +94,7 @@ const SeedRecipes = [
         id: 4,
         favorite: true,
         servings: 2,
+        catagories: ["easy", "copycat", "wings", "chicken"],
         timing: {prep: 25, cook: 10}, 
         ingredients: [
             {name: "chicken wings", qty: "1", measure: "dozen", des: ""},
