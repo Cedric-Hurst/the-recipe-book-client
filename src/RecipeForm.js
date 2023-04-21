@@ -6,6 +6,10 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { v4 as uuid } from 'uuid'
 import { measurements, categories } from './FormData';
 import { useNavigate } from "react-router-dom";
@@ -46,7 +50,9 @@ export default function RecipeForm({ addRecipe }) {
     }
      const handleTextChange = (e) => {
         e.target.name === 'recipeTitle' && setRecipeTitle(e.target.value);
-        e.target.name === 'servings' && setServings(parseInt(e.target.value));
+         if (e.target.name === 'servings' && parseInt(e.target.value) > 0 && !isNaN(parseInt(e.target.value))) {
+            setServings(parseInt(e.target.value));
+         }
     }
     const handleTimingChange = (event) => {
         let timingData = timing;
@@ -59,15 +65,9 @@ export default function RecipeForm({ addRecipe }) {
         }
         setTiming(timingData);
     }
-
     const handleIngredientFormChange = (event, index) => {
         let ingreData = [...ingredients];
-        if ((event.target.id).substring(0,7) === 'measure') { // a way to handle autocomplete option and turn it into abbreviated version of measurement
-            const abrevMeasure = measurements[parseInt(event.target.id.substring(15))].value;
-            ingreData[index][(event.target.id).substring(0,7)] = abrevMeasure;
-        } else {
-            ingreData[index][event.target.name] = event.target.value;
-        }
+        ingreData[index][event.target.name] = event.target.value;
         setIngredients(ingreData);
     }
     const addIngredientFields = () => {
@@ -95,9 +95,8 @@ export default function RecipeForm({ addRecipe }) {
         setInstructions(instructions.filter((instr, i) => i !== index));
     }
 
-
     return (
-        <div style={{ margin: '50px' }}>
+        <div style={{ margin: '25px' }}>
 
             <div>
                 <Link to='/recipes'>Back</Link>
@@ -176,65 +175,84 @@ export default function RecipeForm({ addRecipe }) {
                     <p>Ingredients:</p>
                     {ingredients.map((input, index) => { 
                         return (
-                            <span key={index}>
-                                <Stack direction="row">
-                                    <TextField
-                                        id="qty-text"
-                                        name='qty'
-                                        label="qty"
-                                        variant="standard"
-                                        value={input.qty}
-                                        sx={{ width: '75px'}}
-                                        onChange={event => handleIngredientFormChange(event,index)}
-                                    />
-                                    <Autocomplete
-                                        disablePortal
-                                        id="measure"
-                                        name="measure"
-                                        options={measurements}
-                                        freeSolo={true}
-                                        value={input.measurement}
-                                        sx={{ width: 130 }}
-                                        renderInput={(params) => <TextField {...params} variant="standard" label="Measurement" />}
-                                        onInputChange={event => handleIngredientFormChange(event,index)}
-                                    />
-                                    <TextField
-                                        id="ingredient-text"
-                                        name='ingredient'
-                                        label="Ingredient"
-                                        value={input.ingredient}
-                                        variant="standard"
-                                        onChange={event => handleIngredientFormChange(event,index)}
-                                    />
-                                    <TextField
-                                        id="description-text"
-                                        name='description'
-                                        label="Description"
-                                        value={input.description}
-                                        variant="standard"
-                                        onChange={event => handleIngredientFormChange(event,index)}
-                                    />
-                                    <Button onClick={() => removeIngredientFields(index)}><CloseIcon /></Button>
-                                </Stack>
-                            </span>
+                            <div key={index}>
+                                <span
+                                    style={{
+                                        display: 'inline-flex',
+                                        paddingBottom: '20px',
+                                        paddingLeft: '20px',
+                                        borderLeft: '.5rem solid rgba(29, 40, 191,0.4)',
+                                        marginBottom: '1px'
+                                    }} key={index}
+                                >
+                                    <Stack direction="row">
+                                        <TextField
+                                            id="qty-text"
+                                            name='qty'
+                                            label="qty"
+                                            variant="standard"
+                                            value={input.qty}
+                                            sx={{ width: '75px'}}
+                                            onChange={event => handleIngredientFormChange(event,index)}
+                                        />
+                                        <FormControl variant="standard" sx={{ minWidth: 120 }}>
+                                            <InputLabel id="measure-label">Measurement</InputLabel>
+                                            <Select
+                                                labelId="measure-label"
+                                                id="measure"
+                                                name="measure"
+                                                defaultValue=''
+                                                onChange={event => handleIngredientFormChange(event,index)}
+                                                label="Measurement"
+                                            >
+                                                {measurements.map((measure, i) =>
+                                                    <MenuItem key={i} value={measure.value}>{ measure.label}</MenuItem>
+                                                )}
+                                            </Select>
+                                        </FormControl>
+                                        <TextField
+                                            id="ingredient-text"
+                                            name='ingredient'
+                                            label="Ingredient"
+                                            value={input.ingredient}
+                                            variant="standard"
+                                            sx={{ width: 150 }}
+                                            onChange={event => handleIngredientFormChange(event,index)}
+                                        />
+                                        <TextField
+                                            id="description-text"
+                                            name='description'
+                                            label="Description"
+                                            value={input.description}
+                                            variant="standard"
+                                            sx={{ width: 150 }}
+                                            onChange={event => handleIngredientFormChange(event,index)}
+                                        />
+                                        <Button onClick={() => removeIngredientFields(index)}><CloseIcon /></Button>
+                                    </Stack>
+                                </span>
+                            </div>
                         )
                     })}
-                    <Button onClick={addIngredientFields} >Add More Ingredients <AddIcon/></Button>
+                    <div>
+                        <Button onClick={addIngredientFields} >Add More Ingredients <AddIcon /></Button>
+                    </div>
                 </div>
 
                 <p>Instructions:</p>
                 {instructions.map((instruction, index) => { 
                     return(
                         <div key={index}>
-                            {index + 1}. 
+                            <span style={{fontSize: 25, lineHeight: '100px', marginRight: '10px'}}>{`${index + 1}.`}</span>
                             <TextField
                                 id="instruction"
                                 name="instruction"
                                 label="Instructions"
                                 multiline
                                 value={instruction}
-                                rows={4}
+                                rows={3}
                                 variant="standard"
+                                sx={{ width: 500 }}
                                 onChange={event => handleInstructionFormChange(event, index)}
                             />
                             <Button onClick={() => removeInstructionFields(index)}><CloseIcon/></Button>
