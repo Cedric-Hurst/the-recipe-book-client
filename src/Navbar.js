@@ -144,7 +144,7 @@ export default function Navbar({pageName}) {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <NavList/>
+                <NavList pageName={pageName} />
             </Drawer>
         </Box>
     );

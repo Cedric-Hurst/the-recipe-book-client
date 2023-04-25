@@ -119,4 +119,23 @@ export const categories = [
      'Burrito'
 ];
 
-/* {name: ''}, */
+export const mainCategories = [
+    'Appetizer',
+    'Soup',
+    'Salad',
+    'Main Dish' ,
+    'Side Dish',
+    'Dessert',
+    'Breakfast',
+    'Lunch',
+    'Dinner',
+    'Beef',
+    'Poultry',
+    'Pork',
+    'Seafood',
+    'Vegetarian',
+    'Holiday',
+    'Entertaining',
+    'Easy',
+    'CrockPot'
+]

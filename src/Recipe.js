@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from 'uuid'
+import Navbar from "./Navbar"
+
+
 export default function Recipe({ recipe }) {
     const { recipeTitle, servings, timing, ingredients, instructions, notes } = recipe;
     const { prepTime, cookTime } = timing;
@@ -44,27 +47,30 @@ export default function Recipe({ recipe }) {
     }
 
     return (
-        <div style={{ margin: '25px' }}>
-            <div><Link to='/recipes'>Back to Recipe Book</Link></div>
-            <h1>{recipeTitle}</h1>
-            <h2>{`Prep Time: ${prep} Cook Time: ${cook}`}</h2>
-            <p>{`Servings: ${servings}`}</p>
-            <h3>Ingredients</h3>
-            <ul>
-                {ingredients.map(ingredient =>
-                    <li key={uuid()}>
-                        {`${ingredient.qty} ${ingredient.measure} ${ingredient.ingredient}${ingredient.description.length > 1 ? ',' : ''} ${ingredient.description}`}
-                    </li>
-                )}
-            </ul>
-            <h4>Instructions</h4>
-            <ul>
-                {instructions.map((step, i) => <li key={uuid()}>{`${i+1}. ${step}`}</li>)}
-            </ul>
-            <h5>Notes</h5>
-            <ul>
-                {notes.map(note => <li key={uuid()}>note</li>)}
-            </ul>
-        </div>
+        <>
+            <Navbar pageName={`Recipe Page: ${recipeTitle}`}/>
+            <div style={{ margin: '25px' }}>
+                <div><Link to='/recipes'>Back to Recipe Book</Link></div>
+                <h1>{recipeTitle}</h1>
+                <h2>{`Prep Time: ${prep} Cook Time: ${cook}`}</h2>
+                <p>{`Servings: ${servings}`}</p>
+                <h3>Ingredients</h3>
+                <ul>
+                    {ingredients.map(ingredient =>
+                        <li key={uuid()}>
+                            {`${ingredient.qty} ${ingredient.measure} ${ingredient.ingredient}${ingredient.description.length > 1 ? ',' : ''} ${ingredient.description}`}
+                        </li>
+                    )}
+                </ul>
+                <h4>Instructions</h4>
+                <ul>
+                    {instructions.map((step, i) => <li key={uuid()}>{`${i+1}. ${step}`}</li>)}
+                </ul>
+                <h5>Notes</h5>
+                <ul>
+                    {notes.map(note => <li key={uuid()}>note</li>)}
+                </ul>
+            </div>
+        </>
     )
 }
