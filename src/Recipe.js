@@ -44,7 +44,7 @@ export default function Recipe({ recipe }) {
     }
 
     return (
-        <div>
+        <div style={{ margin: '25px' }}>
             <div><Link to='/recipes'>Back to Recipe Book</Link></div>
             <h1>{recipeTitle}</h1>
             <h2>{`Prep Time: ${prep} Cook Time: ${cook}`}</h2>
@@ -53,7 +53,7 @@ export default function Recipe({ recipe }) {
             <ul>
                 {ingredients.map(ingredient =>
                     <li key={uuid()}>
-                        {`${ingredient.qty} ${ingredient.measure} ${ingredient.name}${ingredient.description.length > 1 ? ',' : ''} ${ingredient.description}`}
+                        {`${ingredient.qty} ${ingredient.measure} ${ingredient.ingredient}${ingredient.description.length > 1 ? ',' : ''} ${ingredient.description}`}
                     </li>
                 )}
             </ul>

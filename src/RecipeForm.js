@@ -36,13 +36,13 @@ export default function RecipeForm({ addRecipe }) {
         e.preventDefault();
 
         const recipe = {
-            recipeTitle,
+            recipeTitle: recipeTitle,
             id: uuid(),
-            category,
-            servings,
-            timing,
-            ingredients,
-            instructions,
+            category: category,
+            servings: servings,
+            timing: timing,
+            ingredients: ingredients,
+            instructions: instructions,
             notes: []
         };
         addRecipe(recipe);
@@ -94,9 +94,12 @@ export default function RecipeForm({ addRecipe }) {
     const removeInstructionFields = (index) => {
         setInstructions(instructions.filter((instr, i) => i !== index));
     }
+    const handleEnterPress = (event) => {
+        event.key === 'Enter' && event.preventDefault();
+    }
 
     return (
-        <div style={{ margin: '25px' }}>
+        <div style={{padding: '25px', backgroundColor: '#cfcfcf'}}>
 
             <div>
                 <Link to='/recipes'>Back</Link>
@@ -109,7 +112,8 @@ export default function RecipeForm({ addRecipe }) {
                     label="Recipe Name"
                     name='recipeTitle'
                     variant="standard"
-                    sx={{mb: 3, width: '30%'}}
+                    sx={{ mb: 3, width: '30%' }}
+                    onKeyDown={handleEnterPress}
                     onChange={handleTextChange}
                 />
                 <div>
@@ -128,7 +132,8 @@ export default function RecipeForm({ addRecipe }) {
                     name="servings"
                     label="Servings"
                     variant="standard"
-                    sx={{my: "20px", width: '75px'}}
+                    sx={{ my: "20px", width: '75px' }}
+                    onKeyDown={handleEnterPress}
                     onChange={handleTextChange}
                 />
                 <div>
@@ -138,7 +143,8 @@ export default function RecipeForm({ addRecipe }) {
                         name="prepHr"
                         label="Hours"
                         variant="standard"
-                        sx={{width: '50px', mx: '10px'}}
+                        sx={{ width: '50px', mx: '10px' }}
+                        onKeyDown={handleEnterPress}
                         onChange={event => event.target.value >= 0 && handleTimingChange(event)}
                     />
                     <span style={{fontSize: 40}}>:</span>
@@ -147,7 +153,8 @@ export default function RecipeForm({ addRecipe }) {
                         name="prepMin"
                         label="Mins"
                         variant="standard"
-                        sx={{width: '50px', mx: '10px'}}
+                        sx={{ width: '50px', mx: '10px' }}
+                        onKeyDown={handleEnterPress}
                         onChange={event => (event.target.value >= 0 && event.target.value < 60) && handleTimingChange(event)}
                     />
 
@@ -157,7 +164,8 @@ export default function RecipeForm({ addRecipe }) {
                         name="cookHr" 
                         label="Hours" 
                         variant="standard" 
-                        sx={{width: '50px', mx: '10px'}}
+                        sx={{ width: '50px', mx: '10px' }}
+                        onKeyDown={handleEnterPress}
                         onChange={event => event.target.value >= 0 && handleTimingChange(event)}
                     />
                     <span style={{fontSize: 40}}>:</span>
@@ -166,7 +174,8 @@ export default function RecipeForm({ addRecipe }) {
                         name="cookMin"
                         label="Mins" 
                         variant="standard" 
-                        sx={{width: '50px', mx: '10px'}}
+                        sx={{ width: '50px', mx: '10px' }}
+                        onKeyDown={handleEnterPress}
                         onChange={event => (event.target.value >= 0 && event.target.value < 60) && handleTimingChange(event)}
                     />
                 </div>
@@ -192,7 +201,8 @@ export default function RecipeForm({ addRecipe }) {
                                             label="qty"
                                             variant="standard"
                                             value={input.qty}
-                                            sx={{ width: '75px'}}
+                                            sx={{ width: '75px' }}
+                                            onKeyDown={handleEnterPress}
                                             onChange={event => handleIngredientFormChange(event,index)}
                                         />
                                         <FormControl variant="standard" sx={{ minWidth: 120 }}>
@@ -202,6 +212,7 @@ export default function RecipeForm({ addRecipe }) {
                                                 id="measure"
                                                 name="measure"
                                                 defaultValue=''
+                                                onKeyDown={handleEnterPress}
                                                 onChange={event => handleIngredientFormChange(event,index)}
                                                 label="Measurement"
                                             >
@@ -217,6 +228,7 @@ export default function RecipeForm({ addRecipe }) {
                                             value={input.ingredient}
                                             variant="standard"
                                             sx={{ width: 150 }}
+                                            onKeyDown={handleEnterPress}
                                             onChange={event => handleIngredientFormChange(event,index)}
                                         />
                                         <TextField
@@ -226,6 +238,7 @@ export default function RecipeForm({ addRecipe }) {
                                             value={input.description}
                                             variant="standard"
                                             sx={{ width: 150 }}
+                                            onKeyDown={handleEnterPress}
                                             onChange={event => handleIngredientFormChange(event,index)}
                                         />
                                         <Button onClick={() => removeIngredientFields(index)}><CloseIcon /></Button>

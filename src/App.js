@@ -10,7 +10,7 @@ function App() {
   const findRecipe = id => recipes.find(recipe => recipe.id === id);
   const GetRecipe = () => {
     const { id } = useParams();
-    const recipe = findRecipe(parseInt(id));
+    const recipe = findRecipe(id);
     return <Recipe recipe={recipe} />
   }
   const addRecipe = (newRecipe) => {
