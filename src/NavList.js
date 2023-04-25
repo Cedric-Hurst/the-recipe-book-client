@@ -6,20 +6,25 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import HomeIcon from '@mui/icons-material/Home';
+import ArticleIcon from '@mui/icons-material/Article';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
-import { mainCategories } from './FormData';
+import FavoriteIcon from '@mui/icons-material/Favorite';import { mainCategories } from './FormData';
 import {useNavigate} from 'react-router-dom';
 
 export default function NavList({pageName}) {
     const [open, setOpen] = React.useState(false);
+    const [catOpen, setCatOpen] = React.useState(false);
     const navigate = useNavigate();
 
     const handleClick = () => {
         setOpen(!open);
     };
+    const handleCatClick = () => { 
+        setCatOpen(!catOpen);
+    }
 
     return (
         <List
@@ -38,31 +43,56 @@ export default function NavList({pageName}) {
                 </ListItemIcon>
                 <ListItemText primary="Home" />
             </ListItemButton>
-            <ListItemButton onClick={() => navigate('/recipes')}>
+            <ListItemButton onClick={handleClick}>
                 <ListItemIcon>
                     <MenuBookIcon />
                 </ListItemIcon>
                 <ListItemText primary="Recipe Book" />
-            </ListItemButton>
-            <ListItemButton onClick={() => navigate('/')}>
-                <ListItemIcon>
-                    <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary="Favorites" />
-            </ListItemButton>
-            <ListItemButton onClick={handleClick}>
-                <ListItemText primary="Recipe Categories" />
                 {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    {mainCategories.map((cat, i) =>
-                        <ListItemButton key={i} sx={{ pl: 4 }}>
-                            <ListItemText primary={`${cat}`} />
-                        </ListItemButton>
-                    )}
+                    <ListItemButton onClick={() => navigate('/recipes')} sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <ArticleIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Recipes" />
+                    </ListItemButton>
+                    <ListItemButton onClick={() => navigate('/recipes/new')} sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <LibraryAddIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Add New Recipe" />
+                    </ListItemButton>
+                    <ListItemButton onClick={() => navigate('/')} sx={{ pl: 4 }}>
+                        <ListItemIcon>
+                            <FavoriteIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Favorites" />
+                    </ListItemButton>
+                    <ListItemButton onClick={handleCatClick} sx={{ pl: 4 }}>
+                        <ListItemText primary="Recipe Categories" />
+                        {catOpen ? <ExpandLess /> : <ExpandMore />}
+                    </ListItemButton>
+                    <Collapse in={catOpen} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            {mainCategories.map((cat, i) =>
+                                <ListItemButton key={i} sx={{ pl: 8 }}>
+                                    <ListItemText primary={`${cat}`} />
+                                </ListItemButton>
+                            )}
+                        </List>
+                    </Collapse>
                 </List>
             </Collapse>
         </List>
     );
 }
+
+/* 
+
+
+
+
+            
+*/

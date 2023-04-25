@@ -135,7 +135,6 @@ export const mainCategories = [
     'Seafood',
     'Vegetarian',
     'Holiday',
-    'Entertaining',
     'Easy',
     'CrockPot'
 ]
