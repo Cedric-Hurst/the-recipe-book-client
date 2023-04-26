@@ -1,9 +1,10 @@
+import { ReceiptLongRounded } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid'
 import Navbar from "./Navbar"
 
 export default function Recipe({ recipe }) {
-    const { recipeTitle, servings, timing, ingredients, instructions, notes } = recipe;
+    const { recipeTitle, servings, img, timing, ingredients, instructions, notes } = recipe;
     const { prepTime, cookTime } = timing;
     let prep = '';
     let cook = '';
@@ -51,6 +52,7 @@ export default function Recipe({ recipe }) {
             <div style={{ margin: '25px', marginTop: '75px' }}>
                 <div><Link to='/recipes'>Back to Recipe Book</Link></div>
                 <h1>{recipeTitle}</h1>
+                <img src={img} alt={recipeTitle} style={{ height: '400px'}} />
                 <h2>{`Prep Time: ${prep} Cook Time: ${cook}`}</h2>
                 <p>{`Servings: ${servings}`}</p>
                 <h3>Ingredients</h3>

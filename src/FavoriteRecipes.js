@@ -6,12 +6,9 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -20,7 +17,6 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,10 +29,9 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeBook({ recipes, updateRecipe }) {
+export default function FavoriteRecipes({ recipes }) {
     const expandArray = new Array(recipes.length).fill(false);
     const [expanded, setExpanded] = React.useState([...expandArray]);
-    const [flipFlop, setFlipFlop] = React.useState(true);
     const navigate = useNavigate();
 
     const handleExpandClick = (index) => {
@@ -44,60 +39,18 @@ export default function RecipeBook({ recipes, updateRecipe }) {
         newExpanded[index] = !newExpanded[index];
         setExpanded([...newExpanded]);
     };
-    const handleFavClick = (index) => {
-        const newRecipe = recipes[index];
-        newRecipe.favorite = !newRecipe.favorite;
-        updateRecipe(newRecipe);
-        setFlipFlop(!flipFlop);
-    }
-    const totalTime = (timing) => {
-        const { prepTime, cookTime } = timing;
-        let totalTime = { totalHr: 0, totalMin: 0 };
-        let total = '';
-
-        totalTime.totalHr = prepTime.prepHr + cookTime.cookHr;
-        totalTime.totalMin = prepTime.prepMin + cookTime.cookMin;
-        if ((totalTime.totalMin / 60) > 0) {
-            totalTime.totalHr += Math.floor(totalTime.totalMin / 60);
-            totalTime.totalMin = totalTime.totalMin % 60;
-        }
-        if (totalTime.totalHr === 0) { //if no hours show mins
-        total = `${totalTime.totalMin} Mins`;
-        }
-        else if(totalTime.totalHr > 0) { //if there is hours
-            if (totalTime.totalMin === 0) { //if there is hours and no mins
-                if (totalTime.totalHr === 1) { //if hours is one
-                    total = `${totalTime.totalHr} Hr`; 
-                } else {
-                    total = `${totalTime.totalHr} Hrs`;
-                }
-            } else { //if there is hours and mins
-                if (totalTime.totalHr === 1) { //if there is one hour and mins
-                    total = `${totalTime.totalHr} Hr ${totalTime.totalMin} Mins`;
-                } else { //if there is hours and mins
-                    total = `${totalTime.totalHr} Hrs ${totalTime.totalMin} Mins`;
-                }
-            }
-        }
-        return total;
-    }
     return (
         <div>
-            <Navbar pageName='Recipe Book'/>
+            <Navbar pageName='Favorite Recipes'/>
             <div style={{ margin: '25px', marginTop: '75px' }}>
-                <div>
-                    <Button aria-label="add new Recipe" onClick={() => navigate('/recipes/new')}>
-                        <LibraryAddIcon /> <span style={{paddingLeft: '5px'}}>Add New Recipe</span>
-                    </Button>
-                </div>
                 {recipes.map((recipe, index) =>
-                    <div key={recipe.id} style={{display: 'inline-flex' , margin: '10px'}}>
-                        <Card sx={{ width: 345 }}>
+                    <div key={recipe.id} style={{display: 'inline-flex' , margin: 5}}>
+                        <Card sx={{ maxWidth: 345 }}>
                             <CardHeader
                                 onClick={() => navigate(`/recipes/${recipe.id}`)}
                                 avatar={
-                                <Avatar sx={{ bgcolor: red[500 + (100 * index)] }} aria-label="recipe">
-                                    {recipe.recipeTitle[0]}
+                                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                    R
                                 </Avatar>
                                 }
                                 action={
@@ -108,23 +61,21 @@ export default function RecipeBook({ recipes, updateRecipe }) {
                                 title={recipe.recipeTitle}
                                 subheader={`Serves: ${recipe.servings}`}
                             />
-                            <CardMedia
+                          {/*   <CardMedia
                                 component="img"
                                 height="194"
-                                image={recipe.img}
-                                alt={recipe.recipeTitle}
-                                onClick={() => navigate(`/recipes/${recipe.id}`)}
-                            />
+                                image="/static/images/cards/paella.jpg"
+                                alt="Paella dish"
+                            /> */}
                             <CardContent>
                                 <Typography variant="body2" color="text.secondary">
-                                    Total Time: {totalTime(recipe.timing)}
+                                This impressive paella is a perfect party dish and a fun meal to cook
+                                together with your guests. Add 1 cup of frozen peas along with the mussels,
+                                if you like.
                                 </Typography>
-                                <Stack direction="row" spacing={1} sx={{mt:'10px'}}>
-                                    {recipe.catagories.map((cat, i)=> <Chip key={i} label={cat} />)}
-                                </Stack>
                             </CardContent>
                             <CardActions disableSpacing>
-                                <IconButton aria-label="add or remove from favorites" onClick={() => handleFavClick(index)}>
+                                <IconButton aria-label="add or remove from favorites">
                                     {recipe.favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                                 </IconButton>
                                 <IconButton aria-label="share">

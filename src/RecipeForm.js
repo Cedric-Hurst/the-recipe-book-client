@@ -19,6 +19,9 @@ export default function RecipeForm({ addRecipe }) {
     const [recipeTitle, setRecipeTitle] = useState('');
     const [category, setCategory] = useState([]);
     const [servings, setServings] = useState(0);
+    const [img, setImg] = useState(
+        'https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80'
+    );
     const [timing, setTiming] = useState({
         prepTime: { prepHr: 0, prepMin: 0 },
         cookTime: { cookHr: 0, cookMin: 0 }
@@ -41,6 +44,7 @@ export default function RecipeForm({ addRecipe }) {
             id: uuid(),
             category: category,
             servings: servings,
+            img: img,
             timing: timing,
             ingredients: ingredients,
             instructions: instructions,
@@ -51,9 +55,14 @@ export default function RecipeForm({ addRecipe }) {
     }
      const handleTextChange = (e) => {
         e.target.name === 'recipeTitle' && setRecipeTitle(e.target.value);
-         if (e.target.name === 'servings' && parseInt(e.target.value) > 0 && !isNaN(parseInt(e.target.value))) {
-            setServings(parseInt(e.target.value));
-         }
+        if (e.target.name === 'servings' && parseInt(e.target.value) > 0 && !isNaN(parseInt(e.target.value))) {
+        setServings(parseInt(e.target.value));
+        }
+        else if (e.target.name === 'img') {
+            e.target.value === ''
+                ? setImg('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80')
+                : setImg(e.target.value);
+        }
     }
     const handleTimingChange = (event) => {
         let timingData = timing;
@@ -119,6 +128,17 @@ export default function RecipeForm({ addRecipe }) {
                         onKeyDown={handleEnterPress}
                         onChange={handleTextChange}
                     />
+                    <div>
+                        <TextField
+                            id="img"
+                            label="Image Url"
+                            name='img'
+                            variant="standard"
+                            sx={{ mb: 3, width: '30%' }}
+                            onKeyDown={handleEnterPress}
+                            onChange={handleTextChange}
+                        />
+                    </div>
                     <div>
                         <Autocomplete
                             multiple

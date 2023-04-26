@@ -64,7 +64,7 @@ export default function NavList({pageName}) {
                         </ListItemIcon>
                         <ListItemText primary="Add New Recipe" />
                     </ListItemButton>
-                    <ListItemButton onClick={() => navigate('/')} sx={{ pl: 4 }}>
+                    <ListItemButton onClick={() => navigate('/recipes/favorites')} sx={{ pl: 4 }}>
                         <ListItemIcon>
                             <FavoriteIcon />
                         </ListItemIcon>
