@@ -11,8 +11,12 @@ import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -33,11 +37,24 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeBook({ recipes, updateRecipe }) {
+export default function RecipeBook({ recipes, updateRecipe, pageName, deleteRecipe }) {
     const expandArray = new Array(recipes.length).fill(false);
     const [expanded, setExpanded] = React.useState([...expandArray]);
     const [flipFlop, setFlipFlop] = React.useState(true);
     const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        event.stopPropagation();
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleDelete = (id) => {
+        handleClose();
+        deleteRecipe(id);
+    }
 
     const handleExpandClick = (index) => {
         const newExpanded = expanded;
@@ -83,7 +100,7 @@ export default function RecipeBook({ recipes, updateRecipe }) {
     }
     return (
         <div>
-            <Navbar pageName='Recipe Book'/>
+            <Navbar pageName={pageName}/>
             <div style={{ margin: '25px', marginTop: '75px' }}>
                 <div>
                     <Button aria-label="add new Recipe" onClick={() => navigate('/recipes/new')}>
@@ -101,13 +118,32 @@ export default function RecipeBook({ recipes, updateRecipe }) {
                                 </Avatar>
                                 }
                                 action={
-                                <IconButton aria-label="settings">
-                                    <MoreVertIcon />
-                                </IconButton>
+                                    <IconButton
+                                        aria-label="settings"
+                                        onClick={handleClick}
+                                    >
+                                        <MoreVertIcon />
+                                    </IconButton>
                                 }
                                 title={recipe.recipeTitle}
                                 subheader={`Serves: ${recipe.servings}`}
                             />
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                                }}
+                            >
+                                <MenuItem onClick={handleClose}>
+                                    <EditIcon sx={{mr: '15px'}}/> Edit
+                                </MenuItem>
+                                <MenuItem onClick={() => handleDelete(recipe.id)}>
+                                    <DeleteForeverIcon sx={{mr: '15px'}}/> Delete
+                                </MenuItem>
+                            </Menu>
                             <CardMedia
                                 component="img"
                                 height="194"

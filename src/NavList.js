@@ -14,7 +14,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import FavoriteIcon from '@mui/icons-material/Favorite';import { mainCategories } from './FormData';
 import {useNavigate} from 'react-router-dom';
 
-export default function NavList({pageName}) {
+export default function NavList({pageName, handleDrawerClose}) {
     const [open, setOpen] = React.useState(false);
     const [catOpen, setCatOpen] = React.useState(false);
     const navigate = useNavigate();
@@ -37,7 +37,11 @@ export default function NavList({pageName}) {
                 </ListSubheader>
             }
         >
-            <ListItemButton onClick={() => navigate('/')}>
+            <ListItemButton
+                onClick={() => {
+                    navigate('/');
+                    handleDrawerClose();
+                }}>
                 <ListItemIcon>
                     <HomeIcon />
                 </ListItemIcon>
@@ -52,19 +56,37 @@ export default function NavList({pageName}) {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton onClick={() => navigate('/recipes')} sx={{ pl: 4 }}>
+                    <ListItemButton
+                        onClick={() => {
+                            navigate('/recipes');
+                            handleDrawerClose();
+                        }}
+                        sx={{ pl: 4 }}
+                    >
                         <ListItemIcon>
                             <ArticleIcon />
                         </ListItemIcon>
                         <ListItemText primary="Recipes" />
                     </ListItemButton>
-                    <ListItemButton onClick={() => navigate('/recipes/new')} sx={{ pl: 4 }}>
+                    <ListItemButton
+                        onClick={() => {
+                            navigate('/recipes/new');
+                            handleDrawerClose();
+                        }}
+                        sx={{ pl: 4 }}
+                    >
                         <ListItemIcon>
                             <LibraryAddIcon />
                         </ListItemIcon>
                         <ListItemText primary="Add New Recipe" />
                     </ListItemButton>
-                    <ListItemButton onClick={() => navigate('/recipes/favorites')} sx={{ pl: 4 }}>
+                    <ListItemButton
+                        onClick={() => {
+                            navigate('/recipes/favorites');
+                            handleDrawerClose();
+                        }}
+                        sx={{ pl: 4 }}
+                    >
                         <ListItemIcon>
                             <FavoriteIcon />
                         </ListItemIcon>

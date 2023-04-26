@@ -149,7 +149,7 @@ export default function Navbar({pageName}) {
                         </IconButton>
                     </DrawerHeader>
                     <Divider />
-                    <NavList pageName={pageName} />
+                    <NavList pageName={pageName} handleDrawerClose={handleDrawerClose} />
                 </Drawer>
             </Box>
         </ClickAwayListener>

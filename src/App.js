@@ -5,7 +5,6 @@ import FrontPage from "./FrontPage";
 import RecipeBook from "./RecipeBook";
 import RecipeForm from "./RecipeForm";
 import Recipe from "./Recipe";
-import FavoriteRecipes from "./FavoriteRecipes";
 function App() {
   const [recipes, setRecipes] = useState(SeedRecipes);
   const findRecipe = id => recipes.find(recipe => recipe.id === id);
@@ -34,9 +33,9 @@ function App() {
       <Routes location={location}>
           <Route index element={<FrontPage/>} />
           <Route path='/recipes'>
-          <Route index element={<RecipeBook recipes={recipes} updateRecipe={updateRecipe} />} />
+          <Route index element={<RecipeBook recipes={recipes} updateRecipe={updateRecipe} pageName='Recipe Book' deleteRecipe={deleteRecipe} />} />
             <Route path='new' element={<RecipeForm addRecipe={addRecipe} />}/>
-            <Route path='favorites' element={<FavoriteRecipes recipes={favRecipes} updateRecipe={updateRecipe} />}/>
+            <Route path='favorites' element={<RecipeBook recipes={favRecipes} updateRecipe={updateRecipe} pageName='Favorites' deleteRecipe={deleteRecipe}/>}/>
             <Route path=':id' element={<GetRecipe/>}/>
           </Route>
         <Route path='*' element={<FrontPage />} />
