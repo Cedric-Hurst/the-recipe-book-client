@@ -25,6 +25,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import { printTiming } from "./CodeHelper";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -41,19 +42,24 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
     const expandArray = new Array(recipes.length).fill(false);
     const [expanded, setExpanded] = React.useState([...expandArray]);
     const [flipFlop, setFlipFlop] = React.useState(true);
-    const navigate = useNavigate();
+
+    
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event) => {
+    const [openElem, setOpenElem] = React.useState(null);
+
+    const handleClick = (id) => (event) => {
         event.stopPropagation();
         setAnchorEl(event.currentTarget);
+        setOpenElem(id);
     };
     const handleClose = () => {
         setAnchorEl(null);
+        setOpenElem(null);
     };
     const handleDelete = (id) => {
-        handleClose();
         deleteRecipe(id);
+        handleClose();
     }
 
     const handleExpandClick = (index) => {
@@ -70,7 +76,6 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
     const totalTime = (timing) => {
         const { prepTime, cookTime } = timing;
         let totalTime = { totalHr: 0, totalMin: 0 };
-        let total = '';
 
         totalTime.totalHr = prepTime.prepHr + cookTime.cookHr;
         totalTime.totalMin = prepTime.prepMin + cookTime.cookMin;
@@ -78,26 +83,10 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
             totalTime.totalHr += Math.floor(totalTime.totalMin / 60);
             totalTime.totalMin = totalTime.totalMin % 60;
         }
-        if (totalTime.totalHr === 0) { //if no hours show mins
-        total = `${totalTime.totalMin} Mins`;
-        }
-        else if(totalTime.totalHr > 0) { //if there is hours
-            if (totalTime.totalMin === 0) { //if there is hours and no mins
-                if (totalTime.totalHr === 1) { //if hours is one
-                    total = `${totalTime.totalHr} Hr`; 
-                } else {
-                    total = `${totalTime.totalHr} Hrs`;
-                }
-            } else { //if there is hours and mins
-                if (totalTime.totalHr === 1) { //if there is one hour and mins
-                    total = `${totalTime.totalHr} Hr ${totalTime.totalMin} Mins`;
-                } else { //if there is hours and mins
-                    total = `${totalTime.totalHr} Hrs ${totalTime.totalMin} Mins`;
-                }
-            }
-        }
-        return total;
+        return printTiming(totalTime.totalHr, totalTime.totalMin);
     }
+
+    const navigate = useNavigate();
     return (
         <div>
             <Navbar pageName={pageName}/>
@@ -120,7 +109,7 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
                                 action={
                                     <IconButton
                                         aria-label="settings"
-                                        onClick={handleClick}
+                                        onClick={handleClick(recipe)}
                                     >
                                         <MoreVertIcon />
                                     </IconButton>
@@ -131,7 +120,7 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
                             <Menu
                                 id="basic-menu"
                                 anchorEl={anchorEl}
-                                open={open}
+                                open={openElem ===  recipe}
                                 onClose={handleClose}
                                 MenuListProps={{
                                 'aria-labelledby': 'basic-button',
@@ -140,7 +129,7 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
                                 <MenuItem onClick={handleClose}>
                                     <EditIcon sx={{mr: '15px'}}/> Edit
                                 </MenuItem>
-                                <MenuItem onClick={() => handleDelete(recipe.id)}>
+                                <MenuItem onClick={(e) => handleDelete(recipe.id)}>
                                     <DeleteForeverIcon sx={{mr: '15px'}}/> Delete
                                 </MenuItem>
                             </Menu>

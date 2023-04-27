@@ -1,49 +1,13 @@
 import { Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid'
+import { printTiming } from "./CodeHelper";
 import Navbar from "./Navbar"
 
 export default function Recipe({ recipe }) {
     const { recipeTitle, servings, img, timing, ingredients, instructions, notes } = recipe;
     const { prepTime, cookTime } = timing;
-    let prep = '';
-    let cook = '';
-
-    if (prepTime.prepHr === 0) { //if no hours show mins
-        prep = `${prepTime.prepMin} Mins`;
-    }
-    else if(prepTime.prepHr > 0) { //if there is hours
-        if (prepTime.prepMin === 0) { //if there is hours and no mins
-            if (prepTime.prepHr === 1) { //if hours is one
-                prep = `${prepTime.prepHr} Hr`; 
-            } else {
-                prep = `${prepTime.prepHr} Hrs`;
-            }
-        } else { //if there is hours and mins
-            if (prepTime.prepHr === 1) { //if there is one hour and mins
-                prep = `${prepTime.prepHr} Hr ${prepTime.prepMin} Mins`;
-            } else { //if there is hours and mins
-                prep = `${prepTime.prepHr} Hrs ${prepTime.prepMin} Mins`;
-            }
-        }
-    }
-    if (cookTime.cookHr === 0) { //if no hours show mins
-        cook = `${cookTime.cookMin} Mins`;
-    }
-    else if(cookTime.cookHr > 0) { //if there is hours
-        if (cookTime.cookMin === 0) { //if there is hours and no mins
-            if (cookTime.cookHr === 1) { //if hours is one
-                cook = `${cookTime.cookHr} Hr`; 
-            } else {
-                cook = `${cookTime.cookHr} Hrs`;
-            }
-        } else { //if there is hours and mins
-            if (cookTime.cookHr === 1) { //if there is one hour and mins
-                cook = `${cookTime.cookHr} Hr ${cookTime.cookMin} Mins`;
-            } else { //if there is hours and mins
-                cook = `${cookTime.cookHr} Hrs ${cookTime.cookMin} Mins`;
-            }
-        }
-    }
+    let prep = printTiming(prepTime.prepHr, prepTime.prepMin);
+    let cook = printTiming(cookTime.cookHr, cookTime.cookMin);
 
     return (
         <>
