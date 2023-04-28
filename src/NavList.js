@@ -99,7 +99,14 @@ export default function NavList({pageName, handleDrawerClose}) {
           <Collapse in={catOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               {mainCategories.map((cat, i) =>
-                <ListItemButton key={i} sx={{ pl: 8 }}>
+                <ListItemButton
+                  key={i}
+                  onClick={() => {
+                    navigate(`/recipes/category/${cat}`);
+                    handleDrawerClose();
+                  }}
+                  sx={{ pl: 8 }}
+                >
                   <ListItemText primary={`${cat}`} />
                 </ListItemButton>
               )}

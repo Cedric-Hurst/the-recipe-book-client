@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import { useState } from "react";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -112,7 +111,7 @@ export default function RecipeForm({ addRecipe }) {
       <Navbar pageName='New Recipe'/>
       <div style={{padding: '25px', marginTop: '75px'}}>
         <div>
-          <Link to='/recipes'>Back</Link>
+          <Button onClick={() => navigate(-1)}>Back</Button>
         </div>
         <form onSubmit={handleSubmit} noValidate>
           <h1>Add a New Recipe</h1>

@@ -147,7 +147,13 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
                   Total Time: {totalTime(recipe.timing)}
                 </Typography>
                 <Stack direction="row" spacing={1} sx={{mt:'10px'}}>
-                  {recipe.category.map((cat, i)=> <Chip key={i} label={cat} />)}
+                  {recipe.category.map((cat, i) =>
+                    <Chip
+                      key={i}
+                      label={cat}
+                      onClick={() => navigate(`/recipes/category/${cat}`)}
+                    />
+                  )}
                 </Stack>
               </CardContent>
               <CardActions disableSpacing>

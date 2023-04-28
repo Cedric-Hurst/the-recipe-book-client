@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid'
 import { printTiming } from "./CodeHelper";
+import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
 import Navbar from "./Navbar"
 
 export default function Recipe({ recipe }) {
@@ -8,12 +9,13 @@ export default function Recipe({ recipe }) {
   const { prepTime, cookTime } = timing;
   let prep = printTiming(prepTime.prepHr, prepTime.prepMin);
   let cook = printTiming(cookTime.cookHr, cookTime.cookMin);
+  const navigate = useNavigate();
 
   return (
     <>
       <Navbar pageName={`Recipe Page: ${recipeTitle}`} />
       <div style={{ margin: '25px', marginTop: '75px' }}>
-        <div><Link to='/recipes'>Back to Recipe Book</Link></div>
+        <div><Button onClick={() => navigate(-1)}>Back</Button></div>
         <h1>{recipeTitle}</h1>
         <img src={img} alt={recipeTitle} style={{ height: '400px'}} />
         <h2>{`Prep Time: ${prep} Cook Time: ${cook}`}</h2>

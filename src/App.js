@@ -36,7 +36,16 @@ function App() {
     setRecipes(newRecipes);
   }
   const favRecipes = recipes.filter(recipe => recipe.favorite === true)
-
+  const GetCatRecipes = () => {
+    const { cat } = useParams();
+    const catRecipes = recipes.filter(recipe =>recipe.category.includes(cat))
+    return <RecipeBook
+      recipes={catRecipes}
+      updateRecipe={updateRecipe}
+      pageName={cat}
+      deleteRecipe={deleteRecipe}
+    />
+  }
   const location = useLocation();
   return (
     <div className="App">
@@ -44,8 +53,9 @@ function App() {
           <Route index element={<FrontPage/>} />
           <Route path='/recipes'>
           <Route index element={<RecipeBook recipes={recipes} updateRecipe={updateRecipe} pageName='Recipe Book' deleteRecipe={deleteRecipe} />} />
-            <Route path='new' element={<RecipeForm addRecipe={addRecipe} />}/>
             <Route path='favorites' element={<RecipeBook recipes={favRecipes} updateRecipe={updateRecipe} pageName='Favorites' deleteRecipe={deleteRecipe}/>}/>
+            <Route path='category/:cat' element={<GetCatRecipes/>}/>
+            <Route path='new' element={<RecipeForm addRecipe={addRecipe} />}/>
             <Route path=':id' element={<GetRecipe/>}/>
             <Route path=':id/edit' element={<GetRecipeEdit/>}/>
           </Route>
