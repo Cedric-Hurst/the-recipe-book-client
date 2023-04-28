@@ -4,6 +4,7 @@ import SeedRecipes from "./SeedRecipes";
 import FrontPage from "./FrontPage";
 import RecipeBook from "./RecipeBook";
 import RecipeForm from "./RecipeForm";
+import RecipeEdit from "./RecipeEdit";
 import Recipe from "./Recipe";
 function App() {
   const [recipes, setRecipes] = useState(SeedRecipes);
@@ -12,6 +13,15 @@ function App() {
     const { id } = useParams();
     const recipe = findRecipe(id);
     return <Recipe recipe={recipe} />
+  }
+  const GetRecipeEdit = () => {
+    const { id } = useParams();
+    const recipe = findRecipe(id);
+    return <RecipeEdit
+      recipe={recipe}
+      updateRecipe={updateRecipe}
+      deleteRecipe={deleteRecipe}
+    />
   }
   const addRecipe = (newRecipe) => {
     setRecipes([...recipes, newRecipe]);
@@ -37,6 +47,7 @@ function App() {
             <Route path='new' element={<RecipeForm addRecipe={addRecipe} />}/>
             <Route path='favorites' element={<RecipeBook recipes={favRecipes} updateRecipe={updateRecipe} pageName='Favorites' deleteRecipe={deleteRecipe}/>}/>
             <Route path=':id' element={<GetRecipe/>}/>
+            <Route path=':id/edit' element={<GetRecipeEdit/>}/>
           </Route>
         <Route path='*' element={<FrontPage />} />
         </Routes>

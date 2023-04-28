@@ -42,10 +42,8 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
     const expandArray = new Array(recipes.length).fill(false);
     const [expanded, setExpanded] = React.useState([...expandArray]);
     const [flipFlop, setFlipFlop] = React.useState(true);
-
     
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
     const [openElem, setOpenElem] = React.useState(null);
 
     const handleClick = (id) => (event) => {
@@ -60,6 +58,10 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
     const handleDelete = (id) => {
         deleteRecipe(id);
         handleClose();
+    }
+    const handleEdit = (id) => {
+        handleClose();
+        navigate(`/recipes/${id}/edit`);
     }
 
     const handleExpandClick = (index) => {
@@ -102,7 +104,7 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
                             <CardHeader
                                 onClick={() => navigate(`/recipes/${recipe.id}`)}
                                 avatar={
-                                <Avatar sx={{ bgcolor: red[500 + (100 * index)] }} aria-label="recipe">
+                                <Avatar sx={{ bgcolor: red[300 + (100 * index)] }} aria-label="recipe">
                                     {recipe.recipeTitle[0]}
                                 </Avatar>
                                 }
@@ -126,7 +128,7 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
                                 'aria-labelledby': 'basic-button',
                                 }}
                             >
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={(e)=> handleEdit(recipe.id)}>
                                     <EditIcon sx={{mr: '15px'}}/> Edit
                                 </MenuItem>
                                 <MenuItem onClick={(e) => handleDelete(recipe.id)}>
@@ -145,7 +147,7 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
                                     Total Time: {totalTime(recipe.timing)}
                                 </Typography>
                                 <Stack direction="row" spacing={1} sx={{mt:'10px'}}>
-                                    {recipe.catagories.map((cat, i)=> <Chip key={i} label={cat} />)}
+                                    {recipe.category.map((cat, i)=> <Chip key={i} label={cat} />)}
                                 </Stack>
                             </CardContent>
                             <CardActions disableSpacing>
