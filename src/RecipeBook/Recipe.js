@@ -15,7 +15,7 @@ export default function Recipe({ recipe }) {
     <>
       <Navbar pageName={`Recipe Page: ${recipeTitle}`} />
       <div style={{ margin: '25px', marginTop: '75px' }}>
-        <div><Button onClick={() => navigate(-1)}>Back</Button></div>
+        <div><Button sx={{color: 'green'}} onClick={() => navigate(-1)}>Back</Button></div>
         <h1>{recipeTitle}</h1>
         <img src={img} alt={recipeTitle} style={{ height: '400px'}} />
         <h2>{`Prep Time: ${prep} Cook Time: ${cook}`}</h2>

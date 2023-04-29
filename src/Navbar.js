@@ -105,8 +105,8 @@ export default function Navbar({pageName}) {
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
+        <AppBar position="fixed" open={open} sx={{backgroundColor: 'green'}}>
+          <Toolbar sx={{justifyContent: 'space-between'}}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -116,9 +116,9 @@ export default function Navbar({pageName}) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
+            <Typography variant="h6" noWrap component="div" sx={{marginRight: 'auto'}}>
               {pageName}
-            </Typography>   
+            </Typography> 
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -144,6 +144,7 @@ export default function Navbar({pageName}) {
         open={open}
       >
           <DrawerHeader>
+            <span style={{marginRight: 'auto', marginLeft: '10px'}}>MyRecipes</span>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>

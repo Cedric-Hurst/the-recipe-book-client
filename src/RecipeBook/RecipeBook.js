@@ -17,12 +17,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { red } from '@mui/material/colors';
+import { green } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import { useNavigate } from "react-router-dom";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import { printTiming } from "../CodeHelper";
@@ -93,13 +95,22 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
     <div>
       <Navbar pageName={pageName}/>
       <div style={{ margin: '25px', marginTop: '75px' }}>
+        <SpeedDial
+          ariaLabel="add new recipe"
+          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          icon={<SpeedDialIcon openIcon={<LibraryAddIcon />} />}
+          onClick={() => navigate('/recipes/new')}
+          FabProps={{
+            sx: {
+              bgcolor: 'green',
+              '&:hover': {
+                bgcolor: 'green',
+              }
+            }
+          }}
+        />
         <div>
-          <Button aria-label="add new Recipe" onClick={() => navigate('/recipes/new')}>
-            <LibraryAddIcon /> <span style={{paddingLeft: '5px'}}>Add New Recipe</span>
-          </Button>
-        </div>
-        <div>
-          <Button onClick={() => navigate(-1)}>Back</Button>
+          <Button sx={{color: 'green'}} onClick={() => navigate(-1)}>Back</Button>
         </div>
         {recipes.map((recipe, index) =>
           <div key={recipe.id} style={{display: 'inline-flex' , margin: '10px'}}>
@@ -107,7 +118,7 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
               <CardHeader
                 onClick={() => navigate(`/recipes/${recipe.id}`)}
                 avatar={
-                <Avatar sx={{ bgcolor: red[300 + (100 * index)] }} aria-label="recipe">
+                <Avatar sx={{ bgcolor: green[300 + (100 * index)] }} aria-label="recipe">
                   {recipe.recipeTitle[0]}
                 </Avatar>
                 }
