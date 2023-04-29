@@ -10,8 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { v4 as uuid } from 'uuid'
-import { measurements, categories } from './FormData';
-import Navbar from "./Navbar"
+import { measurements, categories } from '../FormData';
+import Navbar from "../Navbar"
 import { useNavigate } from "react-router-dom";
 
 export default function RecipeForm({ addRecipe }) {

@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid'
-import { printTiming } from "./CodeHelper";
+import { printTiming } from "../CodeHelper";
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
-import Navbar from "./Navbar"
+import Navbar from "../Navbar"
 
 export default function Recipe({ recipe }) {
   const { recipeTitle, servings, img, timing, ingredients, instructions, notes } = recipe;

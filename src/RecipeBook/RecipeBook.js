@@ -1,4 +1,4 @@
-import Navbar from "./Navbar"
+import Navbar from "../Navbar"
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -25,7 +25,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from "react-router-dom";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
-import { printTiming } from "./CodeHelper";
+import { printTiming } from "../CodeHelper";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -97,6 +97,9 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
           <Button aria-label="add new Recipe" onClick={() => navigate('/recipes/new')}>
             <LibraryAddIcon /> <span style={{paddingLeft: '5px'}}>Add New Recipe</span>
           </Button>
+        </div>
+        <div>
+          <Button onClick={() => navigate(-1)}>Back</Button>
         </div>
         {recipes.map((recipe, index) =>
           <div key={recipe.id} style={{display: 'inline-flex' , margin: '10px'}}>
