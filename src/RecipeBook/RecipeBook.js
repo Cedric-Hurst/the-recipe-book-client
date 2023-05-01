@@ -27,7 +27,9 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import { useNavigate } from "react-router-dom";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import Tooltip from '@mui/material/Tooltip';
 import { printTiming } from "../CodeHelper";
+import "./RecipeBook.css"
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -94,31 +96,33 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
   return (
     <div>
       <Navbar pageName={pageName}/>
-      <div style={{ margin: '25px', marginTop: '75px' }}>
-        <SpeedDial
-          ariaLabel="add new recipe"
-          sx={{ position: 'fixed', bottom: 16, right: 16 }}
-          icon={<SpeedDialIcon openIcon={<LibraryAddIcon />} />}
-          onClick={() => navigate('/recipes/new')}
-          FabProps={{
-            sx: {
-              bgcolor: 'green',
-              '&:hover': {
+      <div className="rb-root" >
+        <Tooltip title='Add New Recipe' placement="left">
+          <SpeedDial
+            ariaLabel="add new recipe"
+            sx={{ position: 'fixed', bottom: 16, right: 16 }}
+            icon={<SpeedDialIcon openIcon={<LibraryAddIcon />} />}
+            onClick={() => navigate('/recipes/new')}
+            FabProps={{
+              sx: {
                 bgcolor: 'green',
+                '&:hover': {
+                  bgcolor: 'green',
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
+        </Tooltip>
         <div>
           <Button sx={{color: 'green'}} onClick={() => navigate(-1)}>Back</Button>
         </div>
         {recipes.map((recipe, index) =>
-          <div key={recipe.id} style={{display: 'inline-flex' , margin: '10px'}}>
+          <div key={recipe.id} className='rb-cards'>
             <Card sx={{ width: 345 }}>
               <CardHeader
                 onClick={() => navigate(`/recipes/${recipe.id}`)}
                 avatar={
-                <Avatar sx={{ bgcolor: green[300 + (100 * index)] }} aria-label="recipe">
+                <Avatar sx={{ bgcolor: green[500] }} aria-label="recipe">
                   {recipe.recipeTitle[0]}
                 </Avatar>
                 }

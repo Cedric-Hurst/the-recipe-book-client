@@ -1,0 +1,16 @@
+.recipe-root {
+	margin: 25px;
+	margin-top: 75px;
+	display: flex;
+}
+.recipe-root img {
+	height: 300px;
+}
+.recipe-info {
+	width: 50%;
+	display: inline-block;
+}
+.recipe-inst {
+	width: 50%;
+	display: inline-block;
+}

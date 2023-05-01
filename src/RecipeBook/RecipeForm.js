@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
@@ -12,7 +13,7 @@ import Select from '@mui/material/Select';
 import { v4 as uuid } from 'uuid'
 import { measurements, categories } from '../FormData';
 import Navbar from "../Navbar"
-import { useNavigate } from "react-router-dom";
+import "./RecipeForm.css"
 
 export default function RecipeForm({ addRecipe }) {
   const [recipeTitle, setRecipeTitle] = useState('');
@@ -109,8 +110,8 @@ export default function RecipeForm({ addRecipe }) {
   return (
     <>
       <Navbar pageName='New Recipe'/>
-      <div style={{padding: '25px', marginTop: '75px'}}>
-        <div>
+      <div className="rForm-root" >
+        <div className="rForm-backBtn">
           <Button onClick={() => navigate(-1)}>Back</Button>
         </div>
         <form onSubmit={handleSubmit} noValidate>
@@ -124,7 +125,7 @@ export default function RecipeForm({ addRecipe }) {
             onKeyDown={handleEnterPress}
             onChange={handleTextChange}
           />
-          <div>
+          <div className="rForm-img">
             <TextField
               id="img"
               label="Image Url"
@@ -135,7 +136,7 @@ export default function RecipeForm({ addRecipe }) {
               onChange={handleTextChange}
             />
           </div>
-          <div>
+          <div className="rForm-cat">
             <Autocomplete
               multiple
               id="category-select"
@@ -155,7 +156,7 @@ export default function RecipeForm({ addRecipe }) {
               onKeyDown={handleEnterPress}
               onChange={handleTextChange}
           />
-          <div>
+          <div className="rForm-time">
             <span>Prep Time:</span>
             <TextField
               id="prepTime-hr"
@@ -199,20 +200,12 @@ export default function RecipeForm({ addRecipe }) {
             />
           </div>
 
-          <div>
+          <div className="rForm-ingredients">
             <p>Ingredients:</p>
             {ingredients.map((input, index) => { 
               return (
-                <div key={index}>
-                  <span
-                    style={{
-                      display: 'inline-flex',
-                      paddingBottom: '20px',
-                      paddingLeft: '20px',
-                      borderLeft: '.5rem solid rgba(29, 40, 191,0.4)',
-                      marginBottom: '1px'
-                    }} key={index}
-                  >
+                <div className="rForm-ingre" key={index}>
+                  <span>
                     <Stack direction="row">
                       <TextField
                         id="qty-text"
@@ -274,8 +267,8 @@ export default function RecipeForm({ addRecipe }) {
           <p>Instructions:</p>
           {instructions.map((instruction, index) => { 
             return(
-              <div key={index}>
-                <span style={{fontSize: 25, lineHeight: '100px', marginRight: '10px'}}>{`${index + 1}.`}</span>
+              <div className="rForm-inst" key={index}>
+                <span>{`${index + 1}.`}</span>
                 <TextField
                   id="instruction"
                   name="instruction"
@@ -297,7 +290,7 @@ export default function RecipeForm({ addRecipe }) {
             Add More instructions
             <AddIcon />
           </Button>
-          <div>
+          <div className="rForm-submit">
             <Button type="submit" variant="outlined">Add Recipe</Button>
           </div>
         </form>

@@ -1,0 +1,26 @@
+.rForm-root {
+	padding: 25px;
+	margin-top: 75px;
+}
+.rForm-backBtn {
+}
+.rForm-img {
+}
+.rForm-cat {
+}
+.rForm-time {
+}
+.rForm-ingredients {
+}
+.rForm-ingre span {
+	display: inline-flex;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	border-left: 0.5rem solid rgba(29, 40, 191, 0.4);
+	margin-bottom: 1px;
+}
+.rForm-inst span {
+	font-size: 25;
+	line-height: 100px;
+	margin-right: 10px;
+}

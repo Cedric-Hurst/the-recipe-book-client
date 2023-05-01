@@ -42,7 +42,7 @@ export default function RecipeRoutes() {
     return <RecipeBook
       recipes={catRecipes}
       updateRecipe={updateRecipe}
-      pageName={cat}
+      pageName={`Category: ${cat}`}
       deleteRecipe={deleteRecipe}
     />
   }
