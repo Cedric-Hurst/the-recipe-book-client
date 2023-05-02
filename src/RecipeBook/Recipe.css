@@ -1,7 +1,13 @@
+.recipe-paper {
+	width: 80%;
+	margin-left: 10%;
+	padding: 1.5% 0;
+}
 .recipe-root {
 	margin: 25px;
-	margin-top: 75px;
+	margin-top: 50px;
 	display: flex;
+	padding: 0 2.5%;
 }
 .recipe-root img {
 	height: 300px;
@@ -9,6 +15,26 @@
 .recipe-info {
 	width: 50%;
 	display: inline-block;
+}
+.recipe-info img {
+	margin-top: 25px;
+}
+.recipe-serving {
+	font-weight: 700;
+}
+.recipe-servingNum {
+	font-weight: 700;
+	color: green;
+}
+.recipe-timing {
+	font-weight: 700;
+	margin-left: 8%;
+}
+.recipe-time {
+	font-size: large;
+}
+.recipe-timeNum {
+	color: green;
 }
 .recipe-inst {
 	width: 50%;

@@ -113,9 +113,6 @@ export default function RecipeBook({ recipes, updateRecipe, pageName, deleteReci
             }}
           />
         </Tooltip>
-        <div>
-          <Button sx={{color: 'green'}} onClick={() => navigate(-1)}>Back</Button>
-        </div>
         {recipes.map((recipe, index) =>
           <div key={recipe.id} className='rb-cards'>
             <Card sx={{ width: 345 }}>
