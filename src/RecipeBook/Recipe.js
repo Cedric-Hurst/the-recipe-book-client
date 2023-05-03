@@ -1,7 +1,5 @@
 import { v4 as uuid } from 'uuid'
 import { printTiming } from "../CodeHelper";
-import { useNavigate } from "react-router-dom";
-import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -14,10 +12,9 @@ export default function Recipe({ recipe }) {
   const { prepTime, cookTime } = timing;
   let prep = printTiming(prepTime.prepHr, prepTime.prepMin);
   let cook = printTiming(cookTime.cookHr, cookTime.cookMin);
-  const navigate = useNavigate();
 
   return (
-    <>
+    <div className='recipe-background'>
       <Navbar pageName={`Recipe Page: ${recipeTitle}`} />
       <Paper elevation={18} className="recipe-paper">
         <div className='recipe-root'>
@@ -34,37 +31,45 @@ export default function Recipe({ recipe }) {
                 <span className='recipe-timeNum'>{cook}</span>
               </span>
           </div>
-            <h3>Ingredients</h3>
+            <h2>Ingredients</h2>
             <FormGroup>
               {ingredients.map(ingredient =>
                 <FormControlLabel
-                  control={<Checkbox />}
+                  control={<Checkbox color="success"/>}
                   label={
-                    `${ingredient.qty} ${ingredient.measure} ${ingredient.ingredient}${ingredient.description.length > 1 ? ',' : ''} ${ingredient.description}`
+                    <span className='recipe-ingre'>
+                      {`${ingredient.qty} ${ingredient.measure} ${ingredient.ingredient}${ingredient.description.length > 1 ? ',' : ''} ${ingredient.description}`}
+                    </span>
                   }
                   key={uuid()}
                 />
               )}
             </FormGroup>
           </div>
-          <div className='recipe-inst'>
-            <h4>Instructions</h4>
+          <div className='recipe-instNote'>
+            <h3>Instructions</h3>
             <FormGroup>
               {instructions.map((step, i) =>
+                <span className='recipe-spacer'>
                 <FormControlLabel
-                  control={<Checkbox />}
-                  label={`${i + 1}. ${step}`}
+                  control={<Checkbox color="success"/>}
+                  label={
+                    <span className='recipe-inst'>
+                      {`${i + 1}. ${step}`}
+                    </span>
+                  }
                   key={uuid()}
                 />
+                </span>
               )}
             </FormGroup>
-            <h5>Notes</h5>
+            <h4>Notes</h4>
             <ul>
               {notes.map(note => <li key={uuid()}>note</li>)}
             </ul>
           </div>
         </div>
       </Paper>
-    </>
+    </div>
   )
 }

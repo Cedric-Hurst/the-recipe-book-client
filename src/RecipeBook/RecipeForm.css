@@ -1,6 +1,26 @@
+.rForm-background {
+	background-image: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80');
+	background-size: cover;
+	background-attachment: fixed;
+	height: 100vh;
+}
+.rForm-paper {
+	width: 80%;
+	margin-left: 10%;
+	height: 100%;
+	padding: 1.5% 0;
+}
 .rForm-root {
-	padding: 25px;
-	margin-top: 75px;
+	margin: 25px;
+	margin-top: 50px;
+	display: flex;
+	padding: 0 2.5%;
+	height: auto;
+}
+.rForm-form {
+	margin-left: -70px;
+	display: flex;
+	height: auto;
 }
 .rForm-backBtn {
 }
@@ -10,17 +30,40 @@
 }
 .rForm-time {
 }
-.rForm-ingredients {
+
+.rForm-1half-container,
+.rForm-2half-container {
+	width: 50%;
+	display: inline-block;
+	height: 50vh;
 }
-.rForm-ingre span {
+.rForm-2half-container {
+	margin-left: 15%;
+}
+.rForm-ingredients {
+	height: 60%;
+	width: 105%;
+	overflow-y: auto;
+}
+.rForm-ingre {
 	display: inline-flex;
 	padding-bottom: 20px;
 	padding-left: 20px;
 	border-left: 0.5rem solid rgba(29, 40, 191, 0.4);
 	margin-bottom: 1px;
 }
+.rForm-inst {
+	display: flex;
+	width: auto;
+}
 .rForm-inst span {
 	font-size: 25;
 	line-height: 100px;
-	margin-right: 10px;
+}
+.rForm-submit {
+	position: fixed;
+	left: 50%;
+	bottom: 20px;
+	transform: translate(-50%, -50%);
+	margin: 0 auto;
 }
