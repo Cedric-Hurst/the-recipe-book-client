@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import { v4 as uuid } from 'uuid'
 import { measurements, categories } from '../FormData';
@@ -90,6 +91,7 @@ export default function RecipeForm({ addRecipe }) {
       description: ''
     }
     setIngredients([...ingredients, newInstrField]);
+    
   }
   const removeIngredientFields = (index) => {
     setIngredients(ingredients.filter((ingre,i) => i !== index))
@@ -112,12 +114,15 @@ export default function RecipeForm({ addRecipe }) {
   return (
     <div className="rForm-background">
       <Navbar pageName='New Recipe' />
+      
       <Paper elevation={18} className="rForm-paper">
         <div className="rForm-root" >
           <div className="rForm-backBtn">
             <Button onClick={() => navigate(-1)}>Back</Button>
           </div>
           <form onSubmit={handleSubmit} noValidate className="rForm-form">
+            <Grid container spacing={2}>
+            <Grid item xs={12} lg={6} >
             <div className="rForm-1half-container">
               <h1>Add a New Recipe</h1>
               <TextField
@@ -254,7 +259,7 @@ export default function RecipeForm({ addRecipe }) {
                             label="Description"
                             value={input.description}
                             variant="standard"
-                            sx={{ width: 150 }}
+                            sx={{ width: 125 }}
                             onKeyDown={handleEnterPress}
                             onChange={event => handleIngredientFormChange(event,index)}
                           />
@@ -268,7 +273,9 @@ export default function RecipeForm({ addRecipe }) {
               <div>
                 <Button onClick={addIngredientFields} >Add More Ingredients <AddIcon /></Button>
               </div>   
-            </div>
+              </div>
+              </Grid>
+              <Grid item xs={12} lg={6}>
             <div className="rForm-2half-container">
               <p>Instructions:</p>
               {instructions.map((instruction, index) => { 
@@ -299,7 +306,8 @@ export default function RecipeForm({ addRecipe }) {
                 <Button type="submit" variant="outlined">Add Recipe</Button>
               </div>
             </div>
-
+            </Grid>
+            </Grid>
           </form>
         </div>
       </Paper>
