@@ -209,7 +209,6 @@ export default function RecipeForm({ addRecipe }) {
                 />
               </div>
             
-              
               <p>Ingredients:</p>
               <div className="rForm-ingredients">
                 {ingredients.map((input, index) => { 
