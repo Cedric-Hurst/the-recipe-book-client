@@ -29,7 +29,6 @@ export default function RecipeForm({ addRecipe }) {
     prepTime: { prepHr: 0, prepMin: 0 },
     cookTime: { cookHr: 0, cookMin: 0 }
   });
-
   const [ingredients, setIngredients] = useState([{
     qty: '',
     measure: '',
@@ -37,7 +36,6 @@ export default function RecipeForm({ addRecipe }) {
     description: ''
   }]);
   const [instructions, setInstructions] = useState(['']);
-
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -96,7 +94,6 @@ export default function RecipeForm({ addRecipe }) {
   const removeIngredientFields = (index) => {
     setIngredients(ingredients.filter((ingre,i) => i !== index))
   }
-
   const handleInstructionFormChange = (event, index) => {
     let instruData = [...instructions];
     instruData[index] = event.target.value;
@@ -114,198 +111,194 @@ export default function RecipeForm({ addRecipe }) {
   return (
     <div className="rForm-background">
       <Navbar pageName='New Recipe' />
-      
       <Paper elevation={18} className="rForm-paper">
         <div className="rForm-root" >
-          <div className="rForm-backBtn">
-            <Button onClick={() => navigate(-1)}>Back</Button>
-          </div>
           <form onSubmit={handleSubmit} noValidate className="rForm-form">
             <Grid container spacing={2}>
-            <Grid item xs={12} lg={6} >
-            <div className="rForm-1half-container">
-              <h1>Add a New Recipe</h1>
-              <TextField
-                id="recipe-text"
-                label="Recipe Name"
-                name='recipeTitle'
-                variant="standard"
-                sx={{ mb: 3, width: '90%' }}
-                onKeyDown={handleEnterPress}
-                onChange={handleTextChange}
-              />
-              <div className="rForm-img">
-                <TextField
-                  id="img"
-                  label="Image Url"
-                  name='img'
-                  variant="standard"
-                  sx={{ mb: 3, width: '90%' }}
-                  onKeyDown={handleEnterPress}
-                  onChange={handleTextChange}
-                />
-              </div>
-              <div className="rForm-cat">
-                <Autocomplete
-                  multiple
-                  id="category-select"
-                  limitTags={3}
-                  options={categories}
-                  sx={{ width: '90%' }}
-                  renderInput={(params) => <TextField {...params} variant="standard" label="Categories" />}
-                  onChange={(e, newVal) => { setCategory(newVal) }}
-                />
-              </div>
-              <TextField
-                  id="servings"
-                  name="servings"
-                  label="Servings"
-                  variant="standard"
-                  sx={{ my: "20px", width: '75px' }}
-                  onKeyDown={handleEnterPress}
-                  onChange={handleTextChange}
-              />
-              <div className="rForm-time">
-                <span>Prep Time:</span>
-                <TextField
-                  id="prepTime-hr"
-                  name="prepHr"
-                  label="Hours"
-                  variant="standard"
-                  sx={{ width: '50px', mx: '10px' }}
-                  onKeyDown={handleEnterPress}
-                  onChange={event => event.target.value >= 0 && handleTimingChange(event)}
-                />
-                <span style={{fontSize: 40}}>:</span>
-                <TextField
-                  id="prepTime-min"
-                  name="prepMin"
-                  label="Mins"
-                  variant="standard"
-                  sx={{ width: '50px', mx: '10px' }}
-                  onKeyDown={handleEnterPress}
-                  onChange={event => (event.target.value >= 0 && event.target.value < 60) && handleTimingChange(event)}
-                />
+              <Grid item xs={12} lg={6} >
+                <div>
+                  <h1>Add a New Recipe</h1>
+                  <TextField
+                    id="recipe-text"
+                    label="Recipe Name"
+                    name='recipeTitle'
+                    variant="standard"
+                    sx={{ mb: 3, width: '90%' }}
+                    onKeyDown={handleEnterPress}
+                    onChange={handleTextChange}
+                  />
+                  <div>
+                    <TextField
+                      id="img"
+                      label="Image Url"
+                      name='img'
+                      variant="standard"
+                      sx={{ mb: 3, width: '90%' }}
+                      onKeyDown={handleEnterPress}
+                      onChange={handleTextChange}
+                    />
+                  </div>
+                  <div>
+                    <Autocomplete
+                      multiple
+                      id="category-select"
+                      limitTags={3}
+                      options={categories}
+                      sx={{ width: '90%' }}
+                      renderInput={(params) => <TextField {...params} variant="standard" label="Categories" />}
+                      onChange={(e, newVal) => { setCategory(newVal) }}
+                    />
+                  </div>
+                  <TextField
+                      id="servings"
+                      name="servings"
+                      label="Servings"
+                      variant="standard"
+                      sx={{ my: "20px", width: '75px' }}
+                      onKeyDown={handleEnterPress}
+                      onChange={handleTextChange}
+                  />
+                  <div>
+                    <span>Prep Time:</span>
+                    <TextField
+                      id="prepTime-hr"
+                      name="prepHr"
+                      label="Hours"
+                      variant="standard"
+                      sx={{ width: '50px', mx: '10px' }}
+                      onKeyDown={handleEnterPress}
+                      onChange={event => event.target.value >= 0 && handleTimingChange(event)}
+                    />
+                    <span style={{fontSize: 40}}>:</span>
+                    <TextField
+                      id="prepTime-min"
+                      name="prepMin"
+                      label="Mins"
+                      variant="standard"
+                      sx={{ width: '50px', mx: '10px' }}
+                      onKeyDown={handleEnterPress}
+                      onChange={event => (event.target.value >= 0 && event.target.value < 60) && handleTimingChange(event)}
+                    />
 
-                <span>Cook Time:</span>
-                <TextField 
-                  id="cookTime-hr" 
-                  name="cookHr" 
-                  label="Hours" 
-                  variant="standard" 
-                  sx={{ width: '50px', mx: '10px' }}
-                  onKeyDown={handleEnterPress}
-                  onChange={event => event.target.value >= 0 && handleTimingChange(event)}
-                />
-                <span style={{fontSize: 40}}>:</span>
-                <TextField 
-                  id="cookTime-min" 
-                  name="cookMin"
-                  label="Mins" 
-                  variant="standard" 
-                  sx={{ width: '50px', mx: '10px' }}
-                  onKeyDown={handleEnterPress}
-                  onChange={event => (event.target.value >= 0 && event.target.value < 60) && handleTimingChange(event)}
-                />
-              </div>
-            
-              <p>Ingredients:</p>
-              <div className="rForm-ingredients">
-                {ingredients.map((input, index) => { 
-                  return (
-                    <div className="rForm-ingre-container" key={index}>
-                      <span className="rForm-ingre">
-                        <Stack direction="row">
-                          <TextField
-                            id="qty-text"
-                            name='qty'
-                            label="qty"
-                            variant="standard"
-                            value={input.qty}
-                            sx={{ width: '75px' }}
-                            onKeyDown={handleEnterPress}
-                            onChange={event => handleIngredientFormChange(event,index)}
-                          />
-                          <FormControl variant="standard" sx={{ minWidth: 120 }}>
-                            <InputLabel id="measure-label">Measurement</InputLabel>
-                            <Select
-                              labelId="measure-label"
-                              id="measure"
-                              name="measure"
-                              defaultValue=''
-                              onKeyDown={handleEnterPress}
-                              onChange={event => handleIngredientFormChange(event,index)}
-                              label="Measurement"
-                            >
-                              {measurements.map((measure, i) =>
-                                <MenuItem key={i} value={measure.value}>{ measure.label}</MenuItem>
-                              )}
-                            </Select>
-                          </FormControl>
-                          <TextField
-                            id="ingredient-text"
-                            name='ingredient'
-                            label="Ingredient"
-                            value={input.ingredient}
-                            variant="standard"
-                            sx={{ width: 150 }}
-                            onKeyDown={handleEnterPress}
-                            onChange={event => handleIngredientFormChange(event,index)}
-                          />
-                          <TextField
-                            id="description-text"
-                            name='description'
-                            label="Description"
-                            value={input.description}
-                            variant="standard"
-                            sx={{ width: 125 }}
-                            onKeyDown={handleEnterPress}
-                            onChange={event => handleIngredientFormChange(event,index)}
-                          />
-                          <IconButton onClick={() => removeIngredientFields(index)}><CloseIcon /></IconButton>
-                        </Stack>
-                      </span>
-                    </div>
-                  )
-                })}
-              </div>
-              <div>
-                <Button onClick={addIngredientFields} >Add More Ingredients <AddIcon /></Button>
-              </div>   
-              </div>
+                    <span>Cook Time:</span>
+                    <TextField 
+                      id="cookTime-hr" 
+                      name="cookHr" 
+                      label="Hours" 
+                      variant="standard" 
+                      sx={{ width: '50px', mx: '10px' }}
+                      onKeyDown={handleEnterPress}
+                      onChange={event => event.target.value >= 0 && handleTimingChange(event)}
+                    />
+                    <span style={{fontSize: 40}}>:</span>
+                    <TextField 
+                      id="cookTime-min" 
+                      name="cookMin"
+                      label="Mins" 
+                      variant="standard" 
+                      sx={{ width: '50px', mx: '10px' }}
+                      onKeyDown={handleEnterPress}
+                      onChange={event => (event.target.value >= 0 && event.target.value < 60) && handleTimingChange(event)}
+                    />
+                  </div>
+                
+                  <p>Ingredients:</p>
+                  <div className="rForm-ingredients">
+                    {ingredients.map((input, index) => { 
+                      return (
+                        <div key={index}>
+                          <span className="rForm-ingre">
+                            <Stack direction="row">
+                              <TextField
+                                id="qty-text"
+                                name='qty'
+                                label="qty"
+                                variant="standard"
+                                value={input.qty}
+                                sx={{ width: '75px' }}
+                                onKeyDown={handleEnterPress}
+                                onChange={event => handleIngredientFormChange(event,index)}
+                              />
+                              <FormControl variant="standard" sx={{ minWidth: 120 }}>
+                                <InputLabel id="measure-label">Measurement</InputLabel>
+                                <Select
+                                  labelId="measure-label"
+                                  id="measure"
+                                  name="measure"
+                                  defaultValue=''
+                                  onKeyDown={handleEnterPress}
+                                  onChange={event => handleIngredientFormChange(event,index)}
+                                  label="Measurement"
+                                >
+                                  {measurements.map((measure, i) =>
+                                    <MenuItem key={i} value={measure.value}>{ measure.label}</MenuItem>
+                                  )}
+                                </Select>
+                              </FormControl>
+                              <TextField
+                                id="ingredient-text"
+                                name='ingredient'
+                                label="Ingredient"
+                                value={input.ingredient}
+                                variant="standard"
+                                sx={{ width: 150 }}
+                                onKeyDown={handleEnterPress}
+                                onChange={event => handleIngredientFormChange(event,index)}
+                              />
+                              <TextField
+                                id="description-text"
+                                name='description'
+                                label="Description"
+                                value={input.description}
+                                variant="standard"
+                                sx={{ width: 125 }}
+                                onKeyDown={handleEnterPress}
+                                onChange={event => handleIngredientFormChange(event,index)}
+                              />
+                              <IconButton onClick={() => removeIngredientFields(index)}><CloseIcon /></IconButton>
+                            </Stack>
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                  <div>
+                    <Button onClick={addIngredientFields} >Add More Ingredients <AddIcon /></Button>
+                  </div>   
+                </div>
               </Grid>
               <Grid item xs={12} lg={6}>
-            <div className="rForm-2half-container">
-              <p>Instructions:</p>
-              {instructions.map((instruction, index) => { 
-                return(
-                  <div className="rForm-inst" key={index}>
-                    <span>{`${index + 1}.`}</span>
-                    <TextField
-                      id="instruction"
-                      name="instruction"
-                      label="Instructions"
-                      multiline
-                      value={instruction}
-                      rows={3}
-                      variant="standard"
-                      sx={{ width: 500 }}
-                      onChange={event => handleInstructionFormChange(event, index)}
-                    />
-                    <IconButton onClick={() => removeInstructionFields(index)}><CloseIcon/></IconButton>
+                <div>
+                  <p>Instructions:</p>
+                  {instructions.map((instruction, index) => { 
+                    return(
+                      <div className="rForm-inst" key={index}>
+                        <span>{`${index + 1}.`}</span>
+                        <TextField
+                          id="instruction"
+                          name="instruction"
+                          label="Instructions"
+                          multiline
+                          value={instruction}
+                          rows={3}
+                          variant="standard"
+                          sx={{ width: 500 }}
+                          onChange={event => handleInstructionFormChange(event, index)}
+                        />
+                        <IconButton onClick={() => removeInstructionFields(index)}><CloseIcon/></IconButton>
+                      </div>
+                    )
+                  }
+                  )}
+                  <Button onClick={addInstructionFields}>
+                    Add More instructions
+                    <AddIcon />
+                  </Button>
+                  <div >
+                    <Button type="submit" variant="outlined">Add Recipe</Button>
                   </div>
-                )
-              }
-              )}
-              <Button onClick={addInstructionFields}>
-                Add More instructions
-                <AddIcon />
-              </Button>
-              <div className="rForm-submit">
-                <Button type="submit" variant="outlined">Add Recipe</Button>
-              </div>
-            </div>
-            </Grid>
+                </div>
+              </Grid>
             </Grid>
           </form>
         </div>

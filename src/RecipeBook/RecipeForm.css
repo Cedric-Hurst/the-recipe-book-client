@@ -19,13 +19,9 @@
 	height: auto;
 }
 .rForm-form {
-	margin-left: -70px;
 	display: flex;
 	height: auto;
 }
-.rForm-backBtn {
-}
-
 .rForm-ingredients {
 	height: 60%;
 	width: 105%;
@@ -45,9 +41,6 @@
 	font-size: 25;
 	line-height: 100px;
 }
-.rForm-submit {
-}
-
 @media (max-width: 800px) {
 	.rForm-background {
 		background-image: none;
@@ -62,16 +55,20 @@
 @media (max-width: 625px) {
 	.rForm-form {
 		scale: 0.8;
-		margin-left: -25%;
+	}
+	.rForm-root {
+		margin: 0;
+		padding: 0;
 	}
 }
 @media (max-width: 525px) {
 	.rForm-form {
 		width: 80%;
-		margin-left: -25%;
 	}
 	.rForm-ingredients {
 		scale: 0.8;
-		margin-left: -15%;
+	}
+	.rForm-ingredients {
+		margin-left: -10%;
 	}
 }
