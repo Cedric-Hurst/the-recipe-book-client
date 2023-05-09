@@ -1,8 +1,21 @@
 .rb-root {
-	margin: 25px;
-	margin-top: 75px;
+	margin: 0.8rem;
+	margin-top: 5rem;
 }
 .rb-cards {
 	display: inline-flex;
-	margin: 10px;
+	margin: 0.8rem;
+	transition: 0.5s;
+}
+.rb-cards #card-header:hover,
+.rb-cards #card-img:hover {
+	cursor: pointer;
+}
+.rb-cards:hover {
+	scale: 1.1;
+}
+@media (max-width: 755px) {
+	.rb-card-container {
+		text-align: center;
+	}
 }
