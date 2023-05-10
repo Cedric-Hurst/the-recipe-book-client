@@ -159,7 +159,7 @@ export default function RecipeCard({ recipe, index, recipes, updateRecipe, delet
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent style={{zIndex: 20}}>
           <Typography paragraph>Ingredients:</Typography>
           <ul>
             {recipe.ingredients.map((ingredient, i) =>

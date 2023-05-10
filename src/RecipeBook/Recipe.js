@@ -63,10 +63,6 @@ export default function Recipe({ recipe }) {
                 </span>
               )}
             </FormGroup>
-            <h4>Notes</h4>
-            <ul>
-              {notes.map(note => <li key={uuid()}>note</li>)}
-            </ul>
           </div>
         </div>
       </Paper>

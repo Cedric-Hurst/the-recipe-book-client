@@ -14,7 +14,7 @@
 .rb-cards:hover {
 	scale: 1.1;
 }
-@media (max-width: 755px) {
+@media (max-width: 765px) {
 	.rb-card-container {
 		text-align: center;
 	}

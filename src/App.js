@@ -1,7 +1,9 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
+import {useState} from "react";
 import FrontPage from "./FrontPage";
 import RecipeRoutes from "./RecipeBook/RecipeRoutes";
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
   return (
     <div className="App">

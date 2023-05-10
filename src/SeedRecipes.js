@@ -23,7 +23,7 @@ const SeedRecipes = [
       "Cover and cook on LOW for 8 to 10 hours or HIGH for 5 to 6 hours.",
       "Shred with 2 forks"
     ],
-    notes:[]
+    author: 'Flappy'
   },
   {
     recipeTitle: "Shrimp and Chorizo Chowder",
@@ -57,7 +57,7 @@ const SeedRecipes = [
       "When potatoes are tender, turn heat very low so the soup is on the lowest of simmers. Stir in the frozen corn and half and half. At the very end add the peeled shrimp and poach for 2-3 minutes until they are opaque and pink and just cooked through.",
       "Serve the chowder in big bowls with a side of toasted baguette and garnished with parsley."
     ],
-    notes:[]
+    author: 'Flappy'
   },
   {
     recipeTitle: "Bison burger",
@@ -91,7 +91,7 @@ const SeedRecipes = [
       "Return skillet to heat and cook patties for 3 minutes, flip, add cheese and cook for 3 more minutes for medium. Work in batches as necessary. Place patties on a cutting board and let rest 5 minutes.",
       "In a small bowl, combine mayonnaise, Dijon mustard, and oregano. Spread mixture on bottom buns, top with romaine, burgers, caramelized onions, and top buns."
     ],
-    notes:[]
+    author: 'Flappy'
   },
   {
     recipeTitle: "Easy copycat Bdubs wings",
@@ -115,7 +115,7 @@ const SeedRecipes = [
       "melt butter in pan, then add wing sauce and mix.",
       "when ready to serve wings, toss wings in pan then serve immediately. waiting too long to serve may cause wings to become soggy."
     ],
-    notes:[]
+    author: 'Flappy'
   },
 ]
 export default SeedRecipes;

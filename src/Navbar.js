@@ -13,8 +13,17 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Stack from '@mui/material/Stack';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
 import NavList from './NavList';
+import LogInForm from './LogInForm';
+import CreateAccountForm from './CreateAccountForm';
 
 const drawerWidth = 300;
 
@@ -86,14 +95,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar({pageName}) {
+export default function Navbar({pageName, isLoggedIn, logOut, logIn}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openDia, setOpenDia] = React.useState(false);
+  const [needAccount, setNeedAccount] = React.useState(false);
+  const [newAccount, setNewAccount] = React.useState({username:'', password:'', email:''});
+  const [account, setAccount] = React.useState({username:'', password:''});
 
+  const handleClickOpen = () => {
+    setOpenDia(true);
+  };
+  const handleClose = () => {
+    setOpenDia(false);
+    setNeedAccount(false);
+  };
+  const handleLogOut = () => { 
+    setOpenDia(false);
+    logOut();
+  }
+  const handleLogIn = () => {
+    console.log(account);
+  }
+  const handleCreate = () => {
+    
+  }
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -128,9 +157,13 @@ export default function Navbar({pageName}) {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-        </Toolbar>
-      </AppBar>
-      <Drawer
+            {isLoggedIn
+              ? <Button variant='outlined' sx={{marginLeft: 5, color: 'white', borderColor:'white'}} onClick={handleLogOut}>LogOut</Button>
+              : <Button variant='outlined' sx={{marginLeft: 5, color: 'white', borderColor:'white'}} onClick={handleClickOpen}>LogIn</Button>
+            }
+          </Toolbar>
+        </AppBar>
+        <Drawer
         sx={{
         width: drawerWidth,
         flexShrink: 0,
@@ -152,6 +185,24 @@ export default function Navbar({pageName}) {
           <Divider />
           <NavList pageName={pageName} handleDrawerClose={handleDrawerClose} />
         </Drawer>
+        <Dialog open={openDia} onClose={handleClose}>
+          <DialogTitle>{needAccount ? 'Create Account' : 'LogIn'}</DialogTitle>
+          <DialogContent>
+            {needAccount
+              ? <CreateAccountForm setNewAccount={setNewAccount}/>
+              : <LogInForm setAccount={setAccount}/>
+            }
+          </DialogContent>
+          <DialogActions>
+            {needAccount
+              ? <Button variant='outlined' onClick={handleCreate}>Create Account</Button>
+              : <Stack direction="row" spacing={2}>
+                  <Button variant='outlined' onClick={handleLogIn}>LogIn</Button>
+                  <Button variant='outlined' onClick={() => setNeedAccount(true)}>Register</Button>
+                </Stack>
+            }
+          </DialogActions>
+        </Dialog>
       </Box>
     </ClickAwayListener>
   );
