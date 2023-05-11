@@ -8,7 +8,7 @@ import Navbar from "../Navbar";
 import './Recipe.css';
 
 export default function Recipe({ recipe }) {
-  const { recipeTitle, servings, img, timing, ingredients, instructions, notes } = recipe;
+  const { recipeTitle, servings, img, timing, ingredients, instructions } = recipe;
   const { prepTime, cookTime } = timing;
   let prep = printTiming(prepTime.prepHr, prepTime.prepMin);
   let cook = printTiming(cookTime.cookHr, cookTime.cookMin);

@@ -24,6 +24,7 @@ import ClickAwayListener from '@mui/base/ClickAwayListener';
 import NavList from './NavList';
 import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
+import './Navbar.css';
 
 const drawerWidth = 300;
 
@@ -43,7 +44,6 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -52,7 +52,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
-
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -67,7 +66,6 @@ const Search = styled('div')(({ theme }) => ({
     width: 'auto',
   },
 }));
-
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -76,8 +74,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-}));
-
+}))
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
@@ -92,6 +89,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         width: '20ch',
       },
     },
+  },
+}));
+const LogButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.common.white,
+  borderColor: theme.palette.common.white,
+  fontWeight: 400,
+  '&:hover': {
+    borderColor: theme.palette.common.white,
+    backgroundColor: 'rgba(255,255,255,0.3)'
   },
 }));
 
@@ -158,8 +164,8 @@ export default function Navbar({pageName, isLoggedIn, logOut, logIn}) {
               />
             </Search>
             {isLoggedIn
-              ? <Button variant='outlined' sx={{marginLeft: 5, color: 'white', borderColor:'white'}} onClick={handleLogOut}>LogOut</Button>
-              : <Button variant='outlined' sx={{marginLeft: 5, color: 'white', borderColor:'white'}} onClick={handleClickOpen}>LogIn</Button>
+              ? <LogButton variant='outlined' sx={{marginLeft: 5}} onClick={handleLogOut}>LogOut</LogButton>
+              : <LogButton variant='outlined' sx={{marginLeft: 5}} onClick={handleClickOpen}>LogIn</LogButton>
             }
           </Toolbar>
         </AppBar>
@@ -195,7 +201,10 @@ export default function Navbar({pageName, isLoggedIn, logOut, logIn}) {
           </DialogContent>
           <DialogActions>
             {needAccount
-              ? <Button variant='outlined' onClick={handleCreate}>Create Account</Button>
+              ? <Stack direction="row" spacing={2}>
+                  <Button variant='outlined' onClick={() => setNeedAccount(false)}>logIn</Button>
+                  <Button variant='outlined' onClick={handleCreate}>Create Account</Button>
+                </Stack>
               : <Stack direction="row" spacing={2}>
                   <Button variant='outlined' onClick={handleLogIn}>LogIn</Button>
                   <Button variant='outlined' onClick={() => setNeedAccount(true)}>Register</Button>

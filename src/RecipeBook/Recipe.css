@@ -2,17 +2,21 @@
 	background-image: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80');
 	background-size: cover;
 	background-attachment: fixed;
+	height: auto;
 }
 .recipe-paper {
 	width: 80%;
 	margin-left: 10%;
 	padding: 1.5% 0;
+	height: auto;
+	min-height: 100vh;
 }
 .recipe-root {
 	margin: 25px;
 	margin-top: 50px;
 	display: flex;
 	padding: 0 2.5%;
+	height: auto;
 }
 .recipe-info img {
 	height: 300px;
