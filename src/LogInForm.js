@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import './LogInForm.css'
+
 
 export default function LogInForm({ setAccount }) {
   const [username, setUsername] = useState('');
@@ -15,13 +17,14 @@ export default function LogInForm({ setAccount }) {
   },[password, setAccount, username])
 
   return (
-    <Stack spacing={2} sx={{marginTop: 2}}>
+    <Stack direction='column' spacing={2} justifyContent="center" alignItems="center" sx={{marginTop: 2}}>
       <TextField
         id="username"
         name="username"
         label="Username"
         onChange={handleChange}
         variant="outlined"
+        className="logInField"
         required
       />
       <TextField
@@ -30,6 +33,9 @@ export default function LogInForm({ setAccount }) {
         label="Password"
         onChange={handleChange}
         variant="outlined"
+        className="logInField"
+        type="password"
+        autoComplete="current-password"
         required
       />
     </Stack>

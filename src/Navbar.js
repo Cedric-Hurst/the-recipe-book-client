@@ -117,14 +117,15 @@ export default function Navbar({pageName, isLoggedIn, logOut, logIn}) {
     setNeedAccount(false);
   };
   const handleLogOut = () => { 
-    setOpenDia(false);
     logOut();
   }
   const handleLogIn = () => {
     console.log(account);
+    setOpenDia(false);
+    logIn();
   }
   const handleCreate = () => {
-    
+    console.log(newAccount)
   }
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -192,11 +193,17 @@ export default function Navbar({pageName, isLoggedIn, logOut, logIn}) {
           <NavList pageName={pageName} handleDrawerClose={handleDrawerClose} />
         </Drawer>
         <Dialog open={openDia} onClose={handleClose}>
-          <DialogTitle>{needAccount ? 'Create Account' : 'LogIn'}</DialogTitle>
+          <DialogTitle>{needAccount ? 'Create Account' : 'Existing Account'}</DialogTitle>
           <DialogContent>
+            <DialogContentText>
+              {needAccount
+                ? 'Sign in with your username and password or create a new account by clicking the register button'
+                : 'Create a new account. If you already have an account click the log in button to log in with your username and password'
+              }
+            </DialogContentText>
             {needAccount
               ? <CreateAccountForm setNewAccount={setNewAccount}/>
-              : <LogInForm setAccount={setAccount}/>
+              : <LogInForm setAccount={setAccount} />
             }
           </DialogContent>
           <DialogActions>

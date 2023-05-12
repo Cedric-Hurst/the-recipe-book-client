@@ -17,7 +17,9 @@ import Navbar from "../Navbar"
 import "./RecipeForm.css"
 
 
-export default function RecipeForm({ updateRecipe, recipe, deleteRecipe }) {
+export default function RecipeForm({
+  updateRecipe, recipe, deleteRecipe, isLoggedIn, logOut, logIn
+}) {
   const [recipeTitle, setRecipeTitle] = useState(recipe.recipeTitle);
   const [category, setCategory] = useState(recipe.category);
   const [servings, setServings] = useState(recipe.servings);
@@ -91,7 +93,12 @@ export default function RecipeForm({ updateRecipe, recipe, deleteRecipe }) {
 
   return (
     <div className="rForm-background">
-      <Navbar pageName='Edit Recipe'/>
+      <Navbar
+        pageName='Edit Recipe'
+        isLoggedIn={isLoggedIn}
+        logOut={logOut}
+        logIn={logIn}
+      />
       <Paper elevation={18} className="rForm-paper">
         <div className="rForm-root">
           <form onSubmit={handleSubmit} noValidate>

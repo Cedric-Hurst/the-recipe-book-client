@@ -6,11 +6,17 @@ import SeedAccounts from "./SeedAccounts";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const logOut = () => {
+    setIsLoggedIn(false);
+  }
+  const logIn = () => {
+    setIsLoggedIn(true);
+  }
   return (
     <div className="App">
       <Routes location={location}>
         <Route index element={<FrontPage/>} />
-        {RecipeRoutes()}
+        {RecipeRoutes(isLoggedIn, logOut, logIn)}
         <Route path='*' element={<FrontPage />} />
       </Routes>
     </div>

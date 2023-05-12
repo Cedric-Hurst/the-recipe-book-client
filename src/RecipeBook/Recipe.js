@@ -7,7 +7,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Navbar from "../Navbar";
 import './Recipe.css';
 
-export default function Recipe({ recipe }) {
+export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
   const { recipeTitle, servings, img, timing, ingredients, instructions } = recipe;
   const { prepTime, cookTime } = timing;
   let prep = printTiming(prepTime.prepHr, prepTime.prepMin);
@@ -15,7 +15,12 @@ export default function Recipe({ recipe }) {
 
   return (
     <div className='recipe-background'>
-      <Navbar pageName={`Recipe Page: ${recipeTitle}`} />
+      <Navbar
+        pageName={`Recipe Page: ${recipeTitle}`}
+        isLoggedIn={isLoggedIn}
+        logOut={logOut}
+        logIn={logIn}
+      />
       <Paper elevation={18} className="recipe-paper">
         <div className='recipe-root'>
           <div className='recipe-info'>

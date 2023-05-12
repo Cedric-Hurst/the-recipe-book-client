@@ -8,11 +8,18 @@ import Tooltip from '@mui/material/Tooltip';
 import "./RecipeBook.css"
 import RecipeCard from "./RecipeCard";
 
-export default function RecipeBook({ recipes, updateRecipe, pageName, deleteRecipe }) {
+export default function RecipeBook({
+  recipes, updateRecipe, pageName, deleteRecipe, isLoggedIn, logOut, logIn
+}) {
   const navigate = useNavigate();
   return (
     <div>
-      <Navbar pageName={pageName}/>
+      <Navbar
+        pageName={pageName}
+        isLoggedIn={isLoggedIn}
+        logOut={logOut}
+        logIn={logIn}
+      />
       <div className="rb-root" >
         <Tooltip title='Add New Recipe' placement="left">
           <SpeedDial

@@ -18,7 +18,7 @@ import { measurements, categories } from '../FormData';
 import Navbar from "../Navbar"
 import "./RecipeForm.css"
 
-export default function RecipeForm({ addRecipe }) {
+export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
   const [recipeTitle, setRecipeTitle] = useState('');
   const [category, setCategory] = useState([]);
   const [servings, setServings] = useState(0);
@@ -110,7 +110,12 @@ export default function RecipeForm({ addRecipe }) {
   }
   return (
     <div className="rForm-background">
-      <Navbar pageName='New Recipe' />
+      <Navbar
+        pageName='New Recipe'
+        isLoggedIn={isLoggedIn}
+        logOut={logOut}
+        logIn={logIn}
+      />
       <Paper elevation={18} className="rForm-paper">
         <div className="rForm-root" >
           <form onSubmit={handleSubmit} noValidate className="rForm-form">
