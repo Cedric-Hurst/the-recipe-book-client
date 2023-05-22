@@ -2,7 +2,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import {useState} from "react";
 import FrontPage from "./FrontPage";
 import RecipeRoutes from "./RecipeBook/RecipeRoutes";
-import SeedAccounts from "./SeedAccounts";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();

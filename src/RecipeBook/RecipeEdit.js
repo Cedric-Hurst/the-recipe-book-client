@@ -12,6 +12,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import EditIcon from '@mui/icons-material/Edit';
+import Tooltip from '@mui/material/Tooltip';
 import { measurements, categories } from '../FormData';
 import Navbar from "../Navbar"
 import "./RecipeForm.css"
@@ -102,6 +106,22 @@ export default function RecipeForm({
       <Paper elevation={18} className="rForm-paper">
         <div className="rForm-root">
           <form onSubmit={handleSubmit} noValidate>
+            <Tooltip title='Update Recipe' placement="left">
+              <SpeedDial
+                ariaLabel="update recipe"
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+                onClick={handleSubmit}
+                FabProps={{
+                  sx: {
+                    bgcolor: 'green',
+                    '&:hover': {
+                      bgcolor: 'green',
+                    }
+                  }
+                }}
+              />
+            </Tooltip>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={6} >
                 <div>
@@ -205,7 +225,7 @@ export default function RecipeForm({
                           <span className="rForm-ingre">
                             <Stack direction="row">
                               <TextField
-                                id="qty-text"
+                                id={`qty-text${index}`}
                                 name='qty'
                                 label="qty"
                                 variant="standard"
@@ -215,10 +235,10 @@ export default function RecipeForm({
                                 onChange={event => handleIngredientFormChange(event,index)}
                               />
                               <FormControl variant="standard" sx={{ minWidth: 120 }}>
-                                <InputLabel id="measure-label">Measurement</InputLabel>
+                                <InputLabel id={`measure-label${index}`}>Measurement</InputLabel>
                                 <Select
-                                  labelId="measure-label"
-                                  id="measure"
+                                  labelId={`measure-label${index}`}
+                                  id={`measure${index}`}
                                   name="measure"
                                   defaultValue={input.measure}
                                   onKeyDown={handleEnterPress}
@@ -231,7 +251,7 @@ export default function RecipeForm({
                                 </Select>
                               </FormControl>
                               <TextField
-                                id="ingredient-text"
+                                id={`ingredient-text${index}`}
                                 name='ingredient'
                                 label="Ingredient"
                                 value={input.ingredient}
@@ -241,7 +261,7 @@ export default function RecipeForm({
                                 onChange={event => handleIngredientFormChange(event,index)}
                               />
                               <TextField
-                                id="description-text"
+                                id={`description-text${index}`}
                                 name='description'
                                 label="Description"
                                 value={input.description}
@@ -270,7 +290,7 @@ export default function RecipeForm({
                       <div className="rForm-inst" key={index}>
                         <span>{`${index + 1}.`}</span>
                         <TextField
-                          id="instruction"
+                          id={`instruction${index}`}
                           name="instruction"
                           label="Instructions"
                           multiline
@@ -288,9 +308,6 @@ export default function RecipeForm({
                     Add More instructions
                     <AddIcon />
                   </Button>
-                  <div>
-                    <Button type="submit" variant="outlined">Update Recipe</Button>
-                  </div>
                 </div>
               </Grid>
             </Grid>
