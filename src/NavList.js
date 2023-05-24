@@ -10,7 +10,8 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import FavoriteIcon from '@mui/icons-material/Favorite';import { mainCategories } from './FormData';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { mainCategories } from './RecipeData';
 import {useNavigate} from 'react-router-dom';
 
 export default function NavList({pageName, handleDrawerClose}) {
