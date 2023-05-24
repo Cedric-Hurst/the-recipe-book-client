@@ -118,7 +118,6 @@ export const categories = [
 	'Wrap',
 	'Burrito',
 ];
-
 export const mainCategories = [
 	'Appetizer',
 	'Soup',
@@ -138,7 +137,6 @@ export const mainCategories = [
 	'Easy',
 	'CrockPot',
 ];
-
 export const substitutions = [
 	{
 		label: 'Allspice',
