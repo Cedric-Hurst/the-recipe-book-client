@@ -3,7 +3,6 @@ export const measurements = [
 	{ label: 'teaspoon', value: 'tsp' },
 	{ label: 'tablespoon', value: 'tbsp' },
 	{ label: 'fluid ounce', value: 'fl oz' },
-	{ label: 'gill', value: 'gill' },
 	{ label: 'cup', value: 'c' },
 	{ label: 'pint', value: 'pt' },
 	{ label: 'quart', value: 'qt' },
@@ -15,7 +14,6 @@ export const measurements = [
 	{ label: 'kilogram', value: 'kg' },
 	{ label: 'milliliter', value: 'ml' },
 	{ label: 'liter', value: 'l' },
-	{ label: 'deciliter', value: 'dl' },
 ];
 export const categories = [
 	'Appetizer',

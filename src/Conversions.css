@@ -1,0 +1,11 @@
+.measureSpan #measure {
+	font-weight: 700;
+	color: green;
+}
+.measureSpan #full {
+	display: block;
+}
+.measureSpan #half {
+	display: inline-block;
+	width: 50%;
+}

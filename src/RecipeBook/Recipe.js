@@ -5,6 +5,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import RecipeSubsDialog from './RecipeSubsDialog';
+import RecipeConDialog from './RecipeConDialog';
 import Navbar from '../Navbar';
 import './Recipe.css';
 
@@ -57,6 +58,7 @@ export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
 							))}
 						</FormGroup>
 						<RecipeSubsDialog />
+						<RecipeConDialog />
 					</div>
 					<div className="recipe-instNote">
 						<h3>Instructions</h3>
