@@ -15,6 +15,14 @@ export const measurements = [
 	{ label: 'milliliter', value: 'ml' },
 	{ label: 'liter', value: 'l' },
 ];
+export const fractions = [
+	{ label: 'none', value: '' },
+	{ label: '¼', value: 0.25 },
+	{ label: '⅓', value: 0.33 },
+	{ label: '½', value: 0.5 },
+	{ label: '⅔', value: 0.67 },
+	{ label: '¾', value: 0.75 },
+];
 export const categories = [
 	'Appetizer',
 	'Soup',

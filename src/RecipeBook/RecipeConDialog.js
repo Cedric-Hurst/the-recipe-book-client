@@ -28,7 +28,7 @@ import {
 	oz,
 	lb,
 } from '../Conversions';
-import { measurements } from '../RecipeData';
+import { measurements, fractions } from '../RecipeData';
 
 const DiaButton = styled(Button)(({ theme }) => ({
 	color: 'rgb(0,128,0)',
@@ -40,36 +40,39 @@ const DiaButton = styled(Button)(({ theme }) => ({
 	},
 }));
 export default function RecipeConDialog() {
-	const [value, setValue] = React.useState(0);
+	const [wholeNum, setWholeNum] = React.useState(0);
+	const [fraction, setFraction] = React.useState(fractions[0]);
 	const [measureValue, setMeasureValue] = React.useState(measurements[0]);
 	const [open, setOpen] = React.useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const getSubText = () => {
-		if (!value.isNaN) {
+		if (!wholeNum.isNaN) {
+			const sumNum =
+				(wholeNum === '' ? 0 : parseInt(wholeNum)) +
+				(fraction === '' ? 0 : parseFloat(fraction));
 			return (
-				<div className="RCD_SubText">
+				<div>
 					<DialogContentText>
-						{measureValue === 'tsp' && tsp(value)}
-						{measureValue === 'tbsp' && tbsp(value)}
-						{measureValue === 'fl oz' && fl(value)}
-						{measureValue === 'c' && c(value)}
-						{measureValue === 'pt' && pt(value)}
-						{measureValue === 'qt' && qt(value)}
-						{measureValue === 'gal' && gal(value)}
-						{measureValue === 'ml' && ml(value)}
-						{measureValue === 'l' && l(value)}
-						{measureValue === 'kg' && kg(value)}
-						{measureValue === 'g' && g(value)}
-						{measureValue === 'mg' && mg(value)}
-						{measureValue === 'oz' && oz(value)}
-						{measureValue === 'lb' && lb(value)}
+						{measureValue === 'tsp' && tsp(sumNum)}
+						{measureValue === 'tbsp' && tbsp(sumNum)}
+						{measureValue === 'fl oz' && fl(sumNum)}
+						{measureValue === 'c' && c(sumNum)}
+						{measureValue === 'pt' && pt(sumNum)}
+						{measureValue === 'qt' && qt(sumNum)}
+						{measureValue === 'gal' && gal(sumNum)}
+						{measureValue === 'ml' && ml(sumNum)}
+						{measureValue === 'l' && l(sumNum)}
+						{measureValue === 'kg' && kg(sumNum)}
+						{measureValue === 'g' && g(sumNum)}
+						{measureValue === 'mg' && mg(sumNum)}
+						{measureValue === 'oz' && oz(sumNum)}
+						{measureValue === 'lb' && lb(sumNum)}
 					</DialogContentText>
 				</div>
 			);
@@ -96,13 +99,32 @@ export default function RecipeConDialog() {
 							name="amount"
 							label="Amount"
 							variant="standard"
-							value={value}
+							value={wholeNum}
 							sx={{ width: '75px' }}
 							onKeyDown={handleEnterPress}
 							onChange={(event) => {
-								!isNaN(event.target.value) && setValue(event.target.value);
+								!isNaN(event.target.value) && setWholeNum(event.target.value);
 							}}
 						/>
+						<FormControl variant="standard" sx={{ minWidth: 80 }}>
+							<InputLabel id="fraction-label">Fraction</InputLabel>
+							<Select
+								labelId="fraction-label"
+								id="fraction"
+								name="fraction"
+								defaultValue=""
+								onKeyDown={handleEnterPress}
+								onChange={(event) => {
+									setFraction(event.target.value);
+								}}
+								label="Fraction">
+								{fractions.map((fraction, i) => (
+									<MenuItem key={i} value={fraction.value}>
+										{fraction.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 						<FormControl variant="standard" sx={{ minWidth: 120 }}>
 							<InputLabel id="measure-label">Measurement</InputLabel>
 							<Select

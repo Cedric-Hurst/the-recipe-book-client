@@ -1,13 +1,26 @@
 import './Conversions.css';
+const fraction = (x) => {
+	//replace decimals with fractions
+	const wholeNum = Math.floor(x);
+	const decimal = round2Num(x - wholeNum);
+	if (decimal === 0.25) return `${wholeNum === 0 ? '' : wholeNum}¼`;
+	else if (decimal === 0.33) return `${wholeNum === 0 ? '' : wholeNum}⅓`;
+	else if (decimal === 0.5) return `${wholeNum === 0 ? '' : wholeNum}½`;
+	else if (decimal === 0.67) return `${wholeNum === 0 ? '' : wholeNum}⅔`;
+	else if (decimal === 0.75) return `${wholeNum === 0 ? '' : wholeNum}¾`;
+	else return x;
+};
 const round2Num = (x) => {
+	//round decimals to the 100th place
 	return Math.round((x + Number.EPSILON) * 100) / 100;
 };
+// Volume conversions
 export const tsp = (x) => {
 	return (
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x / 3)}
+					{fraction(round2Num(x / 3))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
@@ -15,21 +28,21 @@ export const tsp = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 48)}
+					{fraction(round2Num(x / 48))}
 					<span id="measure">{' c'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 96)}
+					{fraction(round2Num(x / 96))}
 					<span id="measure">{' pt'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x / 192)}
+					{fraction(round2Num(x / 192))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 768)}
+					{fraction(round2Num(x / 768))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
@@ -49,7 +62,7 @@ export const tbsp = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 3)}
+					{fraction(round2Num(x * 3))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
@@ -57,21 +70,21 @@ export const tbsp = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 16)}
+					{fraction(round2Num(x / 16))}
 					<span id="measure">{' c'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 32)}
+					{fraction(round2Num(x / 32))}
 					<span id="measure">{' pt'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x / 64)}
+					{fraction(round2Num(x / 64))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 256)}
+					{fraction(round2Num(x / 256))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
@@ -91,29 +104,29 @@ export const fl = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 6)}
+					{fraction(round2Num(x * 6))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 2)}
+					{fraction(round2Num(x * 2))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 8)}
+					{fraction(round2Num(x / 8))}
 					<span id="measure">{' c'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 16)}
+					{fraction(round2Num(x / 16))}
 					<span id="measure">{' pt'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x / 32)}
+					{fraction(round2Num(x / 32))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 128)}
+					{fraction(round2Num(x / 128))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
@@ -133,11 +146,11 @@ export const c = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 48)}
+					{fraction(round2Num(x * 48))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 16)}
+					{fraction(round2Num(x * 16))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
@@ -145,17 +158,17 @@ export const c = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 2)}
+					{fraction(round2Num(x / 2))}
 					<span id="measure">{' pt'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x / 4)}
+					{fraction(round2Num(x / 4))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 16)}
+					{fraction(round2Num(x / 16))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
@@ -175,11 +188,11 @@ export const pt = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 96)}
+					{fraction(round2Num(x * 96))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 32)}
+					{fraction(round2Num(x * 32))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
@@ -187,17 +200,17 @@ export const pt = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 2)}
+					{fraction(round2Num(x * 2))}
 					<span id="measure">{' c'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x / 2)}
+					{fraction(round2Num(x / 2))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 8)}
+					{fraction(round2Num(x / 8))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
@@ -217,11 +230,11 @@ export const qt = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 192)}
+					{fraction(round2Num(x * 192))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 64)}
+					{fraction(round2Num(x * 64))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
@@ -229,17 +242,17 @@ export const qt = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 4)}
+					{fraction(round2Num(x * 4))}
 					<span id="measure">{' c'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 2)}
+					{fraction(round2Num(x * 2))}
 					<span id="measure">{' pt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x / 4)}
+					{fraction(round2Num(x / 4))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
@@ -259,11 +272,11 @@ export const gal = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 768)}
+					{fraction(round2Num(x * 768))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 256)}
+					{fraction(round2Num(x * 256))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
@@ -271,17 +284,17 @@ export const gal = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 16)}
+					{fraction(round2Num(x * 16))}
 					<span id="measure">{' c'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 8)}
+					{fraction(round2Num(x * 8))}
 					<span id="measure">{' pt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 4)}
+					{fraction(round2Num(x * 4))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
@@ -301,11 +314,11 @@ export const ml = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 0.202884)}
+					{fraction(round2Num(x * 0.202884))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 0.067628)}
+					{fraction(round2Num(x * 0.067628))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
@@ -313,21 +326,21 @@ export const ml = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 0.004227)}
+					{fraction(round2Num(x * 0.004227))}
 					<span id="measure">{' c'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 0.002113)}
+					{fraction(round2Num(x * 0.002113))}
 					<span id="measure">{' pt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 0.001057)}
+					{fraction(round2Num(x * 0.001057))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 0.000264)}
+					{fraction(round2Num(x * 0.000264))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
@@ -343,11 +356,11 @@ export const l = (x) => {
 		<span className="measureSpan">
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 202.884136)}
+					{fraction(round2Num(x * 202.884136))}
 					<span id="measure">{' tsp'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 67.628045)}
+					{fraction(round2Num(x * 67.628045))}
 					<span id="measure">{' tbsp'}</span>
 				</span>
 				<span id="full">
@@ -355,31 +368,32 @@ export const l = (x) => {
 					<span id="measure">{' fl oz'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 4.226753)}
+					{fraction(round2Num(x * 4.226753))}
 					<span id="measure">{' c'}</span>
 				</span>
 			</span>
 			<span id="half">
 				<span id="full">
-					{round2Num(x * 2.113376)}
+					{fraction(round2Num(x * 2.113376))}
 					<span id="measure">{' pt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 1.056688)}
+					{fraction(round2Num(x * 1.056688))}
 					<span id="measure">{' qt'}</span>
 				</span>
 				<span id="full">
-					{round2Num(x * 0.264172)}
+					{fraction(round2Num(x * 0.264172))}
 					<span id="measure">{' gal'}</span>
 				</span>
 				<span id="full">
 					{round2Num(x * 1000)}
-					<span id="measure">{' l'}</span>
+					<span id="measure">{' ml'}</span>
 				</span>
 			</span>
 		</span>
 	);
 };
+// Weight Conversions
 export const kg = (x) => {
 	return (
 		<span className="measureSpan">
