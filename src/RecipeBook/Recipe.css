@@ -24,11 +24,6 @@
 	margin-top: 25px;
 	object-fit: cover;
 }
-.recipe-info,
-.recipe-instNote {
-	width: 50%;
-	display: inline-block;
-}
 .recipe-info h1 {
 	font-weight: 900;
 	color: rgba(33, 32, 32, 0.863);
@@ -52,6 +47,34 @@
 .recipe-inst {
 	line-height: 40px;
 }
+.recipe-instNote {
+	margin-left: 17.5%;
+}
 .recipe-spacer {
 	margin-bottom: 30px;
+}
+
+@media (max-width: 1300px) {
+	.recipe-info img {
+		width: 425px;
+	}
+	.recipe-instNote {
+		margin-left: 0;
+	}
+}
+
+@media (max-width: 660px) {
+	.recipe-paper {
+		width: 100%;
+		margin-left: 0;
+	}
+	.recipe-background {
+		background-image: none;
+	}
+}
+
+@media (max-width: 525px) {
+	.recipe-info img {
+		width: 300px;
+	}
 }
