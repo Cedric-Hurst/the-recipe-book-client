@@ -21,7 +21,7 @@ export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
 	return (
 		<div className="recipe-background">
 			<Navbar
-				pageName={`Recipe Page: ${recipeTitle}`}
+				pageName={recipeTitle}
 				isLoggedIn={isLoggedIn}
 				logOut={logOut}
 				logIn={logIn}
