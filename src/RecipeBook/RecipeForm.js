@@ -275,10 +275,13 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 															<FormControl
 																variant="standard"
 																sx={{ minWidth: 120 }}>
-																<InputLabel id={`measure-label${index}`}>
+																<InputLabel
+																	htmlFor={`measure-id-${index}`}
+																	id={`measure-label${index}`}>
 																	Measurement
 																</InputLabel>
 																<Select
+																	inputProps={{ id: `measure-id-${index}` }}
 																	labelId={`measure-label${index}`}
 																	id={`measure${index}`}
 																	name="measure"
@@ -344,7 +347,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 											<div className="rForm-inst" key={index}>
 												<span>{`${index + 1}.`}</span>
 												<TextField
-													id={`instruction${index}`}
+													id={`instruction-${index}`}
 													name="instruction"
 													label="Instructions"
 													multiline

@@ -276,10 +276,13 @@ export default function RecipeForm({
 															<FormControl
 																variant="standard"
 																sx={{ minWidth: 120 }}>
-																<InputLabel id={`measure-label${index}`}>
+																<InputLabel
+																	htmlFor={`measure-id-${index}`}
+																	id={`measure-label${index}`}>
 																	Measurement
 																</InputLabel>
 																<Select
+																	inputProps={{ id: `measure-id-${index}` }}
 																	labelId={`measure-label${index}`}
 																	id={`measure${index}`}
 																	name="measure"

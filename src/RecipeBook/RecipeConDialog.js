@@ -107,17 +107,19 @@ export default function RecipeConDialog() {
 							}}
 						/>
 						<FormControl variant="standard" sx={{ minWidth: 80 }}>
-							<InputLabel id="fraction-label">Fraction</InputLabel>
+							<InputLabel htmlFor="fraction-id" id="fraction-label">
+								Fraction
+							</InputLabel>
 							<Select
+								inputProps={{ id: 'fraction-id' }}
 								labelId="fraction-label"
 								id="fraction"
-								name="fraction"
+								name="fraction-name"
 								defaultValue=""
 								onKeyDown={handleEnterPress}
 								onChange={(event) => {
 									setFraction(event.target.value);
-								}}
-								label="Fraction">
+								}}>
 								{fractions.map((fraction, i) => (
 									<MenuItem key={i} value={fraction.value}>
 										{fraction.label}
@@ -126,17 +128,20 @@ export default function RecipeConDialog() {
 							</Select>
 						</FormControl>
 						<FormControl variant="standard" sx={{ minWidth: 120 }}>
-							<InputLabel id="measure-label">Measurement</InputLabel>
+							<InputLabel htmlFor="measure-id" id="measure-label">
+								Measurement
+							</InputLabel>
 							<Select
+								inputProps={{ id: 'measure-id' }}
 								labelId="measure-label"
 								id="measure"
-								name="measure"
+								name="measure-name"
 								defaultValue=""
 								onKeyDown={handleEnterPress}
 								onChange={(event) => {
 									setMeasureValue(event.target.value);
 								}}
-								label="Measurement">
+								label="measure">
 								{measurements.map((measure, i) => (
 									<MenuItem key={i} value={measure.value}>
 										{measure.label}

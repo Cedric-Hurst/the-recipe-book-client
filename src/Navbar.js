@@ -174,7 +174,7 @@ export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
 							component="div"
 							sx={{
 								marginRight: 'auto',
-								fontSize: { xs: '12.5px', md: '20px' },
+								fontSize: { xs: '20px' },
 							}}>
 							{pageName}
 						</Typography>
@@ -183,6 +183,7 @@ export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
 								<SearchIcon />
 							</SearchIconWrapper>
 							<StyledInputBase
+								id="searchbar"
 								placeholder="Search…"
 								inputProps={{ 'aria-label': 'search' }}
 							/>

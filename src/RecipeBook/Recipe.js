@@ -45,10 +45,12 @@ export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
 								</div>
 								<h2>Ingredients</h2>
 								<FormGroup>
-									{ingredients.map((ingredient) => (
+									{ingredients.map((ingredient, i) => (
 										<FormControlLabel
 											key={uuid()}
-											control={<Checkbox color="success" />}
+											control={
+												<Checkbox color="success" id={`recipe-checkbox-${i}`} />
+											}
 											label={
 												<span className="recipe-ingre">
 													{`${ingredient.qty} ${ingredient.measure} ${
@@ -72,7 +74,12 @@ export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
 									{instructions.map((step, i) => (
 										<span className="recipe-spacer" key={uuid()}>
 											<FormControlLabel
-												control={<Checkbox color="success" />}
+												control={
+													<Checkbox
+														color="success"
+														id={`instruction-checkbox-${i}`}
+													/>
+												}
 												label={
 													<span className="recipe-inst">{`${
 														i + 1
