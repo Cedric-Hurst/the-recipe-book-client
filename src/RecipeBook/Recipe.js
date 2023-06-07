@@ -14,9 +14,8 @@ import './Recipe.css';
 export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
 	const { recipeTitle, servings, img, timing, ingredients, instructions } =
 		recipe;
-	const { prepTime, cookTime } = timing;
-	let prep = printTiming(prepTime.prepHr, prepTime.prepMin);
-	let cook = printTiming(cookTime.cookHr, cookTime.cookMin);
+	let prep = printTiming(timing.prepHr, timing.prepMin);
+	let cook = printTiming(timing.cookHr, timing.cookMin);
 
 	return (
 		<div className="recipe-background">

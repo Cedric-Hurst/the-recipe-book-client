@@ -30,8 +30,10 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 		'https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80'
 	);
 	const [timing, setTiming] = useState({
-		prepTime: { prepHr: 0, prepMin: 0 },
-		cookTime: { cookHr: 0, cookMin: 0 },
+		prepHr: 0,
+		prepMin: 0,
+		cookHr: 0,
+		cookMin: 0,
 	});
 	const [ingredients, setIngredients] = useState([
 		{
@@ -80,9 +82,9 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 		let timingData = timing;
 		if (parseInt(event.target.value) >= 0) {
 			if (event.target.name === 'prepMin' || event.target.name === 'prepHr') {
-				timingData.prepTime[event.target.name] = parseInt(event.target.value);
+				timingData[event.target.name] = parseInt(event.target.value);
 			} else {
-				timingData.cookTime[event.target.name] = parseInt(event.target.value);
+				timingData[event.target.name] = parseInt(event.target.value);
 			}
 		}
 		setTiming(timingData);

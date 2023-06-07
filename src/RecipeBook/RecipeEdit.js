@@ -73,9 +73,9 @@ export default function RecipeForm({
 		let timingData = timing;
 		if (parseInt(event.target.value) >= 0) {
 			if (event.target.name === 'prepMin' || event.target.name === 'prepHr') {
-				timingData.prepTime[event.target.name] = parseInt(event.target.value);
+				timingData[event.target.name] = parseInt(event.target.value);
 			} else {
-				timingData.cookTime[event.target.name] = parseInt(event.target.value);
+				timingData[event.target.name] = parseInt(event.target.value);
 			}
 		}
 		setTiming(timingData);
