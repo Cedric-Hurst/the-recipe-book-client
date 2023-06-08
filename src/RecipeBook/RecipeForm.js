@@ -22,7 +22,14 @@ import { measurements, categories } from '../RecipeData';
 import Navbar from '../Navbar';
 import './RecipeForm.css';
 
-export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
+export default function RecipeForm({
+	title,
+	navTitle,
+	addRecipe,
+	isLoggedIn,
+	logOut,
+	logIn,
+}) {
 	const [recipeTitle, setRecipeTitle] = useState('');
 	const [category, setCategory] = useState([]);
 	const [servings, setServings] = useState(0);
@@ -123,7 +130,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 	return (
 		<div className="rForm-background">
 			<Navbar
-				pageName="New Recipe"
+				pageName={navTitle}
 				isLoggedIn={isLoggedIn}
 				logOut={logOut}
 				logIn={logIn}
@@ -150,7 +157,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 						<Grid container spacing={2}>
 							<Grid item xs={12} lg={6}>
 								<div>
-									<h1>Add a New Recipe</h1>
+									<h1>{title}</h1>
 									<TextField
 										id="recipe-text"
 										label="Recipe Name"
@@ -200,59 +207,62 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 										onChange={handleTextChange}
 									/>
 									<div>
-										<span>Prep Time:</span>
-										<TextField
-											id="prepTime-hr"
-											name="prepHr"
-											label="Hours"
-											variant="standard"
-											sx={{ width: '50px', mx: '10px' }}
-											onKeyDown={handleEnterPress}
-											onChange={(event) =>
-												event.target.value >= 0 && handleTimingChange(event)
-											}
-										/>
-										<span style={{ fontSize: 40 }}>:</span>
-										<TextField
-											id="prepTime-min"
-											name="prepMin"
-											label="Mins"
-											variant="standard"
-											sx={{ width: '50px', mx: '10px' }}
-											onKeyDown={handleEnterPress}
-											onChange={(event) =>
-												event.target.value >= 0 &&
-												event.target.value < 60 &&
-												handleTimingChange(event)
-											}
-										/>
-
-										<span>Cook Time:</span>
-										<TextField
-											id="cookTime-hr"
-											name="cookHr"
-											label="Hours"
-											variant="standard"
-											sx={{ width: '50px', mx: '10px' }}
-											onKeyDown={handleEnterPress}
-											onChange={(event) =>
-												event.target.value >= 0 && handleTimingChange(event)
-											}
-										/>
-										<span style={{ fontSize: 40 }}>:</span>
-										<TextField
-											id="cookTime-min"
-											name="cookMin"
-											label="Mins"
-											variant="standard"
-											sx={{ width: '50px', mx: '10px' }}
-											onKeyDown={handleEnterPress}
-											onChange={(event) =>
-												event.target.value >= 0 &&
-												event.target.value < 60 &&
-												handleTimingChange(event)
-											}
-										/>
+										<div className="rForm-pTime">
+											<span>Prep Time:</span>
+											<TextField
+												id="prepTime-hr"
+												name="prepHr"
+												label="Hours"
+												variant="standard"
+												sx={{ width: '50px', mx: '10px' }}
+												onKeyDown={handleEnterPress}
+												onChange={(event) =>
+													event.target.value >= 0 && handleTimingChange(event)
+												}
+											/>
+											<span style={{ fontSize: 40 }}>:</span>
+											<TextField
+												id="prepTime-min"
+												name="prepMin"
+												label="Mins"
+												variant="standard"
+												sx={{ width: '50px', mx: '10px' }}
+												onKeyDown={handleEnterPress}
+												onChange={(event) =>
+													event.target.value >= 0 &&
+													event.target.value < 60 &&
+													handleTimingChange(event)
+												}
+											/>
+										</div>
+										<div className="rForm-cTime">
+											<span>Cook Time:</span>
+											<TextField
+												id="cookTime-hr"
+												name="cookHr"
+												label="Hours"
+												variant="standard"
+												sx={{ width: '50px', mx: '10px' }}
+												onKeyDown={handleEnterPress}
+												onChange={(event) =>
+													event.target.value >= 0 && handleTimingChange(event)
+												}
+											/>
+											<span style={{ fontSize: 40 }}>:</span>
+											<TextField
+												id="cookTime-min"
+												name="cookMin"
+												label="Mins"
+												variant="standard"
+												sx={{ width: '50px', mx: '10px' }}
+												onKeyDown={handleEnterPress}
+												onChange={(event) =>
+													event.target.value >= 0 &&
+													event.target.value < 60 &&
+													handleTimingChange(event)
+												}
+											/>
+										</div>
 									</div>
 
 									<p>Ingredients:</p>
@@ -268,7 +278,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 																label="qty"
 																variant="standard"
 																value={input.qty}
-																sx={{ width: '75px' }}
+																className="rForm-qty"
 																onKeyDown={handleEnterPress}
 																onChange={(event) =>
 																	handleIngredientFormChange(event, index)
@@ -276,7 +286,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 															/>
 															<FormControl
 																variant="standard"
-																sx={{ minWidth: 120 }}>
+																className="rForm-measure">
 																<InputLabel
 																	htmlFor={`measure-id-${index}`}
 																	id={`measure-label${index}`}>
@@ -306,7 +316,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 																label="Ingredient"
 																value={input.ingredient}
 																variant="standard"
-																sx={{ width: 150 }}
+																className="rForm-ingre-desc"
 																onKeyDown={handleEnterPress}
 																onChange={(event) =>
 																	handleIngredientFormChange(event, index)
@@ -318,7 +328,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 																label="Description"
 																value={input.description}
 																variant="standard"
-																sx={{ width: 125 }}
+																className="rForm-ingre-desc"
 																onKeyDown={handleEnterPress}
 																onChange={(event) =>
 																	handleIngredientFormChange(event, index)

@@ -25,6 +25,18 @@
 .rForm-ingredients {
 	height: 60%;
 	width: 105%;
+	margin-left: -25px;
+}
+.rForm-ingre-desc,
+.rForm-measure {
+	width: 120px;
+}
+.rForm-qty {
+	width: 50px;
+}
+.rForm-cTime,
+.rForm-pTime {
+	display: inline-block;
 }
 .rForm-ingre {
 	display: inline-flex;
@@ -40,6 +52,28 @@
 .rForm-inst span {
 	font-size: 25;
 	line-height: 100px;
+}
+@media (max-width: 1300px) {
+	.rForm-ingre-desc {
+		width: 100px;
+	}
+	.rForm-measure {
+		width: 120px;
+	}
+	.rForm-qty {
+		width: 35px;
+	}
+}
+@media (max-width: 1199px) {
+	.rForm-ingre-desc {
+		width: 150px;
+	}
+	.rForm-measure {
+		width: 150px;
+	}
+	.rForm-qty {
+		width: 50px;
+	}
 }
 @media (max-width: 800px) {
 	.rForm-background {
@@ -69,6 +103,15 @@
 		scale: 0.8;
 	}
 	.rForm-ingredients {
-		margin-left: -10%;
+		margin-left: -15%;
+	}
+	.rForm-ingre-desc {
+		width: 125px;
+	}
+	.rForm-measure {
+		width: 120px;
+	}
+	.rForm-qty {
+		width: 25px;
 	}
 }

@@ -18,7 +18,8 @@
 	padding: 0 2.5%;
 	height: auto;
 }
-.recipe-info img {
+.recipe-info img,
+.recipe-info #skeletonImg {
 	height: 300px;
 	width: 500px;
 	margin-top: 25px;
@@ -55,7 +56,8 @@
 }
 
 @media (max-width: 1300px) {
-	.recipe-info img {
+	.recipe-info img,
+	.recipe-info #skeletonImg {
 		width: 425px;
 	}
 	.recipe-instNote {
@@ -74,7 +76,8 @@
 }
 
 @media (max-width: 525px) {
-	.recipe-info img {
+	.recipe-info img,
+	.recipe-info #skeletonImg {
 		width: 300px;
 	}
 }
