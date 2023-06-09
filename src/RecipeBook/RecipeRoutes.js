@@ -108,8 +108,6 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 				path="new"
 				element={
 					<RecipeForm
-						title="Add a New Recipe"
-						navTitle="New Recipe"
 						addRecipe={addRecipe}
 						isLoggedIn={isLoggedIn}
 						logOut={logOut}

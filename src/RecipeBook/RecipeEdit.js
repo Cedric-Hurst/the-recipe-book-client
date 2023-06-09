@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
@@ -16,7 +17,8 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
-import RecipeForm from './RecipeForm';
+import Skeleton from '@mui/material/Skeleton';
+
 import { measurements, categories } from '../RecipeData';
 import Navbar from '../Navbar';
 import './RecipeForm.css';
@@ -381,7 +383,96 @@ export default function RecipeEdit({
 		);
 	};
 	const LoadingPage = () => {
-		return <RecipeForm title="Edit Recipe" navTitle="Edit Recipe" />;
+		return (
+			<div className="rForm-background">
+				<Navbar
+					pageName="Edit Recipe"
+					isLoggedIn={isLoggedIn}
+					logOut={logOut}
+					logIn={logIn}
+				/>
+				<Paper elevation={18} className="rForm-paper">
+					<div className="rForm-root">
+						<Tooltip title="Update Recipe" placement="left">
+							<SpeedDial
+								ariaLabel="update recipe"
+								sx={{ position: 'fixed', bottom: 16, right: 16 }}
+								icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+								onClick={(e) => e.preventDefault()}
+								FabProps={{
+									sx: {
+										bgcolor: 'green',
+										'&:hover': {
+											bgcolor: 'green',
+										},
+									},
+								}}
+							/>
+						</Tooltip>
+						<Grid container spacing={2}>
+							<Grid item xs={12} lg={6}>
+								<Skeleton
+									variant="text"
+									sx={{ fontSize: '3.2rem', marginTop: '15px', width: '200px' }}
+								/>
+								<Skeleton
+									variant="text"
+									sx={{ fontSize: '3rem', width: '90%' }}
+								/>
+								<Skeleton
+									variant="text"
+									sx={{ fontSize: '3rem', width: '90%' }}
+								/>
+								<Skeleton
+									variant="text"
+									sx={{ fontSize: '3rem', width: '90%' }}
+								/>
+								<Skeleton
+									variant="text"
+									sx={{ fontSize: '3rem', width: '75px' }}
+								/>
+								<div className="rForm-time">
+									<div className="rForm-pTime">
+										<Skeleton
+											variant="text"
+											sx={{ fontSize: '3rem', width: '225px' }}
+										/>
+									</div>
+									<div className="rForm-cTime">
+										<Skeleton
+											variant="text"
+											sx={{ fontSize: '3rem', width: '225px' }}
+										/>
+									</div>
+								</div>
+								<Skeleton
+									variant="text"
+									sx={{ fontSize: '2rem', width: '100px' }}
+								/>
+								<Skeleton
+									variant="rectangular"
+									width={'90%'}
+									height={600}
+									sx={{ marginTop: '10px', marginLeft: '-25px' }}
+								/>
+							</Grid>
+							<Grid item xs={12} lg={6}>
+								<Skeleton
+									variant="text"
+									sx={{ fontSize: '2rem', width: '100px', marginTop: '10px' }}
+								/>
+								<Skeleton
+									variant="rectangular"
+									width={'90%'}
+									height={600}
+									sx={{ marginLeft: '5px' }}
+								/>
+							</Grid>
+						</Grid>
+					</div>
+				</Paper>
+			</div>
+		);
 	};
 	return recipe === undefined ? <LoadingPage /> : <EditPage />;
 }

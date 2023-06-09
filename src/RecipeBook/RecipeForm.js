@@ -22,14 +22,7 @@ import { measurements, categories } from '../RecipeData';
 import Navbar from '../Navbar';
 import './RecipeForm.css';
 
-export default function RecipeForm({
-	title,
-	navTitle,
-	addRecipe,
-	isLoggedIn,
-	logOut,
-	logIn,
-}) {
+export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 	const [recipeTitle, setRecipeTitle] = useState('');
 	const [category, setCategory] = useState([]);
 	const [servings, setServings] = useState(0);
@@ -130,7 +123,7 @@ export default function RecipeForm({
 	return (
 		<div className="rForm-background">
 			<Navbar
-				pageName={navTitle}
+				pageName="New Recipe"
 				isLoggedIn={isLoggedIn}
 				logOut={logOut}
 				logIn={logIn}
@@ -157,7 +150,7 @@ export default function RecipeForm({
 						<Grid container spacing={2}>
 							<Grid item xs={12} lg={6}>
 								<div>
-									<h1>{title}</h1>
+									<h1>Add a New Recipe</h1>
 									<TextField
 										id="recipe-text"
 										label="Recipe Name"
