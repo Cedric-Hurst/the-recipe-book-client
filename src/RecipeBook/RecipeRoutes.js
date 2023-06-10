@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Route, useParams } from 'react-router-dom';
+import { Route, useParams, useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import RecipeBook from './RecipeBook';
 import RecipeForm from './RecipeForm';
@@ -8,6 +9,8 @@ import Recipe from './Recipe';
 
 export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 	const [recipes, setRecipes] = useState([]);
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		const fetchRecipes = async () => {
 			try {
@@ -19,11 +22,14 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 		};
 		fetchRecipes();
 	}, []);
+	const findRecipe = (id) => {
+		return recipes.findIndex((res) => res.id == id);
+	};
 	const GetRecipe = () => {
 		const { id } = useParams();
 		return (
 			<Recipe
-				recipe={recipes[id - 1]}
+				recipe={recipes[findRecipe(id)]}
 				isLoggedIn={isLoggedIn}
 				logOut={logOut}
 				logIn={logIn}
@@ -43,8 +49,18 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 			/>
 		);
 	};
-	const addRecipe = (newRecipe) => {
-		setRecipes([...recipes, newRecipe]);
+	const addRecipe = async (newRecipe) => {
+		try {
+			const res = await axios.post(
+				'http://localhost:3300/recipes/new',
+				newRecipe
+			);
+			newRecipe.id = res.data;
+			setRecipes([...recipes, newRecipe]);
+			navigate(`/recipes/${res.data}`);
+		} catch (e) {
+			console.error(e);
+		}
 	};
 	const deleteRecipe = (id) => {
 		setRecipes(recipes.filter((recipe) => recipe.id !== id));

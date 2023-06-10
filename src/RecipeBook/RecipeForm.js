@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
@@ -12,12 +11,11 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Tooltip from '@mui/material/Tooltip';
-import { v4 as uuid } from 'uuid';
+
 import { measurements, categories } from '../RecipeData';
 import Navbar from '../Navbar';
 import './RecipeForm.css';
@@ -44,23 +42,20 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 		},
 	]);
 	const [instructions, setInstructions] = useState(['']);
-	const navigate = useNavigate();
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		const recipe = {
 			recipeTitle: recipeTitle,
-			id: uuid(),
 			category: category,
 			servings: servings,
 			img: img,
+			id: 0,
 			timing: timing,
 			ingredients: ingredients,
 			instructions: instructions,
-			notes: [],
 		};
 		addRecipe(recipe);
-		navigate(`/recipes/${recipe.id}`);
 	};
 	const handleTextChange = (e) => {
 		e.target.name === 'recipeTitle' && setRecipeTitle(e.target.value);
@@ -327,10 +322,10 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 																	handleIngredientFormChange(event, index)
 																}
 															/>
-															<IconButton
+															<Button
 																onClick={() => removeIngredientFields(index)}>
 																<CloseIcon />
-															</IconButton>
+															</Button>
 														</Stack>
 													</span>
 												</div>
@@ -364,10 +359,9 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 														handleInstructionFormChange(event, index)
 													}
 												/>
-												<IconButton
-													onClick={() => removeInstructionFields(index)}>
+												<Button onClick={() => removeInstructionFields(index)}>
 													<CloseIcon />
-												</IconButton>
+												</Button>
 											</div>
 										);
 									})}
