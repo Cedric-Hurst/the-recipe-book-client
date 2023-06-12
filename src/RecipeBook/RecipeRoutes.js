@@ -17,13 +17,13 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 				const res = await axios.get('http://localhost:3300/recipes');
 				setRecipes(res.data);
 			} catch (e) {
-				console.log(e);
+				console.log(e); // change for post
 			}
 		};
 		fetchRecipes();
 	}, []);
 	const findRecipe = (id) => {
-		return recipes.findIndex((res) => res.id == id);
+		return recipes.findIndex((res) => parseInt(res.id) === parseInt(id));
 	};
 	const GetRecipe = () => {
 		const { id } = useParams();
@@ -40,7 +40,7 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 		const { id } = useParams();
 		return (
 			<RecipeEdit
-				recipe={recipes[id - 1]}
+				recipe={recipes[findRecipe(id)]}
 				updateRecipe={updateRecipe}
 				deleteRecipe={deleteRecipe}
 				isLoggedIn={isLoggedIn}
@@ -59,17 +59,30 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 			setRecipes([...recipes, newRecipe]);
 			navigate(`/recipes/${res.data}`);
 		} catch (e) {
-			console.error(e);
+			console.error(e); // change for post
 		}
 	};
-	const deleteRecipe = (id) => {
-		setRecipes(recipes.filter((recipe) => recipe.id !== id));
+	const deleteRecipe = async (id) => {
+		try {
+			setRecipes(recipes.filter((recipe) => recipe.id !== id));
+			await axios.delete(`http://localhost:3300/recipes/${id}`);
+			window.location.reload();
+		} catch (e) {
+			console.log(e); // change for post
+		}
 	};
-	const updateRecipe = (updatedRecipe) => {
-		const newRecipes = recipes;
-		const index = recipes.findIndex((recipe) => recipe.id === updatedRecipe.id);
-		newRecipes[index] = updatedRecipe;
-		setRecipes(newRecipes);
+	const updateRecipe = async (updatedRecipe) => {
+		try {
+			await axios.put('http://localhost:3300/recipes/edit', updatedRecipe);
+			const newRecipes = recipes;
+			const index = recipes.findIndex(
+				(recipe) => recipe.id === updatedRecipe.id
+			);
+			newRecipes[index] = updatedRecipe;
+			setRecipes(newRecipes);
+		} catch (e) {
+			console.log(e);
+		}
 	};
 	const favRecipes = recipes.filter((recipe) => recipe.favorite === true);
 	const GetCatRecipes = () => {

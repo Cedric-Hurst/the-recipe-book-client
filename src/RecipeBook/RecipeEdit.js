@@ -41,6 +41,7 @@ export default function RecipeEdit({
 		const [instructions, setInstructions] = useState(recipe.instructions);
 		const id = recipe.id;
 		const navigate = useNavigate();
+
 		const handleSubmit = (e) => {
 			e.preventDefault();
 			const recipe = {
@@ -54,7 +55,8 @@ export default function RecipeEdit({
 				instructions: instructions,
 			};
 			updateRecipe(recipe);
-			navigate(`/recipes/${recipe.id}`);
+			navigate(`/recipes/${id}`);
+			window.location.reload();
 		};
 		const handleTextChange = (e) => {
 			e.target.name === 'recipeTitle' && setRecipeTitle(e.target.value);
@@ -170,7 +172,7 @@ export default function RecipeEdit({
 												id="category-select"
 												limitTags={3}
 												options={categories}
-												defaultValue={category}
+												value={category}
 												sx={{ width: '90%' }}
 												renderInput={(params) => (
 													<TextField
@@ -189,7 +191,7 @@ export default function RecipeEdit({
 											name="servings"
 											label="Servings"
 											variant="standard"
-											value={servings}
+											defaultValue={servings}
 											sx={{ my: '20px', width: '75px' }}
 											onKeyDown={handleEnterPress}
 											onChange={handleTextChange}
@@ -202,7 +204,7 @@ export default function RecipeEdit({
 													name="prepHr"
 													label="Hours"
 													variant="standard"
-													value={timing.prepHr}
+													defaultValue={timing.prepHr}
 													sx={{ width: '50px', mx: '10px' }}
 													onKeyDown={handleEnterPress}
 													onChange={(event) =>
@@ -215,7 +217,7 @@ export default function RecipeEdit({
 													name="prepMin"
 													label="Mins"
 													variant="standard"
-													value={timing.prepMin}
+													defaultValue={timing.prepMin}
 													sx={{ width: '50px', mx: '10px' }}
 													onKeyDown={handleEnterPress}
 													onChange={(event) =>
@@ -232,7 +234,7 @@ export default function RecipeEdit({
 													name="cookHr"
 													label="Hours"
 													variant="standard"
-													value={timing.cookHr}
+													defaultValue={timing.cookHr}
 													sx={{ width: '50px', mx: '10px' }}
 													onKeyDown={handleEnterPress}
 													onChange={(event) =>
@@ -245,7 +247,7 @@ export default function RecipeEdit({
 													name="cookMin"
 													label="Mins"
 													variant="standard"
-													value={timing.cookMin}
+													defaultValue={timing.cookMin}
 													sx={{ width: '50px', mx: '10px' }}
 													onKeyDown={handleEnterPress}
 													onChange={(event) =>
@@ -288,7 +290,7 @@ export default function RecipeEdit({
 																		labelId={`measure-label${index}`}
 																		id={`measure${index}`}
 																		name="measure"
-																		defaultValue={input.measure}
+																		value={input.measure}
 																		onKeyDown={handleEnterPress}
 																		onChange={(event) =>
 																			handleIngredientFormChange(event, index)
