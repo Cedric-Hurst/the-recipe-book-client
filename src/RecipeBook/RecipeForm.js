@@ -125,23 +125,23 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 			/>
 			<Paper elevation={18} className="rForm-paper">
 				<div className="rForm-root">
-					<form onSubmit={handleSubmit} noValidate className="rForm-form">
-						<Tooltip title="Add Recipe" placement="left">
-							<SpeedDial
-								ariaLabel="add recipe"
-								sx={{ position: 'fixed', bottom: 16, right: 16 }}
-								icon={<SpeedDialIcon openIcon={<LibraryAddIcon />} />}
-								onClick={handleSubmit}
-								FabProps={{
-									sx: {
+					<Tooltip title="Add Recipe" placement="left">
+						<SpeedDial
+							ariaLabel="add recipe"
+							sx={{ position: 'fixed', bottom: 16, right: 16 }}
+							icon={<SpeedDialIcon openIcon={<LibraryAddIcon />} />}
+							onClick={handleSubmit}
+							FabProps={{
+								sx: {
+									bgcolor: 'green',
+									'&:hover': {
 										bgcolor: 'green',
-										'&:hover': {
-											bgcolor: 'green',
-										},
 									},
-								}}
-							/>
-						</Tooltip>
+								},
+							}}
+						/>
+					</Tooltip>
+					<form onSubmit={handleSubmit} noValidate className="rForm-form">
 						<Grid container spacing={2}>
 							<Grid item xs={12} lg={6}>
 								<div>
@@ -278,7 +278,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 																<InputLabel
 																	htmlFor={`measure-id-${index}`}
 																	id={`measure-label${index}`}>
-																	Measurement
+																	Measure
 																</InputLabel>
 																<Select
 																	inputProps={{ id: `measure-id-${index}` }}
@@ -290,7 +290,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 																	onChange={(event) =>
 																		handleIngredientFormChange(event, index)
 																	}
-																	label="Measurement">
+																	label="Measure">
 																	{measurements.map((measure, i) => (
 																		<MenuItem key={i} value={measure.value}>
 																			{measure.label}
@@ -313,7 +313,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 															<TextField
 																id={`description-text${index}`}
 																name="description"
-																label="Description"
+																label="Desc"
 																value={input.description}
 																variant="standard"
 																className="rForm-ingre-desc"
@@ -354,7 +354,7 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 													value={instruction}
 													rows={3}
 													variant="standard"
-													sx={{ width: 500 }}
+													className="instruction"
 													onChange={(event) =>
 														handleInstructionFormChange(event, index)
 													}

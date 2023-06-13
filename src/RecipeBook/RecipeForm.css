@@ -34,6 +34,9 @@
 .rForm-qty {
 	width: 50px;
 }
+.instruction {
+	width: 500px;
+}
 .rForm-cTime,
 .rForm-pTime {
 	display: inline-block;
@@ -87,31 +90,33 @@
 	}
 }
 @media (max-width: 625px) {
-	.rForm-form {
-		scale: 0.8;
+	.instruction {
+		width: 400px;
 	}
-	.rForm-root {
-		margin: 0;
-		padding: 0;
+	.rForm-ingredients {
+		zoom: 0.8;
 	}
 }
 @media (max-width: 525px) {
 	.rForm-form {
 		width: 80%;
 	}
-	.rForm-ingredients {
-		scale: 0.8;
+	.instruction {
+		width: 350px;
 	}
-	.rForm-ingredients {
-		margin-left: -15%;
+	.rForm-root {
+		zoom: 0.8;
 	}
 	.rForm-ingre-desc {
-		width: 125px;
+		width: 100px;
+	}
+}
+@media (max-width: 355px) {
+	.rForm-root {
+		zoom: 0.6;
+		margin-top: 100px;
 	}
 	.rForm-measure {
-		width: 120px;
-	}
-	.rForm-qty {
-		width: 25px;
+		width: 100px;
 	}
 }

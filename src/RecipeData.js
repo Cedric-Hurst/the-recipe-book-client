@@ -14,6 +14,7 @@ export const measurements = [
 	{ label: 'kilogram', value: 'kg' },
 	{ label: 'milliliter', value: 'ml' },
 	{ label: 'liter', value: 'l' },
+	{ label: 'dozen', value: 'doz' },
 ];
 export const fractions = [
 	{ label: 'none', value: '' },

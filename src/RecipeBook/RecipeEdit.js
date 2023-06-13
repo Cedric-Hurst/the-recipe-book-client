@@ -123,23 +123,23 @@ export default function RecipeEdit({
 				/>
 				<Paper elevation={18} className="rForm-paper">
 					<div className="rForm-root">
-						<form onSubmit={handleSubmit} noValidate>
-							<Tooltip title="Update Recipe" placement="left">
-								<SpeedDial
-									ariaLabel="update recipe"
-									sx={{ position: 'fixed', bottom: 16, right: 16 }}
-									icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-									onClick={handleSubmit}
-									FabProps={{
-										sx: {
+						<Tooltip title="Update Recipe" placement="left">
+							<SpeedDial
+								ariaLabel="update recipe"
+								sx={{ position: 'fixed', bottom: 16, right: 16 }}
+								icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+								onClick={handleSubmit}
+								FabProps={{
+									sx: {
+										bgcolor: 'green',
+										'&:hover': {
 											bgcolor: 'green',
-											'&:hover': {
-												bgcolor: 'green',
-											},
 										},
-									}}
-								/>
-							</Tooltip>
+									},
+								}}
+							/>
+						</Tooltip>
+						<form onSubmit={handleSubmit} noValidate className="rForm-form">
 							<Grid container spacing={2}>
 								<Grid item xs={12} lg={6}>
 									<div>
@@ -196,7 +196,7 @@ export default function RecipeEdit({
 											onKeyDown={handleEnterPress}
 											onChange={handleTextChange}
 										/>
-										<div className="rForm-time">
+										<div>
 											<div className="rForm-pTime">
 												<span>Prep Time:</span>
 												<TextField
@@ -283,7 +283,7 @@ export default function RecipeEdit({
 																	<InputLabel
 																		htmlFor={`measure-id-${index}`}
 																		id={`measure-label${index}`}>
-																		Measurement
+																		Measure
 																	</InputLabel>
 																	<Select
 																		inputProps={{ id: `measure-id-${index}` }}
@@ -295,7 +295,7 @@ export default function RecipeEdit({
 																		onChange={(event) =>
 																			handleIngredientFormChange(event, index)
 																		}
-																		label="Measurement">
+																		label="Measure">
 																		{measurements.map((measure, i) => (
 																			<MenuItem key={i} value={measure.value}>
 																				{measure.label}
@@ -318,7 +318,7 @@ export default function RecipeEdit({
 																<TextField
 																	id={`description-text${index}`}
 																	name="description"
-																	label="Description"
+																	label="Desc"
 																	value={input.description}
 																	variant="standard"
 																	className="rForm-ingre-desc"
@@ -359,7 +359,7 @@ export default function RecipeEdit({
 														value={instruction}
 														rows={3}
 														variant="standard"
-														sx={{ width: 500 }}
+														className="instruction"
 														onChange={(event) =>
 															handleInstructionFormChange(event, index)
 														}
