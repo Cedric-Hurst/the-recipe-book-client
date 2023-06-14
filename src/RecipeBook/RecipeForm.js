@@ -17,10 +17,9 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Tooltip from '@mui/material/Tooltip';
 
 import { measurements, categories } from '../RecipeData';
-import Navbar from '../Navbar';
 import './RecipeForm.css';
 
-export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
+export default function RecipeForm({ addRecipe }) {
 	const [recipeTitle, setRecipeTitle] = useState('');
 	const [category, setCategory] = useState([]);
 	const [servings, setServings] = useState(0);
@@ -117,12 +116,6 @@ export default function RecipeForm({ addRecipe, isLoggedIn, logOut, logIn }) {
 	};
 	return (
 		<div className="rForm-background">
-			<Navbar
-				pageName="New Recipe"
-				isLoggedIn={isLoggedIn}
-				logOut={logOut}
-				logIn={logIn}
-			/>
 			<Paper elevation={18} className="rForm-paper">
 				<div className="rForm-root">
 					<Tooltip title="Add Recipe" placement="left">

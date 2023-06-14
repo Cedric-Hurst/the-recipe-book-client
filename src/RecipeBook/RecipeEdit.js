@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import InputLabel from '@mui/material/InputLabel';
@@ -16,21 +17,13 @@ import Grid from '@mui/material/Grid';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import EditIcon from '@mui/icons-material/Edit';
-import Tooltip from '@mui/material/Tooltip';
 import Skeleton from '@mui/material/Skeleton';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 
 import { measurements, categories } from '../RecipeData';
-import Navbar from '../Navbar';
 import './RecipeForm.css';
 
-export default function RecipeEdit({
-	updateRecipe,
-	recipe,
-	deleteRecipe,
-	isLoggedIn,
-	logOut,
-	logIn,
-}) {
+export default function RecipeEdit({ updateRecipe, recipe, deleteRecipe }) {
 	const EditPage = () => {
 		const [recipeTitle, setRecipeTitle] = useState(recipe.recipeTitle);
 		const [category, setCategory] = useState(recipe.category);
@@ -115,30 +108,33 @@ export default function RecipeEdit({
 
 		return (
 			<div className="rForm-background">
-				<Navbar
-					pageName="Edit Recipe"
-					isLoggedIn={isLoggedIn}
-					logOut={logOut}
-					logIn={logIn}
-				/>
 				<Paper elevation={18} className="rForm-paper">
 					<div className="rForm-root">
-						<Tooltip title="Update Recipe" placement="left">
-							<SpeedDial
-								ariaLabel="update recipe"
-								sx={{ position: 'fixed', bottom: 16, right: 16 }}
-								icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-								onClick={handleSubmit}
-								FabProps={{
-									sx: {
+						<SpeedDial
+							ariaLabel="update recipe"
+							sx={{ position: 'fixed', bottom: 16, right: 16 }}
+							icon={<SpeedDialIcon />}
+							FabProps={{
+								sx: {
+									bgcolor: 'green',
+									'&:hover': {
 										bgcolor: 'green',
-										'&:hover': {
-											bgcolor: 'green',
-										},
 									},
-								}}
+								},
+							}}>
+							<SpeedDialAction
+								key={'Save Edit'}
+								icon={<EditIcon />}
+								tooltipTitle={'Save Edit'}
+								onClick={handleSubmit}
 							/>
-						</Tooltip>
+							<SpeedDialAction
+								key={'Delete'}
+								icon={<DeleteForeverIcon />}
+								tooltipTitle={'Delete'}
+								onClick={() => deleteRecipe(id)}
+							/>
+						</SpeedDial>
 						<form onSubmit={handleSubmit} noValidate className="rForm-form">
 							<Grid container spacing={2}>
 								<Grid item xs={12} lg={6}>
@@ -387,35 +383,17 @@ export default function RecipeEdit({
 	const LoadingPage = () => {
 		return (
 			<div className="rForm-background">
-				<Navbar
-					pageName="Edit Recipe"
-					isLoggedIn={isLoggedIn}
-					logOut={logOut}
-					logIn={logIn}
-				/>
 				<Paper elevation={18} className="rForm-paper">
 					<div className="rForm-root">
-						<Tooltip title="Update Recipe" placement="left">
-							<SpeedDial
-								ariaLabel="update recipe"
-								sx={{ position: 'fixed', bottom: 16, right: 16 }}
-								icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-								onClick={(e) => e.preventDefault()}
-								FabProps={{
-									sx: {
-										bgcolor: 'green',
-										'&:hover': {
-											bgcolor: 'green',
-										},
-									},
-								}}
-							/>
-						</Tooltip>
 						<Grid container spacing={2}>
 							<Grid item xs={12} lg={6}>
 								<Skeleton
 									variant="text"
-									sx={{ fontSize: '3.2rem', marginTop: '15px', width: '200px' }}
+									sx={{
+										fontSize: '3.2rem',
+										marginTop: '15px',
+										width: '200px',
+									}}
 								/>
 								<Skeleton
 									variant="text"

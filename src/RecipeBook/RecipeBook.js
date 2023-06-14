@@ -1,4 +1,3 @@
-import Navbar from '../Navbar';
 import * as React from 'react';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
@@ -13,19 +12,10 @@ export default function RecipeBook({
 	updateRecipe,
 	pageName,
 	deleteRecipe,
-	isLoggedIn,
-	logOut,
-	logIn,
 }) {
 	const navigate = useNavigate();
 	return (
 		<div>
-			<Navbar
-				pageName={pageName}
-				isLoggedIn={isLoggedIn}
-				logOut={logOut}
-				logIn={logIn}
-			/>
 			<div className="rb-root">
 				<Tooltip title="Add New Recipe" placement="left">
 					<SpeedDial

@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,6 +22,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
+
+import axios from 'axios';
+
 import NavList from './NavList';
 import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
@@ -107,7 +111,7 @@ const LogButton = styled(Button)(({ theme }) => ({
 	},
 }));
 
-export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
+export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
 	const [openDia, setOpenDia] = React.useState(false);
@@ -118,6 +122,7 @@ export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
 		email: '',
 	});
 	const [account, setAccount] = React.useState({ username: '', password: '' });
+	const [errMessage, setErrMessage] = React.useState('');
 
 	const handleClickOpen = () => {
 		setOpenDia(true);
@@ -129,13 +134,21 @@ export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
 	const handleLogOut = () => {
 		logOut();
 	};
-	const handleLogIn = () => {
+	const handleLogIn = async () => {
 		console.log(account);
 		setOpenDia(false);
 		logIn();
 	};
-	const handleCreate = () => {
-		console.log(newAccount);
+	const handleCreate = async () => {
+		try {
+			const res = await axios.post(
+				'http://localhost:3300/accounts/new',
+				newAccount
+			);
+			setErrMessage(res.data);
+		} catch (e) {
+			console.log(e);
+		}
 	};
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -176,7 +189,7 @@ export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
 								marginRight: 'auto',
 								fontSize: { xs: '20px' },
 							}}>
-							{pageName}
+							RecipeBook
 						</Typography>
 						<Search>
 							<SearchIconWrapper>
@@ -230,7 +243,10 @@ export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
 						</IconButton>
 					</DrawerHeader>
 					<Divider />
-					<NavList pageName={pageName} handleDrawerClose={handleDrawerClose} />
+					<NavList
+						pageName="RecipeBook"
+						handleDrawerClose={handleDrawerClose}
+					/>
 				</Drawer>
 				<Dialog open={openDia} onClose={handleClose}>
 					<DialogTitle>
@@ -243,9 +259,13 @@ export default function Navbar({ pageName, isLoggedIn, logOut, logIn }) {
 								: 'Create a new account. If you already have an account click the log in button to log in with your username and password'}
 						</DialogContentText>
 						{needAccount ? (
-							<CreateAccountForm setNewAccount={setNewAccount} />
+							<CreateAccountForm
+								setNewAccount={setNewAccount}
+								errMessage={errMessage}
+								allUsers={allUsers}
+							/>
 						) : (
-							<LogInForm setAccount={setAccount} />
+							<LogInForm setAccount={setAccount} errMessage={errMessage} />
 						)}
 					</DialogContent>
 					<DialogActions>

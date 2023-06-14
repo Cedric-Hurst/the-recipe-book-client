@@ -7,7 +7,7 @@ import RecipeForm from './RecipeForm';
 import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
 
-export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
+export default function RecipeRoutes(allUsers) {
 	const [recipes, setRecipes] = useState([]);
 	const navigate = useNavigate();
 
@@ -27,14 +27,7 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 	};
 	const GetRecipe = () => {
 		const { id } = useParams();
-		return (
-			<Recipe
-				recipe={recipes[findRecipe(id)]}
-				isLoggedIn={isLoggedIn}
-				logOut={logOut}
-				logIn={logIn}
-			/>
-		);
+		return <Recipe recipe={recipes[findRecipe(id)]} />;
 	};
 	const GetRecipeEdit = () => {
 		const { id } = useParams();
@@ -43,9 +36,6 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 				recipe={recipes[findRecipe(id)]}
 				updateRecipe={updateRecipe}
 				deleteRecipe={deleteRecipe}
-				isLoggedIn={isLoggedIn}
-				logOut={logOut}
-				logIn={logIn}
 			/>
 		);
 	};
@@ -96,9 +86,6 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 				updateRecipe={updateRecipe}
 				pageName={`Category: ${cat}`}
 				deleteRecipe={deleteRecipe}
-				isLoggedIn={isLoggedIn}
-				logOut={logOut}
-				logIn={logIn}
 			/>
 		);
 	};
@@ -112,9 +99,6 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 						updateRecipe={updateRecipe}
 						pageName="Recipe Book"
 						deleteRecipe={deleteRecipe}
-						isLoggedIn={isLoggedIn}
-						logOut={logOut}
-						logIn={logIn}
 					/>
 				}
 			/>
@@ -126,24 +110,11 @@ export default function RecipeRoutes(isLoggedIn, logOut, logIn) {
 						updateRecipe={updateRecipe}
 						pageName="Favorites"
 						deleteRecipe={deleteRecipe}
-						isLoggedIn={isLoggedIn}
-						logOut={logOut}
-						logIn={logIn}
 					/>
 				}
 			/>
 			<Route path="category/:cat" element={<GetCatRecipes />} />
-			<Route
-				path="new"
-				element={
-					<RecipeForm
-						addRecipe={addRecipe}
-						isLoggedIn={isLoggedIn}
-						logOut={logOut}
-						logIn={logIn}
-					/>
-				}
-			/>
+			<Route path="new" element={<RecipeForm addRecipe={addRecipe} />} />
 			<Route path=":id" element={<GetRecipe />} />
 			<Route path=":id/edit" element={<GetRecipeEdit />} />
 		</Route>

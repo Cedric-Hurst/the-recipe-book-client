@@ -9,10 +9,9 @@ import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 
 import { printTiming } from '../CodeHelper';
-import Navbar from '../Navbar';
 import './Recipe.css';
 
-export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
+export default function Recipe({ recipe }) {
 	const recipePage = () => {
 		const { recipeTitle, servings, img, timing, ingredients, instructions } =
 			recipe;
@@ -21,12 +20,6 @@ export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
 
 		return (
 			<div className="recipe-background">
-				<Navbar
-					pageName={recipeTitle}
-					isLoggedIn={isLoggedIn}
-					logOut={logOut}
-					logIn={logIn}
-				/>
 				<Paper elevation={18} className="recipe-paper">
 					<div className="recipe-root">
 						<Grid container columnSpacing={2}>
@@ -104,12 +97,6 @@ export default function Recipe({ recipe, isLoggedIn, logOut, logIn }) {
 	const loadingPage = () => {
 		return (
 			<div className="recipe-background">
-				<Navbar
-					pageName="RecipePage"
-					isLoggedIn={isLoggedIn}
-					logOut={logOut}
-					logIn={logIn}
-				/>
 				<Paper elevation={18} className="recipe-paper">
 					<div className="recipe-root">
 						<Grid container columnSpacing={2}>
