@@ -123,6 +123,7 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 	});
 	const [account, setAccount] = React.useState({ username: '', password: '' });
 	const [errMessage, setErrMessage] = React.useState('');
+	const [goodAccount, setGoodAccount] = React.useState(false);
 
 	const handleClickOpen = () => {
 		setOpenDia(true);
@@ -140,14 +141,12 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 		logIn();
 	};
 	const handleCreate = async () => {
-		try {
-			const res = await axios.post(
-				'http://localhost:3300/accounts/new',
-				newAccount
-			);
-			setErrMessage(res.data);
-		} catch (e) {
-			console.log(e);
+		if (goodAccount) {
+			try {
+				await axios.post('http://localhost:3300/accounts/new', newAccount);
+			} catch (e) {
+				console.log(e);
+			}
 		}
 	};
 	const handleDrawerOpen = () => {
@@ -263,9 +262,10 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 								setNewAccount={setNewAccount}
 								errMessage={errMessage}
 								allUsers={allUsers}
+								setGoodAccount={setGoodAccount}
 							/>
 						) : (
-							<LogInForm setAccount={setAccount} errMessage={errMessage} />
+							<LogInForm setAccount={setAccount} />
 						)}
 					</DialogContent>
 					<DialogActions>
