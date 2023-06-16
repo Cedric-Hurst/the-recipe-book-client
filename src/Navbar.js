@@ -15,19 +15,14 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Stack from '@mui/material/Stack';
 import ClickAwayListener from '@mui/base/ClickAwayListener';
-
-import axios from 'axios';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import NavList from './NavList';
-import LogInForm from './LogInForm';
-import CreateAccountForm from './CreateAccountForm';
+import AccountDialog from './Accounts/AccountDialog';
+import ProfileDialog from './Accounts/ProfileDialog';
 
 const drawerWidth = 300;
 
@@ -115,16 +110,26 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
 	const [openDia, setOpenDia] = React.useState(false);
+	const [openProDia, setOpenProDia] = React.useState(false);
+
 	const [needAccount, setNeedAccount] = React.useState(false);
+	const [editAccount, setEditAccount] = React.useState(false);
+
 	const [newAccount, setNewAccount] = React.useState({
 		username: '',
 		password: '',
 		email: '',
 	});
 	const [account, setAccount] = React.useState({ username: '', password: '' });
-	const [errMessage, setErrMessage] = React.useState('');
-	const [goodAccount, setGoodAccount] = React.useState(false);
 
+	const [anchorEl, setAnchorEl] = React.useState(null);
+	const openMenu = Boolean(anchorEl);
+	const handleMenuClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleMenuClose = () => {
+		setAnchorEl(null);
+	};
 	const handleClickOpen = () => {
 		setOpenDia(true);
 	};
@@ -132,23 +137,17 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 		setOpenDia(false);
 		setNeedAccount(false);
 	};
+	const handleProClickOpen = () => {
+		handleMenuClose();
+		setOpenProDia(true);
+	};
+	const handleProClose = () => {
+		setOpenProDia(false);
+	};
 	const handleLogOut = () => {
 		logOut();
 	};
-	const handleLogIn = async () => {
-		console.log(account);
-		setOpenDia(false);
-		logIn();
-	};
-	const handleCreate = async () => {
-		if (goodAccount) {
-			try {
-				await axios.post('http://localhost:3300/accounts/new', newAccount);
-			} catch (e) {
-				console.log(e);
-			}
-		}
-	};
+
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
@@ -158,7 +157,6 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 	const handleClickAway = () => {
 		setOpen(false);
 	};
-
 	return (
 		<ClickAwayListener onClickAway={handleClickAway}>
 			<Box sx={{ display: 'flex' }}>
@@ -201,12 +199,22 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 							/>
 						</Search>
 						{isLoggedIn ? (
-							<LogButton
-								variant="outlined"
-								sx={{ marginLeft: 5 }}
-								onClick={handleLogOut}>
-								LogOut
-							</LogButton>
+							<div>
+								<IconButton onClick={handleMenuClick}>
+									<AccountCircleIcon />
+								</IconButton>
+								<Menu
+									id="basic-menu"
+									anchorEl={anchorEl}
+									open={openMenu}
+									onClose={handleMenuClose}
+									MenuListProps={{
+										'aria-labelledby': 'basic-button',
+									}}>
+									<MenuItem onClick={handleProClickOpen}>Profile</MenuItem>
+									<MenuItem onClick={handleLogOut}>Logout</MenuItem>
+								</Menu>
+							</div>
 						) : (
 							<LogButton
 								variant="outlined"
@@ -247,51 +255,24 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 						handleDrawerClose={handleDrawerClose}
 					/>
 				</Drawer>
-				<Dialog open={openDia} onClose={handleClose}>
-					<DialogTitle>
-						{needAccount ? 'Create Account' : 'Existing Account'}
-					</DialogTitle>
-					<DialogContent>
-						<DialogContentText>
-							{needAccount
-								? 'Sign in with your username and password or create a new account by clicking the register button'
-								: 'Create a new account. If you already have an account click the log in button to log in with your username and password'}
-						</DialogContentText>
-						{needAccount ? (
-							<CreateAccountForm
-								setNewAccount={setNewAccount}
-								errMessage={errMessage}
-								allUsers={allUsers}
-								setGoodAccount={setGoodAccount}
-							/>
-						) : (
-							<LogInForm setAccount={setAccount} />
-						)}
-					</DialogContent>
-					<DialogActions>
-						{needAccount ? (
-							<Stack direction="row" spacing={2}>
-								<Button
-									variant="outlined"
-									onClick={() => setNeedAccount(false)}>
-									logIn
-								</Button>
-								<Button variant="outlined" onClick={handleCreate}>
-									Create Account
-								</Button>
-							</Stack>
-						) : (
-							<Stack direction="row" spacing={2}>
-								<Button variant="outlined" onClick={handleLogIn}>
-									LogIn
-								</Button>
-								<Button variant="outlined" onClick={() => setNeedAccount(true)}>
-									Register
-								</Button>
-							</Stack>
-						)}
-					</DialogActions>
-				</Dialog>
+				<AccountDialog
+					account={account}
+					setAccount={setAccount}
+					setOpenDia={setOpenDia}
+					logIn={logIn}
+					newAccount={newAccount}
+					openDia={openDia}
+					handleClose={handleClose}
+					needAccount={needAccount}
+					setNeedAccount={setNeedAccount}
+					setNewAccount={setNewAccount}
+					allUsers={allUsers}
+				/>
+				<ProfileDialog
+					openProDia={openProDia}
+					handleProClose={handleProClose}
+					account={account}
+				/>
 			</Box>
 		</ClickAwayListener>
 	);

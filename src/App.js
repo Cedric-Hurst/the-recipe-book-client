@@ -5,13 +5,16 @@ import FrontPage from './FrontPage';
 import RecipeRoutes from './RecipeBook/RecipeRoutes';
 import Navbar from './Navbar';
 function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(true);
 	const [allUsers, setAllUsers] = useState([]);
+	const [user, setUser] = useState('');
 	const location = useLocation();
 	const logOut = () => {
+		setUser('');
 		setIsLoggedIn(false);
 	};
-	const logIn = () => {
+	const logIn = (user) => {
+		setUser(user);
 		setIsLoggedIn(true);
 	};
 	useEffect(() => {
@@ -32,6 +35,7 @@ function App() {
 				logOut={logOut}
 				logIn={logIn}
 				allUsers={allUsers}
+				user={user}
 			/>
 			<Routes location={location}>
 				<Route index element={<FrontPage />} />
