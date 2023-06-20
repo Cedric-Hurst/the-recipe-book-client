@@ -5,9 +5,9 @@ import FrontPage from './FrontPage';
 import RecipeRoutes from './RecipeBook/RecipeRoutes';
 import Navbar from './Navbar';
 function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(true);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [allUsers, setAllUsers] = useState([]);
-	const [user, setUser] = useState('');
+	const [user, setUser] = useState({ username: '', id: 0 });
 	const location = useLocation();
 	const logOut = () => {
 		setUser('');
@@ -36,6 +36,7 @@ function App() {
 				logIn={logIn}
 				allUsers={allUsers}
 				user={user}
+				setUser={setUser}
 			/>
 			<Routes location={location}>
 				<Route index element={<FrontPage />} />

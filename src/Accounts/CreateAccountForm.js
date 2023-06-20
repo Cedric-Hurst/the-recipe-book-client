@@ -7,10 +7,12 @@ export default function CreateAccountForm({
 	setNewAccount,
 	allUsers,
 	setGoodAccount,
+	setCreateDisable,
 }) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
+	const [confirm, setConfirm] = useState('');
 
 	const [confirmError, setConfirmError] = useState('');
 	const [userError, setUserError] = useState('');
@@ -37,13 +39,16 @@ export default function CreateAccountForm({
 	}
 	const handleChange = (e) => {
 		if (e.target.name === 'username') {
-			if (allUsernames.includes(e.target.value.trim().toLowerCase()))
+			if (allUsernames.includes(e.target.value.trim().toLowerCase())) {
 				setUserError('Username already in use');
-			else if (e.target.value.trim().length < 6)
+				setCreateDisable(true);
+			} else if (e.target.value.trim().length < 6) {
 				setUserError('Username must be at least 6 characters');
-			else if (e.target.value.trim().length > 30)
+				setCreateDisable(true);
+			} else if (e.target.value.trim().length > 30) {
 				setUserError('Username must be less then 30 characters');
-			else {
+				setCreateDisable(true);
+			} else {
 				setUserError('');
 				setUsername(e.target.value.trim());
 			}
@@ -53,36 +58,60 @@ export default function CreateAccountForm({
 				setPasswordError(
 					'Password must contain one capital letter, one symbol, one lowercase letter, and be at least 8 characters long'
 				);
+				setCreateDisable(true);
 			} else {
 				setPasswordError('');
 				setPassword(e.target.value.trim());
 			}
 		}
 		if (e.target.name === 'email') {
-			if (allEmails.includes(e.target.value.trim().toLowerCase()))
+			if (allEmails.includes(e.target.value.trim().toLowerCase())) {
 				setEmailError('Email already attached to an account');
-			else if (!validateEmail(e.target.value.trim()))
+				setCreateDisable(true);
+			} else if (!validateEmail(e.target.value.trim())) {
 				setEmailError('Invalid email address');
-			else {
+				setCreateDisable(true);
+			} else {
 				setEmailError('');
 				setEmail(e.target.value.trim());
 			}
-		}
-		if (goodAccount && username !== '' && password !== '' && email !== '') {
-			setGoodAccount(true);
 		}
 	};
 	const handleConfirm = (e) => {
 		if (e.target.value.trim() !== password) {
 			setConfirmError('Passwords do not match');
+			setCreateDisable(true);
 		} else {
 			setConfirmError('');
+			setConfirm(e.target.value);
 		}
 	};
 	useEffect(() => {
+		if (confirm !== password) {
+			setConfirmError('Passwords do not match');
+			setCreateDisable(true);
+		} else if (
+			goodAccount &&
+			username !== '' &&
+			password !== '' &&
+			email !== '' &&
+			confirm !== ''
+		) {
+			setGoodAccount(true);
+			setCreateDisable(false);
+		}
 		//used to make sure to capture all text in username and password fields.
 		setNewAccount({ username: username, password: password, email: email });
-	}, [password, setNewAccount, username, email]);
+	}, [
+		password,
+		setNewAccount,
+		username,
+		email,
+		goodAccount,
+		setGoodAccount,
+		setCreateDisable,
+		confirm,
+	]);
 	return (
 		<Stack
 			direction="column"

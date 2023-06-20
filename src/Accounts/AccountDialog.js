@@ -12,32 +12,40 @@ import axios from 'axios';
 
 import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
+
 export default function AccountDialog({
-	account,
-	setAccount,
+	user,
+	setUser,
 	setOpenDia,
 	logIn,
-	newAccount,
 	openDia,
 	handleClose,
 	needAccount,
 	setNeedAccount,
-	setNewAccount,
 	allUsers,
 }) {
 	const [goodAccount, setGoodAccount] = React.useState(false);
-
+	const [newAccount, setNewAccount] = React.useState({
+		username: '',
+		password: '',
+		email: '',
+	});
+	const [createDisable, setCreateDisable] = React.useState(true);
 	const handleLogIn = async () => {
-		console.log(account);
+		console.log(user);
 		setOpenDia(false);
-		logIn();
+		logIn(user);
 	};
 	const handleCreate = async () => {
 		if (goodAccount) {
+			setOpenDia(false);
 			try {
-				await axios.post('http://localhost:3300/accounts/new', newAccount);
-				setOpenDia(false);
-				logIn();
+				const res = await axios.post(
+					'http://localhost:3300/accounts/new',
+					newAccount
+				);
+				setUser({ username: newAccount.username, id: res.data });
+				logIn(user);
 			} catch (e) {
 				console.log(e);
 			}
@@ -45,24 +53,24 @@ export default function AccountDialog({
 	};
 	return (
 		<Dialog open={openDia} onClose={handleClose}>
-			{/* dialog for login and create account */}
 			<DialogTitle>
 				{needAccount ? 'Create Account' : 'Existing Account'}
 			</DialogTitle>
 			<DialogContent>
 				<DialogContentText>
 					{needAccount
-						? 'Sign in with your username and password or create a new account by clicking the register button'
-						: 'Create a new account. If you already have an account click the log in button to log in with your username and password'}
+						? 'Create a new account. If you already have an account click the log in button to log in with your username and password'
+						: 'Sign in with your username and password or create a new account by clicking the register button'}
 				</DialogContentText>
 				{needAccount ? (
 					<CreateAccountForm
 						setNewAccount={setNewAccount}
 						allUsers={allUsers}
 						setGoodAccount={setGoodAccount}
+						setCreateDisable={setCreateDisable}
 					/>
 				) : (
-					<LogInForm setAccount={setAccount} />
+					<LogInForm setUser={setUser} />
 				)}
 			</DialogContent>
 			<DialogActions>
@@ -71,7 +79,10 @@ export default function AccountDialog({
 						<Button variant="outlined" onClick={() => setNeedAccount(false)}>
 							logIn
 						</Button>
-						<Button variant="outlined" onClick={handleCreate}>
+						<Button
+							variant="outlined"
+							disabled={createDisable}
+							onClick={handleCreate}>
 							Create Account
 						</Button>
 					</Stack>

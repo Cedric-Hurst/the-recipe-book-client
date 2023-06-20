@@ -10,18 +10,33 @@ import Stack from '@mui/material/Stack';
 
 import axios from 'axios';
 
-export default function ProfileDialog({ openProDia, handleProClose, account }) {
+import EditAccountForm from './EditAccountForm';
+
+export default function ProfileDialog({
+	openProDia,
+	handleProClose,
+	user,
+	editAccount,
+	setEditAccount,
+}) {
+	const [updatedAccount, setUpdatedAccount] = React.useState({
+		id: '',
+		password: '',
+		email: '',
+	});
 	const handleAccountDelete = () => {};
-	const handleEditAccount = () => {};
+	const handleEditAccount = () => {
+		setEditAccount(true);
+	};
 
 	return (
 		<Dialog open={openProDia} onClose={handleProClose}>
-			{/* dialog for Profile */}
-			<DialogTitle>Profile</DialogTitle>
+			<DialogTitle>{editAccount ? 'Edit Account' : 'Profile'}</DialogTitle>
 			<DialogContent>
 				<DialogContentText>
-					You are currently logged in as: {account.username}
+					You are currently logged in as: {user.username}
 				</DialogContentText>
+				{editAccount ? <EditAccountForm /> : ''}
 			</DialogContent>
 			<DialogActions>
 				<Stack direction="row" spacing={2}>

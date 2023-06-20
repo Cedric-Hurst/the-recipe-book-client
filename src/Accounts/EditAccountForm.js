@@ -3,30 +3,25 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import './LogInForm.css';
 
-export default function CreateAccountForm({
-	setNewAccount,
+export default function EditAccountForm({
 	allUsers,
 	setGoodAccount,
+	setUpdatedAccount,
+	updatedAccount,
 }) {
-	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
 
 	const [confirmError, setConfirmError] = useState('');
-	const [userError, setUserError] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
-	const allUsernames = allUsers.map((user) => {
-		return user.username.toLowerCase();
-	});
 	const allEmails = allUsers.map((user) => {
 		return user.email.toLowerCase();
 	});
 	const badEmail = emailError !== '';
-	const badUsername = userError !== '';
 	const badConfirm = confirmError !== '';
 	const badPassword = passwordError !== '';
-	const goodAccount = !badConfirm && !badUsername && !badEmail && !badPassword;
+	const goodAccount = !badConfirm && !badEmail && !badPassword;
 	function checkPassword(str) {
 		let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 		return re.test(str);
@@ -36,18 +31,6 @@ export default function CreateAccountForm({
 		return re.test(email);
 	}
 	const handleChange = (e) => {
-		if (e.target.name === 'username') {
-			if (allUsernames.includes(e.target.value.trim().toLowerCase()))
-				setUserError('Username already in use');
-			else if (e.target.value.trim().length < 6)
-				setUserError('Username must be at least 6 characters');
-			else if (e.target.value.trim().length > 30)
-				setUserError('Username must be less then 30 characters');
-			else {
-				setUserError('');
-				setUsername(e.target.value.trim());
-			}
-		}
 		if (e.target.name === 'password') {
 			if (!checkPassword(e.target.value.trim())) {
 				setPasswordError(
@@ -68,7 +51,7 @@ export default function CreateAccountForm({
 				setEmail(e.target.value.trim());
 			}
 		}
-		if (goodAccount && username !== '' && password !== '' && email !== '') {
+		if (goodAccount && password !== '' && email !== '') {
 			setGoodAccount(true);
 		}
 	};
@@ -81,8 +64,8 @@ export default function CreateAccountForm({
 	};
 	useEffect(() => {
 		//used to make sure to capture all text in username and password fields.
-		setNewAccount({ username: username, password: password, email: email });
-	}, [password, setNewAccount, username, email]);
+		setUpdatedAccount({ password: password, email: email });
+	}, [password, email, setUpdatedAccount]);
 	return (
 		<Stack
 			direction="column"
@@ -90,18 +73,6 @@ export default function CreateAccountForm({
 			justifyContent="center"
 			alignItems="center"
 			sx={{ marginTop: 2 }}>
-			<TextField
-				id="username"
-				name="username"
-				label="Username"
-				error={badUsername}
-				helperText={badUsername ? userError : ''}
-				onChange={handleChange}
-				variant="outlined"
-				className="logInField"
-				autoComplete="username"
-				required
-			/>
 			<TextField
 				id="email"
 				name="email"

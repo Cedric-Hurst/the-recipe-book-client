@@ -106,7 +106,14 @@ const LogButton = styled(Button)(({ theme }) => ({
 	},
 }));
 
-export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
+export default function Navbar({
+	isLoggedIn,
+	logOut,
+	logIn,
+	allUsers,
+	user,
+	setUser,
+}) {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
 	const [openDia, setOpenDia] = React.useState(false);
@@ -114,13 +121,6 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 
 	const [needAccount, setNeedAccount] = React.useState(false);
 	const [editAccount, setEditAccount] = React.useState(false);
-
-	const [newAccount, setNewAccount] = React.useState({
-		username: '',
-		password: '',
-		email: '',
-	});
-	const [account, setAccount] = React.useState({ username: '', password: '' });
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const openMenu = Boolean(anchorEl);
@@ -200,8 +200,10 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 						</Search>
 						{isLoggedIn ? (
 							<div>
-								<IconButton onClick={handleMenuClick}>
-									<AccountCircleIcon />
+								<IconButton
+									onClick={handleMenuClick}
+									sx={{ marginLeft: '5px' }}>
+									<AccountCircleIcon sx={{ color: 'white' }} />
 								</IconButton>
 								<Menu
 									id="basic-menu"
@@ -239,7 +241,7 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 					open={open}>
 					<DrawerHeader>
 						<span style={{ marginRight: 'auto', marginLeft: '10px' }}>
-							MyRecipes
+							TheRecipeBook
 						</span>
 						<IconButton onClick={handleDrawerClose}>
 							{theme.direction === 'ltr' ? (
@@ -256,22 +258,22 @@ export default function Navbar({ isLoggedIn, logOut, logIn, allUsers }) {
 					/>
 				</Drawer>
 				<AccountDialog
-					account={account}
-					setAccount={setAccount}
+					user={user}
+					setUser={setUser}
 					setOpenDia={setOpenDia}
 					logIn={logIn}
-					newAccount={newAccount}
 					openDia={openDia}
 					handleClose={handleClose}
 					needAccount={needAccount}
 					setNeedAccount={setNeedAccount}
-					setNewAccount={setNewAccount}
 					allUsers={allUsers}
 				/>
 				<ProfileDialog
 					openProDia={openProDia}
 					handleProClose={handleProClose}
-					account={account}
+					user={user}
+					editAccount={editAccount}
+					setEditAccount={setEditAccount}
 				/>
 			</Box>
 		</ClickAwayListener>

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import './LogInForm.css';
 
-export default function LogInForm({ setAccount }) {
+export default function LogInForm({ setUser }) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -13,8 +13,8 @@ export default function LogInForm({ setAccount }) {
 	};
 	useEffect(() => {
 		//used to make sure to capture all text in username and password fields.
-		setAccount({ username: username, password: password });
-	}, [password, setAccount, username]);
+		setUser({ username: username, password: password });
+	}, [password, setUser, username]);
 
 	return (
 		<Stack
