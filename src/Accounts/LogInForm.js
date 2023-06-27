@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import './LogInForm.css';
 
-export default function LogInForm({ setAccount }) {
+export default function LogInForm({ setAccount, badUser }) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -27,6 +27,8 @@ export default function LogInForm({ setAccount }) {
 				id="username"
 				name="username"
 				label="Username"
+				error={badUser}
+				helperText={badUser ? 'Wrong Username or Password' : ''}
 				onChange={handleChange}
 				variant="outlined"
 				className="logInField"

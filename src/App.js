@@ -7,10 +7,10 @@ import Navbar from './Navbar';
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [allUsers, setAllUsers] = useState([]);
-	const [user, setUser] = useState({ username: '', id: 0 });
+	const [user, setUser] = useState({ username: '', id: 0, email: '' });
 	const location = useLocation();
 	const logOut = () => {
-		setUser({ username: '', id: 0 });
+		setUser({ username: '', id: 0, email: '' });
 		setIsLoggedIn(false);
 	};
 	const logIn = () => {
