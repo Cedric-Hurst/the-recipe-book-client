@@ -10,11 +10,10 @@ function App() {
 	const [user, setUser] = useState({ username: '', id: 0 });
 	const location = useLocation();
 	const logOut = () => {
-		setUser('');
+		setUser({ username: '', id: 0 });
 		setIsLoggedIn(false);
 	};
-	const logIn = (user) => {
-		setUser(user);
+	const logIn = () => {
 		setIsLoggedIn(true);
 	};
 	useEffect(() => {

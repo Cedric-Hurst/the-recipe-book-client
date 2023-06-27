@@ -20,7 +20,7 @@ export default function ProfileDialog({
 	setEditAccount,
 }) {
 	const [updatedAccount, setUpdatedAccount] = React.useState({
-		id: '',
+		id: user.id,
 		password: '',
 		email: '',
 	});
@@ -36,7 +36,11 @@ export default function ProfileDialog({
 				<DialogContentText>
 					You are currently logged in as: {user.username}
 				</DialogContentText>
-				{editAccount ? <EditAccountForm /> : ''}
+				{editAccount ? (
+					<EditAccountForm setUpdatedAccount={setUpdatedAccount} />
+				) : (
+					''
+				)}
 			</DialogContent>
 			<DialogActions>
 				<Stack direction="row" spacing={2}>

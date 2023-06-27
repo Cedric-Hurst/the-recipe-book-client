@@ -30,11 +30,26 @@ export default function AccountDialog({
 		password: '',
 		email: '',
 	});
+	const [account, setAccount] = React.useState({
+		username: '',
+		password: '',
+	});
 	const [createDisable, setCreateDisable] = React.useState(true);
 	const handleLogIn = async () => {
-		console.log(user);
-		setOpenDia(false);
-		logIn(user);
+		const allUsernames = allUsers.map((user) => user.username);
+		if (allUsernames.includes(account.username)) {
+			try {
+				console.log(account);
+				const res = await axios.post('http://localhost:3300/login', account);
+				console.log(res.data);
+			} catch (e) {
+				console.log(e); // change for post
+			}
+		} else {
+			console.log('not in system');
+		}
+		//setOpenDia(false);
+		//logIn(user);
 	};
 	const handleCreate = async () => {
 		if (goodAccount) {
@@ -70,7 +85,7 @@ export default function AccountDialog({
 						setCreateDisable={setCreateDisable}
 					/>
 				) : (
-					<LogInForm setUser={setUser} />
+					<LogInForm setAccount={setAccount} />
 				)}
 			</DialogContent>
 			<DialogActions>
