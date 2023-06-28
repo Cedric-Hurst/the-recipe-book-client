@@ -58,16 +58,20 @@ export default function AccountDialog({
 	};
 	const handleCreate = async () => {
 		if (goodAccount) {
-			setOpenDia(false);
+			handleClose();
 			try {
 				const res = await axios.post(
 					'http://localhost:3300/accounts/new',
 					newAccount
 				);
-				setUser({ username: newAccount.username, id: res.data });
+				setUser({
+					username: newAccount.username,
+					id: res.data,
+					email: newAccount.email,
+				});
 				logIn(user);
 			} catch (e) {
-				console.log(e);
+				console.log(e); // TODO: change in post
 			}
 		}
 	};

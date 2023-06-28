@@ -7,10 +7,11 @@ export default function EditAccountForm({
 	allUsers,
 	setGoodAccount,
 	setUpdatedAccount,
-	updatedAccount,
+	setUpdateDisable,
 }) {
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
+	const [confirm, setConfirm] = useState('');
 
 	const [confirmError, setConfirmError] = useState('');
 	const [emailError, setEmailError] = useState('');
@@ -58,14 +59,36 @@ export default function EditAccountForm({
 	const handleConfirm = (e) => {
 		if (e.target.value.trim() !== password) {
 			setConfirmError('Passwords do not match');
+			setUpdateDisable(true);
 		} else {
 			setConfirmError('');
+			setConfirm(e.target.value);
 		}
 	};
 	useEffect(() => {
+		if (confirm !== password) {
+			setConfirmError('Passwords do not match');
+			setUpdateDisable(true);
+		} else if (
+			goodAccount &&
+			password !== '' &&
+			email !== '' &&
+			confirm !== ''
+		) {
+			setGoodAccount(true);
+			setUpdateDisable(false);
+		}
 		//used to make sure to capture all text in username and password fields.
 		setUpdatedAccount({ password: password, email: email });
-	}, [password, email, setUpdatedAccount]);
+	}, [
+		password,
+		email,
+		setUpdatedAccount,
+		confirm,
+		goodAccount,
+		setGoodAccount,
+		setUpdateDisable,
+	]);
 	return (
 		<Stack
 			direction="column"

@@ -143,9 +143,7 @@ export default function Navbar({
 	};
 	const handleProClose = () => {
 		setOpenProDia(false);
-	};
-	const handleLogOut = () => {
-		logOut();
+		setEditAccount(false);
 	};
 
 	const handleDrawerOpen = () => {
@@ -214,7 +212,7 @@ export default function Navbar({
 										'aria-labelledby': 'basic-button',
 									}}>
 									<MenuItem onClick={handleProClickOpen}>Profile</MenuItem>
-									<MenuItem onClick={handleLogOut}>Logout</MenuItem>
+									<MenuItem onClick={logOut}>Logout</MenuItem>
 								</Menu>
 							</div>
 						) : (
@@ -274,6 +272,9 @@ export default function Navbar({
 					user={user}
 					editAccount={editAccount}
 					setEditAccount={setEditAccount}
+					allUsers={allUsers}
+					logOut={logOut}
+					setUser={setUser}
 				/>
 			</Box>
 		</ClickAwayListener>
