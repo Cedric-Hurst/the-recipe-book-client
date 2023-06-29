@@ -106,14 +106,7 @@ const LogButton = styled(Button)(({ theme }) => ({
 	},
 }));
 
-export default function Navbar({
-	isLoggedIn,
-	logOut,
-	logIn,
-	allUsers,
-	user,
-	setUser,
-}) {
+export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
 	const [openDia, setOpenDia] = React.useState(false);
@@ -264,7 +257,6 @@ export default function Navbar({
 					handleClose={handleClose}
 					needAccount={needAccount}
 					setNeedAccount={setNeedAccount}
-					allUsers={allUsers}
 				/>
 				<ProfileDialog
 					openProDia={openProDia}
@@ -272,7 +264,6 @@ export default function Navbar({
 					user={user}
 					editAccount={editAccount}
 					setEditAccount={setEditAccount}
-					allUsers={allUsers}
 					logOut={logOut}
 					setUser={setUser}
 				/>

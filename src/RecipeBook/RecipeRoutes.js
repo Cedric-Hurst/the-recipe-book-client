@@ -7,7 +7,7 @@ import RecipeForm from './RecipeForm';
 import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
 
-export default function RecipeRoutes(allUsers) {
+export default function RecipeRoutes() {
 	const [recipes, setRecipes] = useState([]);
 	const navigate = useNavigate();
 

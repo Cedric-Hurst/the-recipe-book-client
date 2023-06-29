@@ -19,7 +19,6 @@ export default function ProfileDialog({
 	setUser,
 	editAccount,
 	setEditAccount,
-	allUsers,
 	logOut,
 }) {
 	const [goodAccount, setGoodAccount] = React.useState(false);
@@ -72,7 +71,6 @@ export default function ProfileDialog({
 				{editAccount ? (
 					<EditAccountForm
 						setUpdatedAccount={setUpdatedAccount}
-						allUsers={allUsers}
 						setGoodAccount={setGoodAccount}
 						setUpdateDisable={setUpdateDisable}
 					/>

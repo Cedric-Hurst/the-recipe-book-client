@@ -22,7 +22,6 @@ export default function AccountDialog({
 	handleClose,
 	needAccount,
 	setNeedAccount,
-	allUsers,
 }) {
 	const [goodAccount, setGoodAccount] = React.useState(false);
 	const [newAccount, setNewAccount] = React.useState({
@@ -38,22 +37,17 @@ export default function AccountDialog({
 	const [badUser, setBadUser] = React.useState(false);
 
 	const handleLogIn = async () => {
-		const allUsernames = allUsers.map((user) => user.username);
-		if (allUsernames.includes(account.username)) {
-			try {
-				const res = await axios.post('http://localhost:3300/login', account);
-				if (res.data === false)
-					setBadUser(true); //trigger error for username/password
-				else {
-					setUser(res.data);
-					setOpenDia(false);
-					logIn();
-				}
-			} catch (e) {
-				console.log(e); // TODO: change for post
+		try {
+			const res = await axios.post('http://localhost:3300/login', account);
+			if (res.data === false)
+				setBadUser(true); //trigger error for username/password
+			else {
+				setUser(res.data);
+				setOpenDia(false);
+				logIn();
 			}
-		} else {
-			setBadUser(true); //trigger error for username/password
+		} catch (e) {
+			console.log(e); // TODO: change for post
 		}
 	};
 	const handleCreate = async () => {
@@ -89,7 +83,6 @@ export default function AccountDialog({
 				{needAccount ? (
 					<CreateAccountForm
 						setNewAccount={setNewAccount}
-						allUsers={allUsers}
 						setGoodAccount={setGoodAccount}
 						setCreateDisable={setCreateDisable}
 					/>

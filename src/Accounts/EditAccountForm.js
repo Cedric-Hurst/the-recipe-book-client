@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import axios from 'axios';
 import './LogInForm.css';
 
 export default function EditAccountForm({
-	allUsers,
 	setGoodAccount,
 	setUpdatedAccount,
 	setUpdateDisable,
@@ -16,9 +16,7 @@ export default function EditAccountForm({
 	const [confirmError, setConfirmError] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
-	const allEmails = allUsers.map((user) => {
-		return user.email.toLowerCase();
-	});
+
 	const badEmail = emailError !== '';
 	const badConfirm = confirmError !== '';
 	const badPassword = passwordError !== '';
@@ -43,9 +41,7 @@ export default function EditAccountForm({
 			}
 		}
 		if (e.target.name === 'email') {
-			if (allEmails.includes(e.target.value.trim().toLowerCase()))
-				setEmailError('Email already attached to an account');
-			else if (!validateEmail(e.target.value.trim()))
+			if (!validateEmail(e.target.value.trim()))
 				setEmailError('Invalid email address');
 			else {
 				setEmailError('');
@@ -63,6 +59,21 @@ export default function EditAccountForm({
 		} else {
 			setConfirmError('');
 			setConfirm(e.target.value);
+		}
+	};
+	const handleEmailBlur = async () => {
+		if (!badEmail && email !== '') {
+			try {
+				const res = await axios.post('http://localhost:3300/checkuser', {
+					email: email,
+				});
+				if (res.data.length > 0) {
+					setEmailError(res.data);
+					setUpdateDisable(true);
+				}
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	};
 	useEffect(() => {
@@ -103,6 +114,7 @@ export default function EditAccountForm({
 				error={badEmail}
 				helperText={badEmail ? emailError : ''}
 				onChange={handleChange}
+				onBlur={handleEmailBlur}
 				variant="outlined"
 				className="logInField"
 				autoComplete="email"

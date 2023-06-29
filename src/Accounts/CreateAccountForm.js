@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import axios from 'axios';
 import './LogInForm.css';
 
 export default function CreateAccountForm({
 	setNewAccount,
-	allUsers,
 	setGoodAccount,
 	setCreateDisable,
 }) {
@@ -18,12 +18,7 @@ export default function CreateAccountForm({
 	const [userError, setUserError] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
-	const allUsernames = allUsers.map((user) => {
-		return user.username.toLowerCase();
-	});
-	const allEmails = allUsers.map((user) => {
-		return user.email.toLowerCase();
-	});
+
 	const badEmail = emailError !== '';
 	const badUsername = userError !== '';
 	const badConfirm = confirmError !== '';
@@ -39,10 +34,7 @@ export default function CreateAccountForm({
 	}
 	const handleChange = (e) => {
 		if (e.target.name === 'username') {
-			if (allUsernames.includes(e.target.value.trim().toLowerCase())) {
-				setUserError('Username already in use');
-				setCreateDisable(true);
-			} else if (e.target.value.trim().length < 6) {
+			if (e.target.value.trim().length < 6) {
 				setUserError('Username must be at least 6 characters');
 				setCreateDisable(true);
 			} else if (e.target.value.trim().length > 30) {
@@ -65,10 +57,7 @@ export default function CreateAccountForm({
 			}
 		}
 		if (e.target.name === 'email') {
-			if (allEmails.includes(e.target.value.trim().toLowerCase())) {
-				setEmailError('Email already attached to an account');
-				setCreateDisable(true);
-			} else if (!validateEmail(e.target.value.trim())) {
+			if (!validateEmail(e.target.value.trim())) {
 				setEmailError('Invalid email address');
 				setCreateDisable(true);
 			} else {
@@ -84,6 +73,36 @@ export default function CreateAccountForm({
 		} else {
 			setConfirmError('');
 			setConfirm(e.target.value);
+		}
+	};
+	const handleUsernameBlur = async () => {
+		if (!badUsername && username !== '') {
+			try {
+				const res = await axios.post('http://localhost:3300/checkuser', {
+					username: username,
+				});
+				if (res.data.length > 0) {
+					setUserError(res.data);
+					setCreateDisable(true);
+				}
+			} catch (err) {
+				console.log(err);
+			}
+		}
+	};
+	const handleEmailBlur = async () => {
+		if (!badEmail && email !== '') {
+			try {
+				const res = await axios.post('http://localhost:3300/checkuser', {
+					email: email,
+				});
+				if (res.data.length > 0) {
+					setEmailError(res.data);
+					setCreateDisable(true);
+				}
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	};
 	useEffect(() => {
@@ -126,6 +145,7 @@ export default function CreateAccountForm({
 				error={badUsername}
 				helperText={badUsername ? userError : ''}
 				onChange={handleChange}
+				onBlur={handleUsernameBlur}
 				variant="outlined"
 				className="logInField"
 				autoComplete="username"
@@ -138,6 +158,7 @@ export default function CreateAccountForm({
 				error={badEmail}
 				helperText={badEmail ? emailError : ''}
 				onChange={handleChange}
+				onBlur={handleEmailBlur}
 				variant="outlined"
 				className="logInField"
 				autoComplete="email"
