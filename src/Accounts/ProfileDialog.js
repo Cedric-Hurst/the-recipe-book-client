@@ -40,17 +40,24 @@ export default function ProfileDialog({
 	};
 	const handleEditAccount = async () => {
 		if (goodAccount) {
+			let updatedUser = { email: '', password: '' };
+			if (updatedAccount.email === '' && updatedAccount.password !== '')
+				updatedUser = { email: user.email, password: updatedAccount.password };
+			else if (updatedAccount.email !== '' && updatedAccount.password === null)
+				updatedUser = { email: updatedAccount.email, password: user.password };
+			else updatedUser = updatedAccount;
 			setUpdateDisable(true);
 			setEditAccount(false);
 			setUser({
 				username: user.username,
 				id: user.id,
-				email: updatedAccount.email,
+				email: updatedUser.email,
 			});
+
 			try {
 				await axios.put(
 					`http://localhost:3300/accounts/${user.id}`,
-					updatedAccount
+					updatedUser
 				);
 			} catch (e) {
 				console.log(e); // TODO: change for post

@@ -35,30 +35,29 @@ export default function EditAccountForm({
 				setPasswordError(
 					'Password must contain one capital letter, one symbol, one lowercase letter, and be at least 8 characters long'
 				);
+				setUpdateDisable(true);
 			} else {
 				setPasswordError('');
 				setPassword(e.target.value.trim());
 			}
 		}
 		if (e.target.name === 'email') {
-			if (!validateEmail(e.target.value.trim()))
+			if (!validateEmail(e.target.value.trim())) {
 				setEmailError('Invalid email address');
-			else {
+				setUpdateDisable(true);
+			} else {
 				setEmailError('');
 				setEmail(e.target.value.trim());
 			}
 		}
-		if (goodAccount && password !== '' && email !== '') {
-			setGoodAccount(true);
-		}
-	};
-	const handleConfirm = (e) => {
-		if (e.target.value.trim() !== password) {
-			setConfirmError('Passwords do not match');
-			setUpdateDisable(true);
-		} else {
-			setConfirmError('');
-			setConfirm(e.target.value);
+		if (e.target.name === 'confirmPassword') {
+			if (e.target.value.trim() !== password) {
+				setConfirmError('Passwords do not match');
+				setUpdateDisable(true);
+			} else {
+				setConfirmError('');
+				setConfirm(e.target.value);
+			}
 		}
 	};
 	const handleEmailBlur = async () => {
@@ -75,6 +74,19 @@ export default function EditAccountForm({
 				console.log(err);
 			}
 		}
+		if (email === '') {
+			setEmailError('');
+		}
+	};
+	const handlePasswordBlur = () => {
+		if (password === '') {
+			setPasswordError('');
+		}
+	};
+	const handleConfirmBlur = () => {
+		if (confirm === '') {
+			setConfirmError('');
+		}
 	};
 	useEffect(() => {
 		if (confirm !== password) {
@@ -82,9 +94,7 @@ export default function EditAccountForm({
 			setUpdateDisable(true);
 		} else if (
 			goodAccount &&
-			password !== '' &&
-			email !== '' &&
-			confirm !== ''
+			((password !== '' && confirm !== '') || email !== '')
 		) {
 			setGoodAccount(true);
 			setUpdateDisable(false);
@@ -127,6 +137,7 @@ export default function EditAccountForm({
 				error={badPassword}
 				helperText={badPassword ? passwordError : ''}
 				onChange={handleChange}
+				onBlur={handlePasswordBlur}
 				variant="outlined"
 				className="logInField"
 				type="password"
@@ -139,7 +150,8 @@ export default function EditAccountForm({
 				label="Confirm Password"
 				error={badConfirm}
 				helperText={badConfirm ? confirmError : ''}
-				onChange={handleConfirm}
+				onChange={handleChange}
+				onBlur={handleConfirmBlur}
 				variant="outlined"
 				className="logInField"
 				type="password"
