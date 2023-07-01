@@ -30,10 +30,10 @@ export default function ProfileDialog({
 	const [updateDisable, setUpdateDisable] = React.useState(true);
 
 	const handleAccountDelete = async () => {
+		handleProClose();
+		logOut();
 		try {
 			await axios.delete(`http://localhost:3300/accounts/${user.id}`);
-			handleProClose();
-			logOut();
 		} catch (e) {
 			console.log(e); // TODO: change for post
 		}
@@ -43,7 +43,7 @@ export default function ProfileDialog({
 			let updatedUser = { email: '', password: '' };
 			if (updatedAccount.email === '' && updatedAccount.password !== '')
 				updatedUser = { email: user.email, password: updatedAccount.password };
-			else if (updatedAccount.email !== '' && updatedAccount.password === null)
+			else if (updatedAccount.email !== '' && updatedAccount.password === '')
 				updatedUser = { email: updatedAccount.email, password: user.password };
 			else updatedUser = updatedAccount;
 			setUpdateDisable(true);
