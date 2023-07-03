@@ -13,8 +13,15 @@ import './Recipe.css';
 
 export default function Recipe({ recipe }) {
 	const recipePage = () => {
-		const { recipeTitle, servings, img, timing, ingredients, instructions } =
-			recipe;
+		const {
+			recipeTitle,
+			servings,
+			img,
+			timing,
+			ingredients,
+			instructions,
+			author,
+		} = recipe;
 		let prep = printTiming(timing.prepHr, timing.prepMin);
 		let cook = printTiming(timing.cookHr, timing.cookMin);
 
@@ -27,6 +34,7 @@ export default function Recipe({ recipe }) {
 								<div className="recipe-info">
 									<img src={img} alt={recipeTitle} />
 									<h1>{recipeTitle}</h1>
+									<p>Chef: {author}</p>
 									<div>
 										<span className="recipe-serving">Servings: </span>
 										<span className="recipe-servingNum">{servings}</span>

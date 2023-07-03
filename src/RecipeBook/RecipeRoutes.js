@@ -7,7 +7,7 @@ import RecipeForm from './RecipeForm';
 import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
 
-export default function RecipeRoutes() {
+export default function RecipeRoutes(user) {
 	const [recipes, setRecipes] = useState([]);
 	const navigate = useNavigate();
 
@@ -31,11 +31,13 @@ export default function RecipeRoutes() {
 	};
 	const GetRecipeEdit = () => {
 		const { id } = useParams();
+		const recipe = recipes[findRecipe(id)];
 		return (
 			<RecipeEdit
-				recipe={recipes[findRecipe(id)]}
+				recipe={recipe}
 				updateRecipe={updateRecipe}
 				deleteRecipe={deleteRecipe}
+				user={user}
 			/>
 		);
 	};
@@ -86,6 +88,7 @@ export default function RecipeRoutes() {
 				updateRecipe={updateRecipe}
 				pageName={`Category: ${cat}`}
 				deleteRecipe={deleteRecipe}
+				user={user}
 			/>
 		);
 	};
@@ -99,6 +102,7 @@ export default function RecipeRoutes() {
 						updateRecipe={updateRecipe}
 						pageName="Recipe Book"
 						deleteRecipe={deleteRecipe}
+						user={user}
 					/>
 				}
 			/>
@@ -110,6 +114,7 @@ export default function RecipeRoutes() {
 						updateRecipe={updateRecipe}
 						pageName="Favorites"
 						deleteRecipe={deleteRecipe}
+						user={user}
 					/>
 				}
 			/>

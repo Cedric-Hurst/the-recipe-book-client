@@ -40,6 +40,7 @@ export default function RecipeCard({
 	recipes,
 	updateRecipe,
 	deleteRecipe,
+	user,
 }) {
 	const expandArray = new Array(recipes.length).fill(false);
 	const [expanded, setExpanded] = React.useState([...expandArray]);
@@ -47,6 +48,8 @@ export default function RecipeCard({
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [openElem, setOpenElem] = React.useState(null);
+
+	const authUser = user.username.toLowerCase() === recipe.author.toLowerCase();
 
 	const handleClick = (id) => (event) => {
 		event.stopPropagation();
@@ -99,9 +102,11 @@ export default function RecipeCard({
 					</Avatar>
 				}
 				action={
-					<IconButton aria-label="settings" onClick={handleClick(recipe)}>
-						<MoreVertIcon />
-					</IconButton>
+					authUser && (
+						<IconButton aria-label="settings" onClick={handleClick(recipe)}>
+							<MoreVertIcon />
+						</IconButton>
+					)
 				}
 				title={recipe.recipeTitle}
 				subheader={`Serves: ${recipe.servings}`}

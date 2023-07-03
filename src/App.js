@@ -26,7 +26,7 @@ function App() {
 			/>
 			<Routes location={location}>
 				<Route index element={<FrontPage />} />
-				{RecipeRoutes()}
+				{RecipeRoutes(user)}
 				<Route path="*" element={<FrontPage />} />
 			</Routes>
 		</div>

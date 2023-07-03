@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import TextField from '@mui/material/TextField';
@@ -23,7 +23,12 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { measurements, categories } from '../RecipeData';
 import './RecipeForm.css';
 
-export default function RecipeEdit({ updateRecipe, recipe, deleteRecipe }) {
+export default function RecipeEdit({
+	updateRecipe,
+	recipe,
+	deleteRecipe,
+	user,
+}) {
 	const EditPage = () => {
 		const [recipeTitle, setRecipeTitle] = useState(recipe.recipeTitle);
 		const [category, setCategory] = useState(recipe.category);
@@ -33,7 +38,14 @@ export default function RecipeEdit({ updateRecipe, recipe, deleteRecipe }) {
 		const [ingredients, setIngredients] = useState(recipe.ingredients);
 		const [instructions, setInstructions] = useState(recipe.instructions);
 		const id = recipe.id;
+
 		const navigate = useNavigate();
+
+		useEffect(() => {
+			const authUser =
+				user.username.toLowerCase() === recipe.author.toLowerCase();
+			if (!authUser) navigate('/');
+		}, [navigate]);
 
 		const handleSubmit = (e) => {
 			e.preventDefault();

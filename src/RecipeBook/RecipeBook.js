@@ -10,8 +10,8 @@ import RecipeCard from './RecipeCard';
 export default function RecipeBook({
 	recipes,
 	updateRecipe,
-	pageName,
 	deleteRecipe,
+	user,
 }) {
 	const navigate = useNavigate();
 	return (
@@ -42,6 +42,7 @@ export default function RecipeBook({
 								index={index}
 								updateRecipe={updateRecipe}
 								deleteRecipe={deleteRecipe}
+								user={user}
 							/>
 						</div>
 					))}
