@@ -243,10 +243,7 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 						</IconButton>
 					</DrawerHeader>
 					<Divider />
-					<NavList
-						pageName="RecipeBook"
-						handleDrawerClose={handleDrawerClose}
-					/>
+					<NavList user={user} handleDrawerClose={handleDrawerClose} />
 				</Drawer>
 				<AccountDialog
 					user={user}

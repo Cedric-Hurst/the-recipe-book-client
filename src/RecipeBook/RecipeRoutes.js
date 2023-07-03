@@ -10,7 +10,6 @@ import Recipe from './Recipe';
 export default function RecipeRoutes(user) {
 	const [recipes, setRecipes] = useState([]);
 	const navigate = useNavigate();
-
 	useEffect(() => {
 		const fetchRecipes = async () => {
 			try {
@@ -119,7 +118,10 @@ export default function RecipeRoutes(user) {
 				}
 			/>
 			<Route path="category/:cat" element={<GetCatRecipes />} />
-			<Route path="new" element={<RecipeForm addRecipe={addRecipe} />} />
+			<Route
+				path="new"
+				element={<RecipeForm addRecipe={addRecipe} user={user} />}
+			/>
 			<Route path=":id" element={<GetRecipe />} />
 			<Route path=":id/edit" element={<GetRecipeEdit />} />
 		</Route>

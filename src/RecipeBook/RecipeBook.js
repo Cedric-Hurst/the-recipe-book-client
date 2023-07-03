@@ -14,25 +14,28 @@ export default function RecipeBook({
 	user,
 }) {
 	const navigate = useNavigate();
+	const isSignedIn = user.username !== '';
 	return (
 		<div>
 			<div className="rb-root">
-				<Tooltip title="Add New Recipe" placement="left">
-					<SpeedDial
-						ariaLabel="add new recipe"
-						sx={{ position: 'fixed', bottom: 16, right: 16 }}
-						icon={<SpeedDialIcon openIcon={<LibraryAddIcon />} />}
-						onClick={() => navigate('/recipes/new')}
-						FabProps={{
-							sx: {
-								bgcolor: 'green',
-								'&:hover': {
+				{isSignedIn && (
+					<Tooltip title="Add New Recipe" placement="left">
+						<SpeedDial
+							ariaLabel="add new recipe"
+							sx={{ position: 'fixed', bottom: 16, right: 16 }}
+							icon={<SpeedDialIcon openIcon={<LibraryAddIcon />} />}
+							onClick={() => navigate('/recipes/new')}
+							FabProps={{
+								sx: {
 									bgcolor: 'green',
+									'&:hover': {
+										bgcolor: 'green',
+									},
 								},
-							},
-						}}
-					/>
-				</Tooltip>
+							}}
+						/>
+					</Tooltip>
+				)}
 				<div className="rb-card-container">
 					{recipes.map((recipe, index) => (
 						<div key={recipe.id} className="rb-cards">
