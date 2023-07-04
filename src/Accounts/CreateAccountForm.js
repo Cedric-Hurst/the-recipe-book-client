@@ -29,16 +29,19 @@ export default function CreateAccountForm({
 		return re.test(str);
 	}
 	function validateEmail(email) {
-		var re = /\S+@\S+\.\S+/;
+		let re = /\S+@\S+\.\S+/;
 		return re.test(email);
+	}
+	function validateName(name) {
+		let re = /^(?=.{6,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+		return re.test(name);
 	}
 	const handleChange = (e) => {
 		if (e.target.name === 'username') {
-			if (e.target.value.trim().length < 6) {
-				setUserError('Username must be at least 6 characters');
-				setCreateDisable(true);
-			} else if (e.target.value.trim().length > 30) {
-				setUserError('Username must be less then 30 characters');
+			if (!validateName(e.target.value.trim())) {
+				setUserError(
+					'Username must be between 6 - 30 characters and must be alphanumeric. (May use underscore and dot but cannot start or end with one)'
+				);
 				setCreateDisable(true);
 			} else {
 				setUserError('');

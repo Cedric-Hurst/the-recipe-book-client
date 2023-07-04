@@ -3,6 +3,7 @@ import { useState } from 'react';
 import FrontPage from './FrontPage';
 import RecipeRoutes from './RecipeBook/RecipeRoutes';
 import Navbar from './Navbar';
+import SignInFrontPage from './SignInFrontPage';
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({ username: '', id: 0, email: '' });
@@ -25,7 +26,16 @@ function App() {
 				setUser={setUser}
 			/>
 			<Routes location={location}>
-				<Route index element={<FrontPage />} />
+				<Route
+					index
+					element={
+						isLoggedIn ? (
+							<FrontPage />
+						) : (
+							<SignInFrontPage logIn={logIn} setUser={setUser} />
+						)
+					}
+				/>
 				{RecipeRoutes(user)}
 				<Route path="*" element={<FrontPage />} />
 			</Routes>

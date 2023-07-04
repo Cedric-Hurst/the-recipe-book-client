@@ -14,7 +14,6 @@ import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
 
 export default function AccountDialog({
-	user,
 	setUser,
 	setOpenDia,
 	logIn,
@@ -63,7 +62,7 @@ export default function AccountDialog({
 					id: res.data,
 					email: newAccount.email,
 				});
-				logIn(user);
+				logIn();
 			} catch (e) {
 				console.log(e); // TODO: change in post
 			}

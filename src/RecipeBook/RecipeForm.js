@@ -59,6 +59,7 @@ export default function RecipeForm({ addRecipe, user }) {
 			timing: timing,
 			ingredients: ingredients,
 			instructions: instructions,
+			user_id: user.id,
 		};
 		addRecipe(recipe);
 	};
