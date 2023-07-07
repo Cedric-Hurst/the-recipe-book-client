@@ -1,6 +1,31 @@
 .SIFP-background {
-	background-image: url('https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80');
+	background-image: url(./images/CookPhoto.jpg);
 	background-size: cover;
 	background-attachment: fixed;
+	background-position: center center;
+	background-repeat: no-repeat;
 	height: 100vh;
+	overflow: hidden;
+}
+.SIFP-Paper {
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25vh;
+	padding: 1.5rem;
+	height: fit-content;
+}
+.SIFP-Paper h1 {
+	font-size: larger;
+}
+.SIFP-Paper h2 {
+	font-size: small;
+}
+.SIFP-Btns {
+	margin-top: 10px;
+}
+@media (max-width: 450px) {
+	.SIFP-Paper {
+		width: 100%;
+	}
 }
