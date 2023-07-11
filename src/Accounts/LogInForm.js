@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import { v4 as uuid } from 'uuid';
 import './LogInForm.css';
 
 export default function LogInForm({ setAccount, badUser }) {
@@ -24,7 +25,7 @@ export default function LogInForm({ setAccount, badUser }) {
 			alignItems="center"
 			sx={{ marginTop: 2 }}>
 			<TextField
-				id="username"
+				id={`username-${uuid()}`}
 				name="username"
 				label="Username"
 				error={badUser}
@@ -36,7 +37,7 @@ export default function LogInForm({ setAccount, badUser }) {
 				required
 			/>
 			<TextField
-				id="password"
+				id={`password-${uuid()}`}
 				name="password"
 				label="Password"
 				onChange={handleChange}

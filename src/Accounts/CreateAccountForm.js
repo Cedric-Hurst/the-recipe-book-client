@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
+import { v4 as uuid } from 'uuid';
 import './LogInForm.css';
 
 export default function CreateAccountForm({
@@ -142,7 +143,7 @@ export default function CreateAccountForm({
 			alignItems="center"
 			sx={{ marginTop: 2 }}>
 			<TextField
-				id="username"
+				id={`username-${uuid()}`}
 				name="username"
 				label="Username"
 				error={badUsername}
@@ -155,7 +156,7 @@ export default function CreateAccountForm({
 				required
 			/>
 			<TextField
-				id="email"
+				id={`email-${uuid()}`}
 				name="email"
 				label="Email"
 				error={badEmail}
@@ -168,7 +169,7 @@ export default function CreateAccountForm({
 				required
 			/>
 			<TextField
-				id="password"
+				id={`password-${uuid()}`}
 				name="password"
 				label="Password"
 				error={badPassword}
@@ -181,7 +182,7 @@ export default function CreateAccountForm({
 				required
 			/>
 			<TextField
-				id="confirmPassword"
+				id={`confirm-password-${uuid()}`}
 				name="confirmPassword"
 				label="Confirm Password"
 				error={badConfirm}
