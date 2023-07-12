@@ -20,6 +20,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
+import { useNavigate } from 'react-router-dom';
+
 import NavList from './NavList';
 import AccountDialog from './Accounts/AccountDialog';
 import ProfileDialog from './Accounts/ProfileDialog';
@@ -117,6 +119,9 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const openMenu = Boolean(anchorEl);
+
+	const navigate = useNavigate();
+
 	const handleMenuClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -173,9 +178,11 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 							variant="h1"
 							noWrap
 							component="div"
+							onClick={() => navigate('/recipes')}
 							sx={{
 								marginRight: 'auto',
 								fontSize: { xs: '20px' },
+								cursor: 'pointer',
 							}}>
 							RecipeBook
 						</Typography>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,7 +18,6 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { measurements, categories } from '../RecipeData';
 import './RecipeForm.css';
-import { useNavigate } from 'react-router-dom';
 
 export default function RecipeForm({ addRecipe, user }) {
 	const [recipeTitle, setRecipeTitle] = useState('');
@@ -42,11 +41,7 @@ export default function RecipeForm({ addRecipe, user }) {
 		},
 	]);
 	const [instructions, setInstructions] = useState(['']);
-	const navigate = useNavigate();
-	useEffect(() => {
-		const isSignedIn = user.username !== '';
-		!isSignedIn && navigate('/');
-	}, [navigate, user.username]);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 

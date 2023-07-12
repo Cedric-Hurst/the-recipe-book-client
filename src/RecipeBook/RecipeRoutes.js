@@ -6,8 +6,9 @@ import RecipeBook from './RecipeBook';
 import RecipeForm from './RecipeForm';
 import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
+import SignInFrontPage from '../SignInFrontPage';
 
-export default function RecipeRoutes(user) {
+export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 	const [recipes, setRecipes] = useState([]);
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -108,22 +109,41 @@ export default function RecipeRoutes(user) {
 			<Route
 				path="favorites"
 				element={
-					<RecipeBook
-						recipes={favRecipes}
-						updateRecipe={updateRecipe}
-						pageName="Favorites"
-						deleteRecipe={deleteRecipe}
-						user={user}
-					/>
+					isLoggedIn ? (
+						<RecipeBook
+							recipes={favRecipes}
+							updateRecipe={updateRecipe}
+							pageName="Favorites"
+							deleteRecipe={deleteRecipe}
+							user={user}
+						/>
+					) : (
+						<SignInFrontPage logIn={logIn} setUser={setUser} />
+					)
 				}
 			/>
 			<Route path="category/:cat" element={<GetCatRecipes />} />
 			<Route
 				path="new"
-				element={<RecipeForm addRecipe={addRecipe} user={user} />}
+				element={
+					isLoggedIn ? (
+						<RecipeForm addRecipe={addRecipe} user={user} />
+					) : (
+						<SignInFrontPage logIn={logIn} setUser={setUser} />
+					)
+				}
 			/>
 			<Route path=":id" element={<GetRecipe />} />
-			<Route path=":id/edit" element={<GetRecipeEdit />} />
+			<Route
+				path=":id/edit"
+				element={
+					isLoggedIn ? (
+						<GetRecipeEdit />
+					) : (
+						<SignInFrontPage logIn={logIn} setUser={setUser} />
+					)
+				}
+			/>
 		</Route>
 	);
 }

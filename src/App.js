@@ -36,7 +36,7 @@ function App() {
 						)
 					}
 				/>
-				{RecipeRoutes(user)}
+				{RecipeRoutes(user, isLoggedIn, logIn, setUser)}
 				<Route path="*" element={<FrontPage />} />
 			</Routes>
 		</div>
