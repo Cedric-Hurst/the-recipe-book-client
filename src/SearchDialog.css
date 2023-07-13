@@ -1,0 +1,7 @@
+.sd-searchResult {
+	display: block;
+}
+.sd-searchResult:hover {
+	cursor: pointer;
+	background-color: rgba(0, 0, 0, 0.1);
+}

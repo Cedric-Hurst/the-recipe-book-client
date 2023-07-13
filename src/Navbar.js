@@ -25,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import NavList from './NavList';
 import AccountDialog from './Accounts/AccountDialog';
 import ProfileDialog from './Accounts/ProfileDialog';
+import SearchDialog from './SearchDialog';
 
 const drawerWidth = 300;
 
@@ -110,24 +111,28 @@ const LogButton = styled(Button)(({ theme }) => ({
 
 export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 	const theme = useTheme();
-	const [open, setOpen] = React.useState(false);
-	const [openDia, setOpenDia] = React.useState(false);
-	const [openProDia, setOpenProDia] = React.useState(false);
+
+	const [open, setOpen] = React.useState(false); //drawer
+	const [openDia, setOpenDia] = React.useState(false); // login dialog
+	const [openProDia, setOpenProDia] = React.useState(false); //profile dialog
+	const [openSearchDia, setOpenSearchDia] = React.useState(false); //Search Dialog
 
 	const [needAccount, setNeedAccount] = React.useState(false);
 	const [editAccount, setEditAccount] = React.useState(false);
 
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [anchorEl, setAnchorEl] = React.useState(null); //profile menu
 	const openMenu = Boolean(anchorEl);
 
 	const navigate = useNavigate();
 
+	//profile menu
 	const handleMenuClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleMenuClose = () => {
 		setAnchorEl(null);
 	};
+	//sign in / create account dialog
 	const handleClickOpen = () => {
 		setOpenDia(true);
 	};
@@ -135,6 +140,7 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 		setOpenDia(false);
 		setNeedAccount(false);
 	};
+	//profile / edit dialog
 	const handleProClickOpen = () => {
 		handleMenuClose();
 		setOpenProDia(true);
@@ -143,7 +149,16 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 		setOpenProDia(false);
 		setEditAccount(false);
 	};
+	//searchbar
+	const handleSearchOpen = () => {
+		document.activeElement.blur(); //blur the searchbar so clickaway closes dialog
+		setOpenSearchDia(true);
+	};
+	const handleSearchClose = () => {
+		setOpenSearchDia(false);
+	};
 
+	//app Drawer
 	const handleDrawerOpen = () => {
 		setOpen(true);
 	};
@@ -153,6 +168,7 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 	const handleClickAway = () => {
 		setOpen(false);
 	};
+
 	return (
 		<ClickAwayListener onClickAway={handleClickAway}>
 			<Box sx={{ display: 'flex' }}>
@@ -194,6 +210,7 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 								id="searchbar"
 								placeholder="Search…"
 								inputProps={{ 'aria-label': 'search' }}
+								onFocusCapture={handleSearchOpen}
 							/>
 						</Search>
 						{isLoggedIn ? (
@@ -270,6 +287,10 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 					setEditAccount={setEditAccount}
 					logOut={logOut}
 					setUser={setUser}
+				/>
+				<SearchDialog
+					openSearchDia={openSearchDia}
+					handleSearchClose={handleSearchClose}
 				/>
 			</Box>
 		</ClickAwayListener>
