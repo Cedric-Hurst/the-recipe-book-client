@@ -9,7 +9,8 @@ import ArticleIcon from '@mui/icons-material/Article';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { mainCategories } from './RecipeData';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ export default function NavList({ handleDrawerClose, user }) {
         </ListSubheader>
       } */
 		>
+			{/* Home */}
 			<ListItemButton
 				onClick={() => {
 					navigate('/');
@@ -41,6 +43,7 @@ export default function NavList({ handleDrawerClose, user }) {
 				</ListItemIcon>
 				<ListItemText primary="Home" />
 			</ListItemButton>
+			{/* Recipes */}
 			<ListItemButton
 				onClick={() => {
 					navigate('/recipes');
@@ -51,8 +54,9 @@ export default function NavList({ handleDrawerClose, user }) {
 				</ListItemIcon>
 				<ListItemText primary="Recipes" />
 			</ListItemButton>
-			{user.username !== '' && ( // if signed in then user can see favorites and add recipes
+			{user.username !== '' && ( // if signed in then user can see favorites, add recipes, and MyRecipes
 				<>
+					{/* add Recipe */}
 					<ListItemButton
 						onClick={() => {
 							navigate('/recipes/new');
@@ -63,22 +67,36 @@ export default function NavList({ handleDrawerClose, user }) {
 						</ListItemIcon>
 						<ListItemText primary="Add New Recipe" />
 					</ListItemButton>
+					{/* myrecipes */}
 					<ListItemButton
 						onClick={() => {
-							navigate('/recipes/favorites');
+							navigate('/recipes/myrecipes');
 							handleDrawerClose();
 						}}>
 						<ListItemIcon>
-							<FavoriteIcon />
+							<MenuBookIcon />
 						</ListItemIcon>
-						<ListItemText primary="Favorites" />
+						<ListItemText primary="MyRecipes" />
+					</ListItemButton>
+					{/* favorites */}
+					<ListItemButton
+						onClick={() => {
+							navigate('/recipes/bookmarks');
+							handleDrawerClose();
+						}}>
+						<ListItemIcon>
+							<BookmarksIcon />
+						</ListItemIcon>
+						<ListItemText primary="Bookmarks" />
 					</ListItemButton>
 				</>
 			)}
+			{/* catagories */}
 			<ListItemButton onClick={handleCatClick}>
 				<ListItemText primary="Recipe Categories" />
 				{catOpen ? <ExpandLess /> : <ExpandMore />}
 			</ListItemButton>
+			{/* list of catagories */}
 			<Collapse in={catOpen} timeout="auto" unmountOnExit>
 				<List component="div" disablePadding>
 					{mainCategories.map((cat, i) => (

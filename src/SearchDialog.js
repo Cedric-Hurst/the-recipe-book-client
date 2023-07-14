@@ -71,15 +71,19 @@ export default function SearchDialog({ openSearchDia, handleSearchClose }) {
 	}, [openSearchDia]);
 
 	const handleSearch = async (e) => {
-		try {
-			const res = await axios.get('http://localhost:3300/search', {
-				params: {
-					q: `${e.target.value}`,
-				},
-			});
-			setSearchResult(res.data);
-		} catch (e) {
-			console.log(e); // TODO: change for post
+		if (e.target.value !== '') {
+			try {
+				const res = await axios.get('http://localhost:3300/search', {
+					params: {
+						q: `${e.target.value}`,
+					},
+				});
+				setSearchResult(res.data);
+			} catch (e) {
+				console.log(e); // TODO: change for post
+			}
+		} else {
+			setSearchResult([]);
 		}
 	};
 	return (

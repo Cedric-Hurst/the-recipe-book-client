@@ -16,8 +16,8 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { green } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -152,7 +152,7 @@ export default function RecipeCard({
 				<IconButton
 					aria-label="add or remove from favorites"
 					onClick={() => handleFavClick(index)}>
-					{recipe.favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+					{recipe.favorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
 				</IconButton>
 				<IconButton aria-label="share">
 					<ShareIcon />

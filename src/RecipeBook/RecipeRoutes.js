@@ -41,6 +41,21 @@ export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 			/>
 		);
 	};
+	const GetCatRecipes = () => {
+		const { cat } = useParams();
+		const catRecipes = recipes.filter((recipe) =>
+			recipe.category.includes(cat)
+		);
+		return (
+			<RecipeBook
+				recipes={catRecipes}
+				updateRecipe={updateRecipe}
+				pageName={`Category: ${cat}`}
+				deleteRecipe={deleteRecipe}
+				user={user}
+			/>
+		);
+	};
 	const addRecipe = async (newRecipe) => {
 		try {
 			const res = await axios.post(
@@ -77,21 +92,9 @@ export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 		}
 	};
 	const favRecipes = recipes.filter((recipe) => recipe.favorite === true);
-	const GetCatRecipes = () => {
-		const { cat } = useParams();
-		const catRecipes = recipes.filter((recipe) =>
-			recipe.category.includes(cat)
-		);
-		return (
-			<RecipeBook
-				recipes={catRecipes}
-				updateRecipe={updateRecipe}
-				pageName={`Category: ${cat}`}
-				deleteRecipe={deleteRecipe}
-				user={user}
-			/>
-		);
-	};
+	const myRecipes = recipes.filter(
+		(recipe) => recipe.author.toLowerCase() === user.username.toLowerCase()
+	);
 	return (
 		<Route path="/recipes">
 			<Route
@@ -107,13 +110,27 @@ export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 				}
 			/>
 			<Route
-				path="favorites"
+				path="bookmarks"
 				element={
 					isLoggedIn ? (
 						<RecipeBook
 							recipes={favRecipes}
 							updateRecipe={updateRecipe}
-							pageName="Favorites"
+							deleteRecipe={deleteRecipe}
+							user={user}
+						/>
+					) : (
+						<SignInFrontPage logIn={logIn} setUser={setUser} />
+					)
+				}
+			/>
+			<Route
+				path="myrecipes"
+				element={
+					isLoggedIn ? (
+						<RecipeBook
+							recipes={myRecipes}
+							updateRecipe={updateRecipe}
 							deleteRecipe={deleteRecipe}
 							user={user}
 						/>
