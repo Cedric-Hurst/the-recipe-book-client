@@ -1,4 +1,10 @@
 import { v4 as uuid } from 'uuid';
+
+import { printTiming } from '../CodeHelper';
+import './Recipe.css';
+
+import * as React from 'react';
+
 import Paper from '@mui/material/Paper';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -7,11 +13,16 @@ import RecipeSubsDialog from './RecipeSubsDialog';
 import RecipeConDialog from './RecipeConDialog';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import MuiAlert from '@mui/material/Alert';
 
-import { printTiming } from '../CodeHelper';
-import './Recipe.css';
+const Alert = React.forwardRef(function Alert(props, ref) {
+	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
-export default function Recipe({ recipe }) {
+export default function Recipe({ recipe, handleCloseSnack, openSnack }) {
 	const recipePage = () => {
 		const {
 			recipeTitle,
@@ -25,6 +36,17 @@ export default function Recipe({ recipe }) {
 		let prep = printTiming(timing.prepHr, timing.prepMin);
 		let cook = printTiming(timing.cookHr, timing.cookMin);
 
+		const snackAction = (
+			<React.Fragment>
+				<IconButton
+					size="small"
+					aria-label="close"
+					color="inherit"
+					onClick={handleCloseSnack}>
+					<CloseIcon fontSize="small" />
+				</IconButton>
+			</React.Fragment>
+		);
 		return (
 			<div className="recipe-background">
 				<Paper elevation={18} className="recipe-paper">
@@ -99,6 +121,20 @@ export default function Recipe({ recipe }) {
 						</Grid>
 					</div>
 				</Paper>
+				<div>
+					<Snackbar
+						open={openSnack}
+						autoHideDuration={6000}
+						onClose={handleCloseSnack}
+						action={snackAction}>
+						<Alert
+							onClose={handleCloseSnack}
+							severity="success"
+							sx={{ width: '100%' }}>
+							New Recipe Added!
+						</Alert>
+					</Snackbar>
+				</div>
 			</div>
 		);
 	};

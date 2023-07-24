@@ -194,7 +194,7 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 							variant="h1"
 							noWrap
 							component="div"
-							onClick={() => navigate('/recipes')}
+							onClick={() => navigate('/')}
 							sx={{
 								marginRight: 'auto',
 								fontSize: { xs: '20px' },

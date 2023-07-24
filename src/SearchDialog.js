@@ -99,7 +99,7 @@ export default function SearchDialog({ openSearchDia, handleSearchClose }) {
 						<SearchIcon />
 					</SearchIconWrapper>
 					<StyledInputBase
-						id="searchbar"
+						id="searchbarDia"
 						placeholder="Search…"
 						inputProps={{ 'aria-label': 'search' }}
 						onChange={handleSearch}
