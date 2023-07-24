@@ -42,6 +42,11 @@ export default function AccountDialog({
 				setBadUser(true); //trigger error for username/password
 			else {
 				setUser(res.data);
+				// set cookie for user and set expiration to 7 days from now
+				let expires = new Date(Date.now() + 86400 * 7000).toUTCString();
+				document.cookie = `user = ${JSON.stringify(
+					res.data
+				)}; expires = ${expires}`;
 				setOpenDia(false);
 				logIn();
 			}
