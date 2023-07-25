@@ -229,7 +229,13 @@ export default function Navbar({ isLoggedIn, logOut, logIn, user, setUser }) {
 										'aria-labelledby': 'basic-button',
 									}}>
 									<MenuItem onClick={handleProClickOpen}>Profile</MenuItem>
-									<MenuItem onClick={logOut}>Logout</MenuItem>
+									<MenuItem
+										onClick={() => {
+											handleMenuClose();
+											logOut();
+										}}>
+										Logout
+									</MenuItem>
 								</Menu>
 							</div>
 						) : (

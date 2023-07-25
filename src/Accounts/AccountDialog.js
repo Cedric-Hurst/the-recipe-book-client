@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 
 import axios from 'axios';
+import { encryptData } from '../CodeHelper';
 
 import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
@@ -44,9 +45,9 @@ export default function AccountDialog({
 				setUser(res.data);
 				// set cookie for user and set expiration to 7 days from now
 				let expires = new Date(Date.now() + 86400 * 7000).toUTCString();
-				document.cookie = `user = ${JSON.stringify(
+				document.cookie = `rbuid = ${await encryptData(
 					res.data
-				)}; expires = ${expires}`;
+				)}; expires = ${expires}; secure`;
 				setOpenDia(false);
 				logIn();
 			}

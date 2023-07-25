@@ -1,3 +1,31 @@
+import axios from 'axios';
+
+// Encrypt data
+export async function encryptData(data) {
+	try {
+		const res = await axios.get('http://localhost:3300/encrypt', {
+			params: {
+				q: `${JSON.stringify(data)}`,
+			},
+		});
+		return res.data;
+	} catch (e) {
+		console.log(e); // TODO: change for post
+	}
+}
+// Decrypt data
+export async function decryptData(encryptedData) {
+	try {
+		const res = await axios.get('http://localhost:3300/decrypt', {
+			params: {
+				q: `${encryptedData}`,
+			},
+		});
+		return JSON.parse(res.data);
+	} catch (e) {
+		console.log(e); // TODO: change for post
+	}
+}
 export const printTiming = (hr, min) => {
 	let res = '';
 

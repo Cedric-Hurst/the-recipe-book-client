@@ -1,6 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 
+import { encryptData } from './CodeHelper';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
@@ -34,9 +35,9 @@ export default function SignInFrontPage({ logIn, setUser }) {
 				setUser(res.data);
 				// set cookie for user and set expiration to 7 days from now
 				let expires = new Date(Date.now() + 86400 * 7000).toUTCString();
-				document.cookie = `user = ${JSON.stringify(
+				document.cookie = `rbuid = ${await encryptData(
 					res.data
-				)}; expires = ${expires}`;
+				)}; expires = ${expires}; secure`;
 				logIn();
 			}
 		} catch (e) {
