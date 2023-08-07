@@ -7,10 +7,15 @@ import SignInFrontPage from './SignInFrontPage';
 import { decryptData } from './CodeHelper';
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [user, setUser] = useState({ username: '', id: 0, email: '' });
+	const [user, setUser] = useState({
+		username: '',
+		id: 0,
+		email: '',
+		bookmarks: [],
+	});
 	const location = useLocation();
 	const logOut = () => {
-		setUser({ username: '', id: 0, email: '' });
+		setUser({ username: '', id: 0, email: '', bookmarks: [] });
 		let now = new Date();
 		now.setMonth(now.getMonth() - 1);
 		document.cookie = `rbuid = ${JSON.stringify(

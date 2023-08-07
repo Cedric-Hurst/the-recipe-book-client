@@ -25,7 +25,7 @@ export default function FrontPage() {
 					<div className="fp-card">
 						<FrontPageCard
 							description="Click here to view your bookmarked recipes."
-							pageUrl="/bookmarks"
+							pageUrl="/recipes/bookmarks"
 							title="Bookmarked Recipes"
 							img="https://images.unsplash.com/photo-1560719887-fe3105fa1e55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=867&q=80"
 							imgAlt="Bookmarks"
@@ -43,7 +43,7 @@ export default function FrontPage() {
 					<div className="fp-card">
 						<FrontPageCard
 							description="Click here to view all recipes created you"
-							pageUrl="/myrecipes"
+							pageUrl="/recipes/myrecipes"
 							title="My Recipes"
 							img="https://images.unsplash.com/photo-1556909211-36987daf7b4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
 							imgAlt="MyRecipes"

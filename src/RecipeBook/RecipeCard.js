@@ -22,7 +22,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
-import { printTiming } from '../CodeHelper';
+import { printTiming, bookmark, removeBookmark } from '../CodeHelper';
 
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
@@ -38,13 +38,14 @@ export default function RecipeCard({
 	recipe,
 	index,
 	recipes,
-	updateRecipe,
 	deleteRecipe,
 	user,
 }) {
 	const expandArray = new Array(recipes.length).fill(false);
 	const [expanded, setExpanded] = React.useState([...expandArray]);
-	const [flipFlop, setFlipFlop] = React.useState(true);
+	const [isBookmarked, setIsBookmarked] = React.useState(
+		user.bookmarks.includes(recipe.id)
+	);
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [openElem, setOpenElem] = React.useState(null);
@@ -73,11 +74,10 @@ export default function RecipeCard({
 		newExpanded[index] = !newExpanded[index];
 		setExpanded([...newExpanded]);
 	};
-	const handleFavClick = (index) => {
-		const newRecipe = recipes[index];
-		newRecipe.favorite = !newRecipe.favorite;
-		updateRecipe(newRecipe);
-		setFlipFlop(!flipFlop);
+	const handleFavClick = () => {
+		!isBookmarked
+			? bookmark(recipe.id, user.id)
+			: removeBookmark(recipe.id, user.id);
 	};
 	const totalTime = (timing) => {
 		let totalTime = { totalHr: 0, totalMin: 0 };
@@ -151,8 +151,11 @@ export default function RecipeCard({
 			<CardActions disableSpacing>
 				<IconButton
 					aria-label="add or remove from favorites"
-					onClick={() => handleFavClick(index)}>
-					{recipe.favorite ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+					onClick={() => {
+						setIsBookmarked(!isBookmarked);
+						handleFavClick();
+					}}>
+					{isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
 				</IconButton>
 				<IconButton aria-label="share">
 					<ShareIcon />

@@ -55,3 +55,25 @@ export const printTiming = (hr, min) => {
 	}
 	return res;
 };
+
+// Bookmarked
+export async function bookmark(recipeId, userId) {
+	try {
+		await axios.post('http://localhost:3300/bookmark', {
+			recipeId: recipeId,
+			userId: userId,
+		});
+	} catch (e) {
+		console.log(e);
+	}
+}
+export async function removeBookmark(recipeId, userId) {
+	try {
+		await axios.put('http://localhost:3300/bookmark', {
+			recipeId: recipeId,
+			userId: userId,
+		});
+	} catch (e) {
+		console.log(e);
+	}
+}
