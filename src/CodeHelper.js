@@ -77,3 +77,15 @@ export async function removeBookmark(recipeId, userId) {
 		console.log(e);
 	}
 }
+export async function getBookmark(userId) {
+	try {
+		const res = await axios.get('http://localhost:3300/bookmark', {
+			params: {
+				q: userId,
+			},
+		});
+		return res.data;
+	} catch (err) {
+		console.log(err);
+	}
+}

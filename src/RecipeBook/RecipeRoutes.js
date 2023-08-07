@@ -8,7 +8,14 @@ import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
 import SignInFrontPage from '../SignInFrontPage';
 
-export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
+export default function RecipeRoutes(
+	user,
+	isLoggedIn,
+	logIn,
+	setUser,
+	bookmarks,
+	setBookmarks
+) {
 	const [recipes, setRecipes] = useState([]);
 	const navigate = useNavigate();
 
@@ -37,6 +44,20 @@ export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 		fetchRecipes();
 	}, []);
 
+	//get recipe book based on whatever recipes your looking for.
+	const recipeBook = (specRecipes) => {
+		return (
+			<RecipeBook
+				recipes={specRecipes}
+				deleteRecipe={deleteRecipe}
+				user={user}
+				handleCloseSnack={handleCloseSnack}
+				openSnack={openSnack}
+				bookmarks={bookmarks}
+				setBookmarks={setBookmarks}
+			/>
+		);
+	};
 	// find one Recipe using recipe_id
 	const findRecipe = (id) => {
 		return recipes.findIndex((res) => parseInt(res.id) === parseInt(id));
@@ -71,15 +92,7 @@ export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 		const catRecipes = recipes.filter((recipe) =>
 			recipe.category.includes(cat)
 		);
-		return (
-			<RecipeBook
-				recipes={catRecipes}
-				updateRecipe={updateRecipe}
-				pageName={`Category: ${cat}`}
-				deleteRecipe={deleteRecipe}
-				user={user}
-			/>
-		);
+		return recipeBook(catRecipes);
 	};
 	// add recipe to database
 	const addRecipe = async (newRecipe) => {
@@ -122,37 +135,19 @@ export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 		}
 	};
 	// array of bookmarked recipes
-	const favRecipes = recipes.filter((recipe) => recipe.favorite === true);
+	const favRecipes = recipes.filter((recipe) => bookmarks.includes(recipe.id));
 	// array of recipes created by current user
 	const myRecipes = recipes.filter(
 		(recipe) => recipe.author.toLowerCase() === user.username.toLowerCase()
 	);
 	return (
 		<Route path="/recipes">
-			<Route
-				index
-				element={
-					<RecipeBook
-						recipes={recipes}
-						updateRecipe={updateRecipe}
-						pageName="Recipe Book"
-						deleteRecipe={deleteRecipe}
-						user={user}
-						handleCloseSnack={handleCloseSnack}
-						openSnack={openSnack}
-					/>
-				}
-			/>
+			<Route index element={recipeBook(recipes)} />
 			<Route
 				path="bookmarks"
 				element={
 					isLoggedIn ? (
-						<RecipeBook
-							recipes={favRecipes}
-							updateRecipe={updateRecipe}
-							deleteRecipe={deleteRecipe}
-							user={user}
-						/>
+						recipeBook(favRecipes)
 					) : (
 						<SignInFrontPage logIn={logIn} setUser={setUser} />
 					)
@@ -162,12 +157,7 @@ export default function RecipeRoutes(user, isLoggedIn, logIn, setUser) {
 				path="myrecipes"
 				element={
 					isLoggedIn ? (
-						<RecipeBook
-							recipes={myRecipes}
-							updateRecipe={updateRecipe}
-							deleteRecipe={deleteRecipe}
-							user={user}
-						/>
+						recipeBook(myRecipes)
 					) : (
 						<SignInFrontPage logIn={logIn} setUser={setUser} />
 					)

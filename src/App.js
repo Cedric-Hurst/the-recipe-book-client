@@ -4,18 +4,18 @@ import FrontPage from './FrontPage';
 import RecipeRoutes from './RecipeBook/RecipeRoutes';
 import Navbar from './Navbar';
 import SignInFrontPage from './SignInFrontPage';
-import { decryptData } from './CodeHelper';
+import { decryptData, getBookmark } from './CodeHelper';
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({
 		username: '',
 		id: 0,
 		email: '',
-		bookmarks: [],
 	});
+	const [bookmarks, setBookmarks] = useState([]);
 	const location = useLocation();
 	const logOut = () => {
-		setUser({ username: '', id: 0, email: '', bookmarks: [] });
+		setUser({ username: '', id: 0, email: '' });
 		let now = new Date();
 		now.setMonth(now.getMonth() - 1);
 		document.cookie = `rbuid = ${JSON.stringify(
@@ -35,9 +35,20 @@ function App() {
 				setUser(await decryptData(getCookieValue('rbuid')));
 				logIn();
 			}
+			if (getCookieValue('bmfavs')) {
+				setBookmarks(await decryptData(getCookieValue('bmfavs')));
+			}
 		};
 		fetchCookieValue();
 	}, []);
+
+	// get users bookmarks
+	useEffect(() => {
+		const fetchBookmarks = async () => {
+			setBookmarks(await getBookmark(user.id));
+		};
+		fetchBookmarks();
+	}, [user.id]);
 
 	return (
 		<div className="App">
@@ -59,7 +70,14 @@ function App() {
 						)
 					}
 				/>
-				{RecipeRoutes(user, isLoggedIn, logIn, setUser)}
+				{RecipeRoutes(
+					user,
+					isLoggedIn,
+					logIn,
+					setUser,
+					bookmarks,
+					setBookmarks
+				)}
 				<Route path="*" element={<FrontPage />} />
 			</Routes>
 		</div>

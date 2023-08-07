@@ -18,11 +18,12 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function RecipeBook({
 	recipes,
-	updateRecipe,
 	deleteRecipe,
 	user,
 	handleCloseSnack,
 	openSnack,
+	bookmarks,
+	setBookmarks,
 }) {
 	const navigate = useNavigate();
 	const isSignedIn = user.username !== '';
@@ -66,9 +67,10 @@ export default function RecipeBook({
 								recipe={recipe}
 								recipes={recipes}
 								index={index}
-								updateRecipe={updateRecipe}
 								deleteRecipe={deleteRecipe}
 								user={user}
+								bookmarks={bookmarks}
+								setBookmarks={setBookmarks}
 							/>
 						</div>
 					))}

@@ -22,7 +22,13 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
-import { printTiming, bookmark, removeBookmark } from '../CodeHelper';
+import {
+	printTiming,
+	bookmark,
+	removeBookmark,
+	encryptData,
+	getBookmark,
+} from '../CodeHelper';
 
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
@@ -40,17 +46,20 @@ export default function RecipeCard({
 	recipes,
 	deleteRecipe,
 	user,
+	bookmarks,
+	setBookmarks,
 }) {
 	const expandArray = new Array(recipes.length).fill(false);
 	const [expanded, setExpanded] = React.useState([...expandArray]);
 	const [isBookmarked, setIsBookmarked] = React.useState(
-		user.bookmarks.includes(recipe.id)
+		bookmarks.includes(recipe.id)
 	);
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [openElem, setOpenElem] = React.useState(null);
 
 	const authUser = user.username.toLowerCase() === recipe.author.toLowerCase();
+	const isSignedIn = user.username !== '';
 
 	const handleClick = (id) => (event) => {
 		event.stopPropagation();
@@ -74,10 +83,18 @@ export default function RecipeCard({
 		newExpanded[index] = !newExpanded[index];
 		setExpanded([...newExpanded]);
 	};
-	const handleFavClick = () => {
-		!isBookmarked
-			? bookmark(recipe.id, user.id)
-			: removeBookmark(recipe.id, user.id);
+	const handleFavClick = async () => {
+		if (!isBookmarked) {
+			bookmark(recipe.id, user.id);
+			setBookmarks([...bookmarks, recipe.id]);
+		} else {
+			removeBookmark(recipe.id, user.id);
+			setBookmarks(bookmarks.filter((bookmark) => bookmark !== recipe.id));
+		}
+
+		document.cookie = `bmfavs = ${await encryptData(
+			await getBookmark(user.id)
+		)}; secure`;
 	};
 	const totalTime = (timing) => {
 		let totalTime = { totalHr: 0, totalMin: 0 };
@@ -149,14 +166,16 @@ export default function RecipeCard({
 				</Stack>
 			</CardContent>
 			<CardActions disableSpacing>
-				<IconButton
-					aria-label="add or remove from favorites"
-					onClick={() => {
-						setIsBookmarked(!isBookmarked);
-						handleFavClick();
-					}}>
-					{isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
-				</IconButton>
+				{isSignedIn && (
+					<IconButton
+						aria-label="add or remove from favorites"
+						onClick={() => {
+							setIsBookmarked(!isBookmarked);
+							handleFavClick();
+						}}>
+						{isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+					</IconButton>
+				)}
 				<IconButton aria-label="share">
 					<ShareIcon />
 				</IconButton>
