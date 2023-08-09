@@ -70,6 +70,8 @@ export default function RecipeRoutes(
 				recipe={recipes[findRecipe(id)]}
 				handleCloseSnack={handleCloseSnack}
 				openSnack={openSnack}
+				user={user}
+				deleteRecipe={deleteRecipe}
 			/>
 		);
 	};

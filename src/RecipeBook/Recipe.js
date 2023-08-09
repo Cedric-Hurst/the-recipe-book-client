@@ -4,6 +4,7 @@ import { printTiming } from '../CodeHelper';
 import './Recipe.css';
 
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Paper from '@mui/material/Paper';
 import FormGroup from '@mui/material/FormGroup';
@@ -17,12 +18,24 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert from '@mui/material/Alert';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import EditIcon from '@mui/icons-material/Edit';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function Recipe({ recipe, handleCloseSnack, openSnack }) {
+export default function Recipe({
+	recipe,
+	handleCloseSnack,
+	openSnack,
+	user,
+	deleteRecipe,
+}) {
+	const navigate = useNavigate();
 	const recipePage = () => {
 		const {
 			recipeTitle,
@@ -32,6 +45,7 @@ export default function Recipe({ recipe, handleCloseSnack, openSnack }) {
 			ingredients,
 			instructions,
 			author,
+			id,
 		} = recipe;
 		let prep = printTiming(timing.prepHr, timing.prepMin);
 		let cook = printTiming(timing.cookHr, timing.cookMin);
@@ -47,10 +61,47 @@ export default function Recipe({ recipe, handleCloseSnack, openSnack }) {
 				</IconButton>
 			</React.Fragment>
 		);
+		const authUser =
+			user.username.toLowerCase() === recipe.author.toLowerCase();
+
+		const handleEdit = () => {
+			navigate(`/recipes/${id}/edit`);
+		};
+		const handleDelete = () => {
+			deleteRecipe(id);
+			navigate(`/recipes`);
+		};
 		return (
 			<div className="recipe-background">
 				<Paper elevation={18} className="recipe-paper">
 					<div className="recipe-root">
+						{authUser && (
+							<SpeedDial
+								ariaLabel="update recipe"
+								sx={{ position: 'fixed', bottom: 16, right: 16 }}
+								icon={<SpeedDialIcon />}
+								FabProps={{
+									sx: {
+										bgcolor: 'green',
+										'&:hover': {
+											bgcolor: 'green',
+										},
+									},
+								}}>
+								<SpeedDialAction
+									key={'Edit Recipe'}
+									icon={<EditIcon />}
+									tooltipTitle={'Edit Recipe'}
+									onClick={handleEdit}
+								/>
+								<SpeedDialAction
+									key={'Delete'}
+									icon={<DeleteForeverIcon />}
+									tooltipTitle={'Delete'}
+									onClick={handleDelete}
+								/>
+							</SpeedDial>
+						)}
 						<Grid container columnSpacing={2}>
 							<Grid item xs={12} lg={6}>
 								<div className="recipe-info">
