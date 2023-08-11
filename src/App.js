@@ -5,6 +5,8 @@ import RecipeRoutes from './RecipeBook/RecipeRoutes';
 import Navbar from './Navbar';
 import SignInFrontPage from './SignInFrontPage';
 import { decryptData, getBookmark } from './CodeHelper';
+import CircularProgress from '@mui/material/CircularProgress';
+
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({
@@ -14,6 +16,8 @@ function App() {
 	});
 	const [bookmarks, setBookmarks] = useState([]);
 	const location = useLocation();
+	const [isLoading, setIsLoading] = useState(true);
+
 	const logOut = () => {
 		setUser({ username: '', id: 0, email: '' });
 		let now = new Date();
@@ -40,6 +44,7 @@ function App() {
 			}
 		};
 		fetchCookieValue();
+		setIsLoading(false);
 	}, []);
 
 	// get users bookmarks
@@ -63,7 +68,15 @@ function App() {
 				<Route
 					index
 					element={
-						isLoggedIn ? (
+						isLoading ? (
+							<CircularProgress
+								color="success"
+								sx={{
+									marginTop: '200px',
+									marginLeft: '50%',
+								}}
+							/>
+						) : isLoggedIn ? (
 							<FrontPage />
 						) : (
 							<SignInFrontPage logIn={logIn} setUser={setUser} />
