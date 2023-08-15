@@ -89,7 +89,8 @@ function App() {
 					logIn,
 					setUser,
 					bookmarks,
-					setBookmarks
+					setBookmarks,
+					isLoading
 				)}
 				<Route path="*" element={<FrontPage />} />
 			</Routes>

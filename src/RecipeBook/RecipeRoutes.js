@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Route, useParams, useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
 import RecipeBook from './RecipeBook';
@@ -14,7 +15,8 @@ export default function RecipeRoutes(
 	logIn,
 	setUser,
 	bookmarks,
-	setBookmarks
+	setBookmarks,
+	isLoading
 ) {
 	const [recipes, setRecipes] = useState([]);
 	const navigate = useNavigate();
@@ -46,7 +48,15 @@ export default function RecipeRoutes(
 
 	//get recipe book based on whatever recipes your looking for.
 	const recipeBook = (specRecipes) => {
-		return (
+		return isLoading ? (
+			<CircularProgress
+				color="success"
+				sx={{
+					marginTop: '200px',
+					marginLeft: '50%',
+				}}
+			/>
+		) : (
 			<RecipeBook
 				recipes={specRecipes}
 				deleteRecipe={deleteRecipe}
@@ -148,7 +158,15 @@ export default function RecipeRoutes(
 			<Route
 				path="bookmarks"
 				element={
-					isLoggedIn ? (
+					isLoading ? (
+						<CircularProgress
+							color="success"
+							sx={{
+								marginTop: '200px',
+								marginLeft: '50%',
+							}}
+						/>
+					) : isLoggedIn ? (
 						recipeBook(favRecipes)
 					) : (
 						<SignInFrontPage logIn={logIn} setUser={setUser} />
@@ -169,7 +187,15 @@ export default function RecipeRoutes(
 			<Route
 				path="new"
 				element={
-					isLoggedIn ? (
+					isLoading ? (
+						<CircularProgress
+							color="success"
+							sx={{
+								marginTop: '200px',
+								marginLeft: '50%',
+							}}
+						/>
+					) : isLoggedIn ? (
 						<RecipeForm addRecipe={addRecipe} user={user} />
 					) : (
 						<SignInFrontPage logIn={logIn} setUser={setUser} />
@@ -180,7 +206,15 @@ export default function RecipeRoutes(
 			<Route
 				path=":id/edit"
 				element={
-					isLoggedIn ? (
+					isLoading ? (
+						<CircularProgress
+							color="success"
+							sx={{
+								marginTop: '200px',
+								marginLeft: '50%',
+							}}
+						/>
+					) : isLoggedIn ? (
 						<GetRecipeEdit />
 					) : (
 						<SignInFrontPage logIn={logIn} setUser={setUser} />
