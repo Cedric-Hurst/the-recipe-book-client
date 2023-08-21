@@ -4,6 +4,7 @@ import { printTiming } from '../CodeHelper';
 import './Recipe.css';
 
 import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Paper from '@mui/material/Paper';
@@ -23,6 +24,7 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
+import ConfirmationDialog from '../ConfirmationDialog';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -35,6 +37,14 @@ export default function Recipe({
 	user,
 	deleteRecipe,
 }) {
+	//Confirmation states and functions
+	const [openConfirm, setOpenConfirm] = useState(false);
+	const handleConfirmOpen = () => {
+		setOpenConfirm(true);
+	};
+	const handleConfirmClose = () => {
+		setOpenConfirm(false);
+	};
 	const navigate = useNavigate();
 	const recipePage = () => {
 		const {
@@ -49,7 +59,6 @@ export default function Recipe({
 		} = recipe;
 		let prep = printTiming(timing.prepHr, timing.prepMin);
 		let cook = printTiming(timing.cookHr, timing.cookMin);
-
 		const snackAction = (
 			<React.Fragment>
 				<IconButton
@@ -98,10 +107,16 @@ export default function Recipe({
 									key={'Delete'}
 									icon={<DeleteForeverIcon />}
 									tooltipTitle={'Delete'}
-									onClick={handleDelete}
+									onClick={handleConfirmOpen}
 								/>
 							</SpeedDial>
 						)}
+						<ConfirmationDialog
+							open={openConfirm}
+							handleClose={handleConfirmClose}
+							doFunction={handleDelete}
+							confirmText={`delete ${recipeTitle}?`}
+						/>
 						<Grid container columnSpacing={2}>
 							<Grid item xs={12} lg={6}>
 								<div className="recipe-info">

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -22,6 +23,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
+import ConfirmationDialog from '../ConfirmationDialog';
 import {
 	printTiming,
 	bookmark,
@@ -50,13 +52,22 @@ export default function RecipeCard({
 	setBookmarks,
 }) {
 	const expandArray = new Array(recipes.length).fill(false);
-	const [expanded, setExpanded] = React.useState([...expandArray]);
-	const [isBookmarked, setIsBookmarked] = React.useState(
+	const [expanded, setExpanded] = useState([...expandArray]);
+	const [isBookmarked, setIsBookmarked] = useState(
 		bookmarks.includes(recipe.id)
 	);
 
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const [openElem, setOpenElem] = React.useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [openElem, setOpenElem] = useState(null);
+
+	//confirmation dialog states and functions
+	const [openConfirm, setOpenConfirm] = useState(false);
+	const handleConfirmOpen = () => {
+		setOpenConfirm(true);
+	};
+	const handleConfirmClose = () => {
+		setOpenConfirm(false);
+	};
 
 	const authUser = user.username.toLowerCase() === recipe.author.toLowerCase();
 	const isSignedIn = user.username !== '';
@@ -70,13 +81,13 @@ export default function RecipeCard({
 		setAnchorEl(null);
 		setOpenElem(null);
 	};
-	const handleDelete = (id) => {
-		deleteRecipe(id);
+	const handleDelete = () => {
+		deleteRecipe(recipe.id);
 		handleClose();
 	};
-	const handleEdit = (id) => {
+	const handleEdit = () => {
 		handleClose();
-		navigate(`/recipes/${id}/edit`);
+		navigate(`/recipes/${recipe.id}/edit`);
 	};
 	const handleExpandClick = (index) => {
 		const newExpanded = expanded;
@@ -136,13 +147,19 @@ export default function RecipeCard({
 				MenuListProps={{
 					'aria-labelledby': 'basic-button',
 				}}>
-				<MenuItem onClick={(e) => handleEdit(recipe.id)}>
+				<MenuItem onClick={handleEdit}>
 					<EditIcon sx={{ mr: '15px' }} /> Edit
 				</MenuItem>
-				<MenuItem onClick={(e) => handleDelete(recipe.id)}>
+				<MenuItem onClick={handleConfirmOpen}>
 					<DeleteForeverIcon sx={{ mr: '15px' }} /> Delete
 				</MenuItem>
 			</Menu>
+			<ConfirmationDialog
+				open={openConfirm}
+				handleClose={handleConfirmClose}
+				doFunction={handleDelete}
+				confirmText={`delete ${recipe.recipeTitle}?`}
+			/>
 			<CardMedia
 				id="card-img"
 				component="img"
