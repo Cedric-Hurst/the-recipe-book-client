@@ -111,10 +111,11 @@ export default function SearchDialog({ openSearchDia, handleSearchClose }) {
 					id="scroll-dialog-description"
 					ref={descriptionElementRef}
 					tabIndex={-1}>
-					{searchResult.map((res) => {
+					{searchResult.map((res, i) => {
 						return (
 							<span
 								className="sd-searchResult"
+								key={`search: ${i}`}
 								onClick={() => {
 									navigate(`/recipes/${res.id}`);
 									handleSearchClose();

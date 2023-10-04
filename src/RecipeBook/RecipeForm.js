@@ -77,8 +77,8 @@ export default function RecipeForm({ addRecipe, user }) {
 		//if any badState is true then return false for checkRecipe
 		let returnVal = true;
 
-		const checkLength = recipeTitle.length >= 5 && recipeTitle.length < 30;
-		// if title is less then 5 or greater then 30 - trigger warning
+		const checkLength = recipeTitle.length >= 5 && recipeTitle.length < 50;
+		// if title is less then 5 or greater then 50 - trigger warning
 		if (!checkLength) {
 			setBadTitle(true);
 			returnVal = false;
