@@ -19,3 +19,7 @@ export function validateUsername(name) {
 	let re = /^(?=.{6,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
 	return re.test(name);
 }
+export function validateImageUrl(url) {
+	let re = /(https?:\/\/.*\.(?:png|jpg))/i;
+	return re.test(url);
+}

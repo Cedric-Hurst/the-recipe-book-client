@@ -16,10 +16,20 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Tooltip from '@mui/material/Tooltip';
 
+import * as React from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
 import { measurements, categories } from '../RecipeData';
+import { validateName, validateImageUrl } from '../Validations';
 import './RecipeForm.css';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 export default function RecipeForm({ addRecipe, user }) {
+	// recipe state
 	const [recipeTitle, setRecipeTitle] = useState('');
 	const [category, setCategory] = useState([]);
 	const [servings, setServings] = useState(0);
@@ -42,9 +52,90 @@ export default function RecipeForm({ addRecipe, user }) {
 	]);
 	const [instructions, setInstructions] = useState(['']);
 
+	//validation
+	const errorText = [
+		'Recipe titles must have between 5 and 30 characters and cannot have special characters.',
+		'Image requires a proper image url.',
+		'choose 1 or more categories.',
+		'Add an ingredient.',
+		'Add an instruction.',
+	];
+	const [badTitle, setBadTitle] = useState(false);
+	const [badImg, setBadImg] = useState(false);
+	const [badCat, setBadCat] = useState(false);
+	const [badIngre, setBadIngre] = useState(false);
+	const [badInstr, setBadInstr] = useState(false);
+	const resetBads = () => {
+		setBadImg(false);
+		setBadTitle(false);
+		setBadCat(false);
+		setBadIngre(false);
+		setBadInstr(false);
+	};
+	//validation check
+	const checkRecipe = () => {
+		//if any badState is true then return false for checkRecipe
+		let returnVal = true;
+
+		const checkLength = recipeTitle.length >= 5 && recipeTitle.length < 30;
+		// if title is less then 5 or greater then 30 - trigger warning
+		if (!checkLength) {
+			setBadTitle(true);
+			returnVal = false;
+		}
+		// if title has special characters - trigger warning
+		if (!validateName(recipeTitle)) {
+			setBadTitle(true);
+			returnVal = false;
+		}
+		//if category is empty - trigger warning
+		if (category.length <= 0) {
+			setBadCat(true);
+			returnVal = false;
+		}
+		//if there is no ingredient name input - trigger warning
+		if (ingredients[0].ingredient === '') {
+			setBadIngre(true);
+			returnVal = false;
+		}
+		//if there is no text in instructions - trigger warning
+		if (instructions[0] === '') {
+			setBadInstr(true);
+			returnVal = false;
+		}
+		//if img is not valid - trigger warning
+		if (!validateImageUrl(img)) {
+			setBadImg(true);
+			returnVal = false;
+		}
+		return returnVal;
+	};
+	const warning = () => {
+		const message = [];
+		badTitle && message.push(' Recipe Title');
+		badImg && message.push(' Image Url');
+		badCat && message.push(' Category');
+		badIngre && message.push(' Ingredients');
+		badInstr && message.push(' Instructions');
+		return message.toString();
+	};
+
+	//snackbar
+	const [open, setOpen] = React.useState(false);
+	const handleSnackOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
+
+	// recipe form functions
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
+		resetBads();
 		const recipe = {
 			recipeTitle: recipeTitle,
 			category: category,
@@ -57,7 +148,9 @@ export default function RecipeForm({ addRecipe, user }) {
 			user_id: user.id,
 			author: user.username,
 		};
-		addRecipe(recipe);
+		if (checkRecipe()) {
+			addRecipe(recipe);
+		} else handleSnackOpen();
 	};
 	const handleTextChange = (e) => {
 		e.target.name === 'recipeTitle' && setRecipeTitle(e.target.value);
@@ -137,6 +230,14 @@ export default function RecipeForm({ addRecipe, user }) {
 							}}
 						/>
 					</Tooltip>
+					<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+						<Alert
+							onClose={handleClose}
+							severity="warning"
+							sx={{ width: '100%' }}>
+							Recipe missing {warning()}
+						</Alert>
+					</Snackbar>
 					<form onSubmit={handleSubmit} noValidate className="rForm-form">
 						<Grid container spacing={2}>
 							<Grid item xs={12} lg={6}>
@@ -147,6 +248,8 @@ export default function RecipeForm({ addRecipe, user }) {
 										label="Recipe Name"
 										name="recipeTitle"
 										variant="standard"
+										error={badTitle}
+										helperText={badTitle ? errorText[0] : ''}
 										sx={{ mb: 3, width: '90%' }}
 										onKeyDown={handleEnterPress}
 										onChange={handleTextChange}
@@ -157,6 +260,8 @@ export default function RecipeForm({ addRecipe, user }) {
 											label="Image Url"
 											name="img"
 											variant="standard"
+											error={badImg}
+											helperText={badImg ? errorText[1] : ''}
 											sx={{ mb: 3, width: '90%' }}
 											onKeyDown={handleEnterPress}
 											onChange={handleTextChange}
@@ -174,6 +279,8 @@ export default function RecipeForm({ addRecipe, user }) {
 													{...params}
 													variant="standard"
 													label="Categories"
+													error={badCat}
+													helperText={badCat ? errorText[2] : ''}
 												/>
 											)}
 											onChange={(e, newVal) => {
@@ -249,7 +356,7 @@ export default function RecipeForm({ addRecipe, user }) {
 										</div>
 									</div>
 
-									<p>Ingredients:</p>
+									<p>{`Ingredients:`}</p>
 									<div className="rForm-ingredients">
 										{ingredients.map((input, index) => {
 											return (
@@ -261,6 +368,8 @@ export default function RecipeForm({ addRecipe, user }) {
 																name="qty"
 																label="qty"
 																variant="standard"
+																error={badIngre}
+																helperText={badIngre ? ' ' : ''}
 																value={input.qty}
 																className="rForm-qty"
 																onKeyDown={handleEnterPress}
@@ -298,6 +407,8 @@ export default function RecipeForm({ addRecipe, user }) {
 																id={`ingredient-text${index}`}
 																name="ingredient"
 																label="Ingredient"
+																error={badIngre}
+																helperText={badIngre ? errorText[3] : ''}
 																value={input.ingredient}
 																variant="standard"
 																className="rForm-ingre-desc"
@@ -312,6 +423,8 @@ export default function RecipeForm({ addRecipe, user }) {
 																label="Desc"
 																value={input.description}
 																variant="standard"
+																error={badIngre}
+																helperText={badIngre ? ' ' : ''}
 																className="rForm-ingre-desc"
 																onKeyDown={handleEnterPress}
 																onChange={(event) =>
@@ -346,6 +459,8 @@ export default function RecipeForm({ addRecipe, user }) {
 													id={`instruction-${index}`}
 													name="instruction"
 													label="Instructions"
+													error={badInstr}
+													helperText={badInstr ? errorText[4] : ''}
 													multiline
 													value={instruction}
 													rows={3}
