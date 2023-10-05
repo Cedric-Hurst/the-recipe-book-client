@@ -1,15 +1,16 @@
 import * as React from 'react';
 import axios from 'axios';
 
-import { encryptData } from './CodeHelper';
+import { encryptData } from '../Helpers/CodeHelper';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 
-import LogInForm from './Accounts/LogInForm';
-import CreateAccountForm from './Accounts/CreateAccountForm';
+import LogInForm from '../Accounts/LogInForm';
+import CreateAccountForm from '../Accounts/CreateAccountForm';
 
 import './SignInFrontPage.css';
+import ErrorPage from '../Main/ErrorPage';
 
 export default function SignInFrontPage({ logIn, setUser }) {
 	const [needAccount, setNeedAccount] = React.useState(false);
@@ -41,7 +42,7 @@ export default function SignInFrontPage({ logIn, setUser }) {
 				logIn();
 			}
 		} catch (e) {
-			console.log(e); // TODO: change for post
+			return <ErrorPage errorCode={e} />;
 		}
 	};
 	const handleCreate = async () => {
@@ -58,7 +59,7 @@ export default function SignInFrontPage({ logIn, setUser }) {
 				});
 				logIn();
 			} catch (e) {
-				console.log(e); // TODO: change in post
+				return <ErrorPage errorCode={e} />;
 			}
 		}
 	};

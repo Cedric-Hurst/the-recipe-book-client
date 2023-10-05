@@ -27,8 +27,8 @@ import {
 	mg,
 	oz,
 	lb,
-} from '../Conversions';
-import { measurements, fractions } from '../RecipeData';
+} from '../Helpers/Conversions';
+import { measurements, fractions } from '../Helpers/RecipeData';
 
 const DiaButton = styled(Button)(({ theme }) => ({
 	color: 'rgb(0,128,0)',

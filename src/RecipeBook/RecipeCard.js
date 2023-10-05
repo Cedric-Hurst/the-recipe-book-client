@@ -24,14 +24,14 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
-import ConfirmationDialog from '../ConfirmationDialog';
+import ConfirmationDialog from '../Helpers/ConfirmationDialog';
 import {
 	printTiming,
 	bookmark,
 	removeBookmark,
 	encryptData,
 	getBookmark,
-} from '../CodeHelper';
+} from '../Helpers/CodeHelper';
 
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;

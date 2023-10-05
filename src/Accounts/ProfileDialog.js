@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import axios from 'axios';
 
 import EditAccountForm from './EditAccountForm';
-import ErrorPage from '../ErrorPage';
+import ErrorPage from '../Main/ErrorPage';
 
 export default function ProfileDialog({
 	openProDia,

@@ -1,11 +1,11 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import FrontPage from './FrontPage';
-import ErrorPage from './ErrorPage';
+import FrontPage from './Main/FrontPage';
+import ErrorPage from './Main/ErrorPage';
 import RecipeRoutes from './RecipeBook/RecipeRoutes';
-import Navbar from './Navbar';
-import SignInFrontPage from './SignInFrontPage';
-import { decryptData, getBookmark } from './CodeHelper';
+import Navbar from './Main/Navbar';
+import SignInFrontPage from './Main/SignInFrontPage';
+import { decryptData, getBookmark } from './Helpers/CodeHelper';
 import CircularProgress from '@mui/material/CircularProgress';
 
 function App() {

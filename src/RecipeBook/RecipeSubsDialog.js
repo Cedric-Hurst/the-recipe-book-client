@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/material/styles';
 
-import { substitutions } from '../RecipeData';
+import { substitutions } from '../Helpers/RecipeData';
 import './RecipeSubsDialog.css';
 
 const DiaButton = styled(Button)(({ theme }) => ({

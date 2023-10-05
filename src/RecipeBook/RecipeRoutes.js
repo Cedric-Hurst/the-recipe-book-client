@@ -7,8 +7,8 @@ import RecipeBook from './RecipeBook';
 import RecipeForm from './RecipeForm';
 import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
-import SignInFrontPage from '../SignInFrontPage';
-import ErrorPage from '../ErrorPage';
+import SignInFrontPage from '../Main/SignInFrontPage';
+import ErrorPage from '../Main/ErrorPage';
 
 export default function RecipeRoutes(
 	user,

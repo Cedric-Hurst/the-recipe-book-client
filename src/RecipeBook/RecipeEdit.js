@@ -24,8 +24,8 @@ import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-import { measurements, categories } from '../RecipeData';
-import { validateName, validateImageUrl } from '../Validations';
+import { measurements, categories } from '../Helpers/RecipeData';
+import { validateName, validateImageUrl } from '../Helpers/Validations';
 import './RecipeForm.css';
 
 const Alert = React.forwardRef(function Alert(props, ref) {

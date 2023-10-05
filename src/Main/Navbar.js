@@ -23,9 +23,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
 import NavList from './NavList';
-import AccountDialog from './Accounts/AccountDialog';
-import ProfileDialog from './Accounts/ProfileDialog';
-import SearchDialog from './SearchDialog';
+import AccountDialog from '../Accounts/AccountDialog';
+import ProfileDialog from '../Accounts/ProfileDialog';
+import SearchDialog from '../Helpers/SearchDialog';
 
 const drawerWidth = 300;
 

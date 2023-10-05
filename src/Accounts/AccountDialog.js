@@ -9,11 +9,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 
 import axios from 'axios';
-import { encryptData } from '../CodeHelper';
+import { encryptData } from '../Helpers/CodeHelper';
 
 import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
-import ErrorPage from '../ErrorPage';
+import ErrorPage from '../Main/ErrorPage';
 
 export default function AccountDialog({
 	setUser,

@@ -8,9 +8,9 @@ import {
 	validatePassword,
 	validateEmail,
 	validateUsername,
-} from '../Validations';
+} from '../Helpers/Validations';
 import './LogInForm.css';
-import ErrorPage from '../ErrorPage';
+import ErrorPage from '../Main/ErrorPage';
 
 export default function CreateAccountForm({
 	setNewAccount,

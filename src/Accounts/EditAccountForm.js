@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import './LogInForm.css';
-import { validatePassword, validateEmail } from '../Validations';
+import { validatePassword, validateEmail } from '../Helpers/Validations';
 
 export default function EditAccountForm({
 	setGoodAccount,

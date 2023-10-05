@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-import { printTiming } from '../CodeHelper';
+import { printTiming } from '../Helpers/CodeHelper';
 import './Recipe.css';
 
 import * as React from 'react';
@@ -24,7 +24,7 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import ConfirmationDialog from '../ConfirmationDialog';
+import ConfirmationDialog from '../Helpers/ConfirmationDialog';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

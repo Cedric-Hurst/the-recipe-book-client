@@ -11,7 +11,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { mainCategories } from './RecipeData';
+import { mainCategories } from '../Helpers/RecipeData';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavList({ handleDrawerClose, user }) {
