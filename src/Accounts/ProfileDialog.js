@@ -11,6 +11,7 @@ import Stack from '@mui/material/Stack';
 import axios from 'axios';
 
 import EditAccountForm from './EditAccountForm';
+import ErrorPage from '../ErrorPage';
 
 export default function ProfileDialog({
 	openProDia,
@@ -35,7 +36,7 @@ export default function ProfileDialog({
 		try {
 			await axios.delete(`http://localhost:3300/accounts/${user.id}`);
 		} catch (e) {
-			console.log(e); // TODO: change for post
+			return <ErrorPage errorCode={e} />;
 		}
 	};
 	const handleEditAccount = async () => {
@@ -60,10 +61,10 @@ export default function ProfileDialog({
 					updatedUser
 				);
 			} catch (e) {
-				console.log(e); // TODO: change for post
+				return <ErrorPage errorCode={e} />;
 			}
 		} else {
-			console.log('error');
+			return <ErrorPage errorCode={'Profile Error'} />;
 		}
 	};
 

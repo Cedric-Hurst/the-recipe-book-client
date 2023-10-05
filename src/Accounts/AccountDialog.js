@@ -13,6 +13,7 @@ import { encryptData } from '../CodeHelper';
 
 import LogInForm from './LogInForm';
 import CreateAccountForm from './CreateAccountForm';
+import ErrorPage from '../ErrorPage';
 
 export default function AccountDialog({
 	setUser,
@@ -52,7 +53,7 @@ export default function AccountDialog({
 				logIn();
 			}
 		} catch (e) {
-			console.log(e); // TODO: change for post
+			return <ErrorPage errorCode={e} />;
 		}
 	};
 	const handleCreate = async () => {
@@ -70,7 +71,7 @@ export default function AccountDialog({
 				});
 				logIn();
 			} catch (e) {
-				console.log(e); // TODO: change in post
+				return <ErrorPage errorCode={e} />;
 			}
 		}
 	};

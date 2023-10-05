@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import './LogInForm.css';
+import { validatePassword, validateEmail } from '../Validations';
 
 export default function EditAccountForm({
 	setGoodAccount,
@@ -21,17 +22,10 @@ export default function EditAccountForm({
 	const badConfirm = confirmError !== '';
 	const badPassword = passwordError !== '';
 	const goodAccount = !badConfirm && !badEmail && !badPassword;
-	function checkPassword(str) {
-		let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-		return re.test(str);
-	}
-	function validateEmail(email) {
-		var re = /\S+@\S+\.\S+/;
-		return re.test(email);
-	}
+
 	const handleChange = (e) => {
 		if (e.target.name === 'password') {
-			if (!checkPassword(e.target.value.trim())) {
+			if (!validatePassword(e.target.value.trim())) {
 				setPasswordError(
 					'Password must contain one capital letter, one symbol, one lowercase letter, and be at least 8 characters long'
 				);

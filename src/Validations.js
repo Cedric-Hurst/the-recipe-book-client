@@ -13,6 +13,12 @@ export function validateEmail(email) {
 	let re = /\S+@\S+\.\S+/;
 	return re.test(email);
 }
+// validate password, one capitalize letter, one lower, one number,
+// and one special character, min 8 characters
+export function validatePassword(str) {
+	let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+	return re.test(str);
+}
 // validate username. ex: name.name or name_name or name123
 // (min 6 characters, max 30) cant start or end with . or _ and no special characters
 export function validateUsername(name) {

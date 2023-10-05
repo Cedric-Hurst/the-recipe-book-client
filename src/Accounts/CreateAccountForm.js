@@ -3,7 +3,14 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
+
+import {
+	validatePassword,
+	validateEmail,
+	validateUsername,
+} from '../Validations';
 import './LogInForm.css';
+import ErrorPage from '../ErrorPage';
 
 export default function CreateAccountForm({
 	setNewAccount,
@@ -25,21 +32,10 @@ export default function CreateAccountForm({
 	const badConfirm = confirmError !== '';
 	const badPassword = passwordError !== '';
 	const goodAccount = !badConfirm && !badUsername && !badEmail && !badPassword;
-	function checkPassword(str) {
-		let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-		return re.test(str);
-	}
-	function validateEmail(email) {
-		let re = /\S+@\S+\.\S+/;
-		return re.test(email);
-	}
-	function validateName(name) {
-		let re = /^(?=.{6,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
-		return re.test(name);
-	}
+
 	const handleChange = (e) => {
 		if (e.target.name === 'username') {
-			if (!validateName(e.target.value.trim())) {
+			if (!validateUsername(e.target.value.trim())) {
 				setUserError(
 					'Username must be between 6 - 30 characters and must be alphanumeric. (May use underscore and dot but cannot start or end with one)'
 				);
@@ -50,7 +46,7 @@ export default function CreateAccountForm({
 			}
 		}
 		if (e.target.name === 'password') {
-			if (!checkPassword(e.target.value.trim())) {
+			if (!validatePassword(e.target.value.trim())) {
 				setPasswordError(
 					'Password must contain one capital letter, one symbol, one lowercase letter, and be at least 8 characters long'
 				);
@@ -90,7 +86,7 @@ export default function CreateAccountForm({
 					setCreateDisable(true);
 				}
 			} catch (err) {
-				console.log(err);
+				return <ErrorPage errorCode={err} />;
 			}
 		}
 	};
@@ -105,7 +101,7 @@ export default function CreateAccountForm({
 					setCreateDisable(true);
 				}
 			} catch (err) {
-				console.log(err);
+				return <ErrorPage errorCode={err} />;
 			}
 		}
 	};

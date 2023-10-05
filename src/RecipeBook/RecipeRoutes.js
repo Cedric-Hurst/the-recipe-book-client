@@ -8,6 +8,7 @@ import RecipeForm from './RecipeForm';
 import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
 import SignInFrontPage from '../SignInFrontPage';
+import ErrorPage from '../ErrorPage';
 
 export default function RecipeRoutes(
 	user,
@@ -40,7 +41,7 @@ export default function RecipeRoutes(
 				const res = await axios.get('http://localhost:3300/recipes');
 				setRecipes(res.data);
 			} catch (e) {
-				console.log(e); // change for post
+				return <ErrorPage errorCode={e} />;
 			}
 		};
 		fetchRecipes();
@@ -118,7 +119,7 @@ export default function RecipeRoutes(
 			handleClickSnack();
 			navigate(`/recipes/${res.data}`);
 		} catch (e) {
-			console.error(e); // change for post
+			return <ErrorPage errorCode={e} />;
 		}
 	};
 	// delete recipe from database
@@ -129,7 +130,7 @@ export default function RecipeRoutes(
 			await axios.delete(`http://localhost:3300/recipes/${id}`);
 			window.location.reload();
 		} catch (e) {
-			console.log(e); // change for post
+			return <ErrorPage errorCode={e} />;
 		}
 	};
 	// update recipe in database
@@ -143,7 +144,7 @@ export default function RecipeRoutes(
 			newRecipes[index] = updatedRecipe;
 			setRecipes(newRecipes);
 		} catch (e) {
-			console.log(e);
+			return <ErrorPage errorCode={e} />;
 		}
 	};
 	// array of bookmarked recipes
