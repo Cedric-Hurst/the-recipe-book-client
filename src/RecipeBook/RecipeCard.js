@@ -6,6 +6,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
+import { CardActionArea } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Collapse from '@mui/material/Collapse';
@@ -118,6 +119,9 @@ export default function RecipeCard({
 		}
 		return printTiming(totalTime.totalHr, totalTime.totalMin);
 	};
+	const handleCardClick = () => {
+		navigate(`/recipes/${recipe.id}}`);
+	};
 	const navigate = useNavigate();
 	return (
 		<Card sx={{ width: 345 }}>
@@ -160,14 +164,15 @@ export default function RecipeCard({
 				doFunction={handleDelete}
 				confirmText={`delete ${recipe.recipeTitle}?`}
 			/>
-			<CardMedia
-				id="card-img"
-				component="img"
-				height="194"
-				image={recipe.img}
-				alt={recipe.recipeTitle}
-				onClick={() => navigate(`/recipes/${recipe.id}`)}
-			/>
+			<CardActionArea onClick={handleCardClick}>
+				<CardMedia
+					id="card-img"
+					component="img"
+					height="194"
+					image={recipe.img}
+					alt={recipe.recipeTitle}
+				/>
+			</CardActionArea>
 			<CardContent>
 				<Typography variant="body2" color="text.secondary">
 					Total Time: {totalTime(recipe.timing)}

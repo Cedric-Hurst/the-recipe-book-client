@@ -11,9 +11,6 @@
 .rb-cards #card-img:hover {
 	cursor: pointer;
 }
-.rb-cards:hover {
-	scale: 1.1;
-}
 @media (max-width: 765px) {
 	.rb-card-container {
 		text-align: center;

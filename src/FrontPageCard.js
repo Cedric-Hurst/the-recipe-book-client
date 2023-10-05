@@ -20,7 +20,12 @@ export default function FrontPageCard({
 		navigate(pageUrl);
 	};
 	return (
-		<Card sx={{ maxWidth: 345 }}>
+		<Card
+			sx={{
+				maxWidth: 345,
+				backgroundColor: 'rgba(0,128,0,0.9)',
+				color: 'white',
+			}}>
 			<CardActionArea onClick={handleClick}>
 				<CardMedia component="img" height="140" image={img} alt={imgAlt} />
 				<CardContent>

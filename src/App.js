@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FrontPage from './FrontPage';
+import ErrorPage from './ErrorPage';
 import RecipeRoutes from './RecipeBook/RecipeRoutes';
 import Navbar from './Navbar';
 import SignInFrontPage from './SignInFrontPage';
@@ -92,7 +93,7 @@ function App() {
 					setBookmarks,
 					isLoading
 				)}
-				<Route path="*" element={<FrontPage />} />
+				<Route path="*" element={<ErrorPage errorCode={'Page Not Found!'} />} />
 			</Routes>
 		</div>
 	);
