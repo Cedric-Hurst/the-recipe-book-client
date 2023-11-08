@@ -15,17 +15,35 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 import { measurements, categories } from '../Helpers/RecipeData';
-import { validateName, validateImageUrl } from '../Helpers/Validations';
+import {
+	validateName,
+	validateImageUrl,
+	validateFileExt,
+} from '../Helpers/Validations';
 import './RecipeForm.css';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
 	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const VisuallyHiddenInput = styled('input')({
+	clip: 'rect(0 0 0 0)',
+	clipPath: 'inset(50%)',
+	height: 1,
+	overflow: 'hidden',
+	position: 'absolute',
+	bottom: 0,
+	left: 0,
+	whiteSpace: 'nowrap',
+	width: 1,
 });
 
 export default function RecipeForm({ addRecipe, user }) {
@@ -33,9 +51,7 @@ export default function RecipeForm({ addRecipe, user }) {
 	const [recipeTitle, setRecipeTitle] = useState('');
 	const [category, setCategory] = useState([]);
 	const [servings, setServings] = useState(0);
-	const [img, setImg] = useState(
-		'https://images.unsplash.com/photo-1495195134817-aeb325a55b65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1176&q=80'
-	);
+	const [img, setImg] = useState({});
 	const [timing, setTiming] = useState({
 		prepHr: 0,
 		prepMin: 0,
@@ -51,11 +67,12 @@ export default function RecipeForm({ addRecipe, user }) {
 		},
 	]);
 	const [instructions, setInstructions] = useState(['']);
-
+	const [imgName, setImgName] = useState('Upload an Image here');
+	const [imgView, setImgView] = useState('');
 	//validation
 	const errorText = [
 		'Recipe titles must have between 5 and 30 characters and cannot have special characters.',
-		'Image requires a proper image url.',
+		"File ext must be '.png' or '.jpg'",
 		'choose 1 or more categories.',
 		'Add an ingredient.',
 		'Add an instruction.',
@@ -210,6 +227,19 @@ export default function RecipeForm({ addRecipe, user }) {
 	const handleEnterPress = (event) => {
 		event.key === 'Enter' && event.preventDefault();
 	};
+
+	//Image upload
+	const uploadImage = (files) => {
+		const fileName = files[0].name;
+		if (validateFileExt(fileName)) {
+			setImg(files[0]);
+			setImgView(URL.createObjectURL(files[0]));
+			setImgName(fileName);
+			setBadImg(false);
+		} else {
+			setBadImg(true);
+		}
+	};
 	return (
 		<div className="rForm-background">
 			<Paper elevation={18} className="rForm-paper">
@@ -255,7 +285,7 @@ export default function RecipeForm({ addRecipe, user }) {
 										onChange={handleTextChange}
 									/>
 									<div>
-										<TextField
+										{/* <TextField
 											id="img"
 											label="Image Url"
 											name="img"
@@ -265,7 +295,41 @@ export default function RecipeForm({ addRecipe, user }) {
 											sx={{ mb: 3, width: '90%' }}
 											onKeyDown={handleEnterPress}
 											onChange={handleTextChange}
-										/>
+										/> */}
+										<Button
+											component="label"
+											id="img"
+											name="img"
+											variant="contained"
+											startIcon={<PhotoCameraIcon />}>
+											Upload Image
+											<VisuallyHiddenInput
+												type="file"
+												onChange={(e) => uploadImage(e.target.files)}
+											/>
+										</Button>
+										<span>
+											{' '}
+											{badImg ? ( // if img ext is bad then show error message
+												<span style={{ color: 'red' }}>{errorText[1]}</span>
+											) : (
+												// image name and small size view of image
+												<>
+													{imgName.substring(0, 23)}
+													<img
+														src={imgView}
+														alt={
+															imgName === 'Upload an Image here' ? ' ' : imgName
+														}
+														style={{
+															marginLeft: '15px',
+															height: '30px',
+															width: '30px',
+														}}
+													/>
+												</>
+											)}
+										</span>
 									</div>
 									<div>
 										<Autocomplete

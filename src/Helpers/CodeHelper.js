@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ErrorPage from '../Main/ErrorPage';
 
 // Encrypt data
 export async function encryptData(data) {
@@ -10,7 +11,7 @@ export async function encryptData(data) {
 		});
 		return res.data;
 	} catch (e) {
-		console.log(e); // TODO: change for post
+		return <ErrorPage errorCode={e} />;
 	}
 }
 // Decrypt data
@@ -23,7 +24,7 @@ export async function decryptData(encryptedData) {
 		});
 		return JSON.parse(res.data);
 	} catch (e) {
-		console.log(e); // TODO: change for post
+		return <ErrorPage errorCode={e} />;
 	}
 }
 export const printTiming = (hr, min) => {
@@ -64,7 +65,7 @@ export async function bookmark(recipeId, userId) {
 			userId: userId,
 		});
 	} catch (e) {
-		console.log(e);
+		return <ErrorPage errorCode={e} />;
 	}
 }
 export async function removeBookmark(recipeId, userId) {
@@ -74,7 +75,7 @@ export async function removeBookmark(recipeId, userId) {
 			userId: userId,
 		});
 	} catch (e) {
-		console.log(e);
+		return <ErrorPage errorCode={e} />;
 	}
 }
 export async function getBookmark(userId) {
@@ -86,6 +87,6 @@ export async function getBookmark(userId) {
 		});
 		return res.data;
 	} catch (err) {
-		console.log(err);
+		return <ErrorPage errorCode={err} />;
 	}
 }

@@ -26,6 +26,17 @@ export function validateUsername(name) {
 	return re.test(name);
 }
 export function validateImageUrl(url) {
+	// not used yet, added for possible future use
 	let re = /(https?:\/\/.*\.(?:png|jpg))/i;
 	return re.test(url);
+}
+
+// check to see if file extension is an image. may add more to later (maybe use an array)
+export function validateFileExt(fileName) {
+	const fileExt = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+	if (fileExt === '.png' || fileExt === '.jpg' || fileExt === '.jpeg') {
+		return true;
+	} else {
+		return false;
+	}
 }
