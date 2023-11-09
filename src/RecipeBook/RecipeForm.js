@@ -23,11 +23,8 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 import { measurements, categories } from '../Helpers/RecipeData';
-import {
-	validateName,
-	validateImageUrl,
-	validateFileExt,
-} from '../Helpers/Validations';
+import { validateName, validateFileExt } from '../Helpers/Validations';
+import { uploadImgCloud } from '../Helpers/CodeHelper';
 import './RecipeForm.css';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -121,8 +118,9 @@ export default function RecipeForm({ addRecipe, user }) {
 			returnVal = false;
 		}
 		//if img is not valid - trigger warning
-		if (!validateImageUrl(img)) {
+		if (!validateFileExt(img.name)) {
 			setBadImg(true);
+			setImg({});
 			returnVal = false;
 		}
 		return returnVal;
@@ -150,10 +148,11 @@ export default function RecipeForm({ addRecipe, user }) {
 	};
 
 	// recipe form functions
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		resetBads();
+	const handleSubmit = async (e) => {
+		e.preventDefault(); //prevent normal form submit
+		resetBads(); // resets error warnings to be checked again
 		const recipe = {
+			// set all recipe states to one recipe object to send to backend
 			recipeTitle: recipeTitle,
 			category: category,
 			servings: servings,
@@ -166,8 +165,9 @@ export default function RecipeForm({ addRecipe, user }) {
 			author: user.username,
 		};
 		if (checkRecipe()) {
+			recipe.img = await uploadImgCloud(img);
 			addRecipe(recipe);
-		} else handleSnackOpen();
+		} else handleSnackOpen(); // if form is missing any field, show snack that says missing field(s)
 	};
 	const handleTextChange = (e) => {
 		e.target.name === 'recipeTitle' && setRecipeTitle(e.target.value);
@@ -224,6 +224,8 @@ export default function RecipeForm({ addRecipe, user }) {
 	const removeInstructionFields = (index) => {
 		setInstructions(instructions.filter((instr, i) => i !== index));
 	};
+
+	//handle anytime a user presses enter in the from inputs
 	const handleEnterPress = (event) => {
 		event.key === 'Enter' && event.preventDefault();
 	};
@@ -237,9 +239,11 @@ export default function RecipeForm({ addRecipe, user }) {
 			setImgName(fileName);
 			setBadImg(false);
 		} else {
+			setImg({});
 			setBadImg(true);
 		}
 	};
+
 	return (
 		<div className="rForm-background">
 			<Paper elevation={18} className="rForm-paper">
@@ -313,20 +317,26 @@ export default function RecipeForm({ addRecipe, user }) {
 											{badImg ? ( // if img ext is bad then show error message
 												<span style={{ color: 'red' }}>{errorText[1]}</span>
 											) : (
-												// image name and small size view of image
+												// if img has been uploaded and is correct file ext then show img preview and file name
 												<>
-													{imgName.substring(0, 23)}
-													<img
-														src={imgView}
-														alt={
-															imgName === 'Upload an Image here' ? ' ' : imgName
-														}
-														style={{
-															marginLeft: '15px',
-															height: '30px',
-															width: '30px',
-														}}
-													/>
+													{imgName === 'Upload an Image here' ? (
+														imgName
+													) : (
+														<>
+															<span style={{ color: 'green' }}>
+																{imgName.substring(0, 23)}
+															</span>
+															<img
+																src={imgView}
+																alt={imgName}
+																style={{
+																	marginLeft: '15px',
+																	height: '30px',
+																	width: '30px',
+																}}
+															/>
+														</>
+													)}
 												</>
 											)}
 										</span>

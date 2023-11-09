@@ -90,3 +90,20 @@ export async function getBookmark(userId) {
 		return <ErrorPage errorCode={err} />;
 	}
 }
+
+//Cloudinary
+export async function uploadImgCloud(file) {
+	const formData = new FormData();
+	formData.append('file', file);
+	formData.append('upload_preset', 'howmw1mj');
+	try {
+		const res = await axios.post(
+			'https://api.cloudinary.com/v1_1/dn6qbakb9/image/upload',
+			formData
+		);
+		return res.data.secure_url;
+	} catch (err) {
+		return <ErrorPage errorCode={err} />;
+	}
+}
+//create way to delete image when recipe is deleted
