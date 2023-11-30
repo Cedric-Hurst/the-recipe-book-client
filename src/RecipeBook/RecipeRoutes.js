@@ -9,6 +9,7 @@ import RecipeEdit from './RecipeEdit';
 import Recipe from './Recipe';
 import SignInFrontPage from '../Main/SignInFrontPage';
 import ErrorPage from '../Main/ErrorPage';
+import { deleteImgCloud } from '../Helpers/CodeHelper';
 
 export default function RecipeRoutes(
 	user,
@@ -126,7 +127,12 @@ export default function RecipeRoutes(
 	const deleteRecipe = async (id) => {
 		handleClickSnack();
 		try {
+			// delete img from cloudinary
+			const recipeImgUrl = recipes.find((r) => r.id === id).img;
+			await deleteImgCloud(recipeImgUrl);
+			// delete from this instance of recipes
 			setRecipes(recipes.filter((recipe) => recipe.id !== id));
+			// delete recipe from database
 			await axios.delete(`http://localhost:3300/recipes/${id}`);
 			window.location.reload();
 		} catch (e) {

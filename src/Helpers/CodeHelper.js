@@ -107,3 +107,19 @@ export async function uploadImgCloud(file) {
 	}
 }
 //create way to delete image when recipe is deleted
+export async function deleteImgCloud(imgUrl) {
+	const imgPublicId = imgUrl.substring(
+		imgUrl.lastIndexOf('/') + 1,
+		imgUrl.lastIndexOf('.')
+	);
+	try {
+		await axios.delete('http://localhost:3300/removeimage', {
+			params: {
+				q: imgPublicId,
+			},
+		});
+		return true;
+	} catch (err) {
+		return <ErrorPage errorCode={err} />;
+	}
+}

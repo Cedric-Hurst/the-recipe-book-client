@@ -17,6 +17,7 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Tooltip from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
@@ -44,6 +45,9 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 export default function RecipeForm({ addRecipe, user }) {
+	// state for loading circle
+	const [isLoading, setIsLoading] = useState(false);
+
 	// recipe state
 	const [recipeTitle, setRecipeTitle] = useState('');
 	const [category, setCategory] = useState([]);
@@ -64,9 +68,12 @@ export default function RecipeForm({ addRecipe, user }) {
 		},
 	]);
 	const [instructions, setInstructions] = useState(['']);
+
+	//image preview states
 	const [imgName, setImgName] = useState('Upload an Image here');
 	const [imgView, setImgView] = useState('');
-	//validation
+
+	//validation state
 	const errorText = [
 		'Recipe titles must have between 5 and 30 characters and cannot have special characters.',
 		"File ext must be '.png' or '.jpg'",
@@ -165,8 +172,10 @@ export default function RecipeForm({ addRecipe, user }) {
 			author: user.username,
 		};
 		if (checkRecipe()) {
-			recipe.img = await uploadImgCloud(img);
-			addRecipe(recipe);
+			setIsLoading(true); // set loading to true
+			recipe.img = await uploadImgCloud(img); // upload image to cloudinary
+			setIsLoading(false); // set loading to false
+			addRecipe(recipe); // add recipe to db (reroute to created recipe page)
 		} else handleSnackOpen(); // if form is missing any field, show snack that says missing field(s)
 	};
 	const handleTextChange = (e) => {
@@ -244,7 +253,7 @@ export default function RecipeForm({ addRecipe, user }) {
 		}
 	};
 
-	return (
+	return !isLoading ? (
 		<div className="rForm-background">
 			<Paper elevation={18} className="rForm-paper">
 				<div className="rForm-root">
@@ -560,6 +569,10 @@ export default function RecipeForm({ addRecipe, user }) {
 					</form>
 				</div>
 			</Paper>
+		</div>
+	) : (
+		<div style={{ marginLeft: '50%', marginTop: '50vh' }}>
+			<CircularProgress color="success" />
 		</div>
 	);
 }
