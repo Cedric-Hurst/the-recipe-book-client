@@ -1,0 +1,6 @@
+.rc_head:hover .rc_title {
+	text-decoration: underline;
+}
+.rc_title {
+	font-weight: 600;
+}

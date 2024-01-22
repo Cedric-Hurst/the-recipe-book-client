@@ -298,17 +298,6 @@ export default function RecipeForm({ addRecipe, user }) {
 										onChange={handleTextChange}
 									/>
 									<div>
-										{/* <TextField
-											id="img"
-											label="Image Url"
-											name="img"
-											variant="standard"
-											error={badImg}
-											helperText={badImg ? errorText[1] : ''}
-											sx={{ mb: 3, width: '90%' }}
-											onKeyDown={handleEnterPress}
-											onChange={handleTextChange}
-										/> */}
 										<Button
 											component="label"
 											id="img"
@@ -333,7 +322,7 @@ export default function RecipeForm({ addRecipe, user }) {
 													) : (
 														<>
 															<span style={{ color: 'green' }}>
-																{imgName.substring(0, 23)}
+																{imgName.substring(0, 25)}
 															</span>
 															<img
 																src={imgView}

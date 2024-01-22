@@ -24,6 +24,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useNavigate } from 'react-router-dom';
+
 import ConfirmationDialog from '../Helpers/ConfirmationDialog';
 import {
 	printTiming,
@@ -32,6 +33,7 @@ import {
 	encryptData,
 	getBookmark,
 } from '../Helpers/CodeHelper';
+import './RecipeCard.css';
 
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
@@ -127,6 +129,7 @@ export default function RecipeCard({
 		<Card sx={{ width: 345 }}>
 			<CardHeader
 				id="card-header"
+				className="rc_head"
 				onClick={() => navigate(`/recipes/${recipe.id}`)}
 				avatar={
 					<Avatar sx={{ bgcolor: green[500] }} aria-label="recipe">
@@ -140,7 +143,7 @@ export default function RecipeCard({
 						</IconButton>
 					)
 				}
-				title={recipe.recipeTitle}
+				title={<span className="rc_title">{recipe.recipeTitle}</span>}
 				subheader={`Serves: ${recipe.servings}`}
 			/>
 			<Menu

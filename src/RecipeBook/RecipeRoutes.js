@@ -130,8 +130,10 @@ export default function RecipeRoutes(
 			// delete img from cloudinary
 			const recipeImgUrl = recipes.find((r) => r.id === id).img;
 			await deleteImgCloud(recipeImgUrl);
+
 			// delete from this instance of recipes
 			setRecipes(recipes.filter((recipe) => recipe.id !== id));
+
 			// delete recipe from database
 			await axios.delete(`http://localhost:3300/recipes/${id}`);
 			window.location.reload();
@@ -140,9 +142,15 @@ export default function RecipeRoutes(
 		}
 	};
 	// update recipe in database
-	const updateRecipe = async (updatedRecipe) => {
+	const updateRecipe = async (updatedRecipe, oldImgUrl) => {
 		try {
+			// delete old img from cloudinary
+			await deleteImgCloud(oldImgUrl);
+
+			// update recipe on database
 			await axios.put('http://localhost:3300/recipes/edit', updatedRecipe);
+
+			// update local recipes
 			const newRecipes = recipes;
 			const index = recipes.findIndex(
 				(recipe) => recipe.id === updatedRecipe.id
