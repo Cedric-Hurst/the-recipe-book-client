@@ -142,11 +142,8 @@ export default function RecipeRoutes(
 		}
 	};
 	// update recipe in database
-	const updateRecipe = async (updatedRecipe, oldImgUrl) => {
+	const updateRecipe = async (updatedRecipe) => {
 		try {
-			// delete old img from cloudinary
-			await deleteImgCloud(oldImgUrl);
-
 			// update recipe on database
 			await axios.put('http://localhost:3300/recipes/edit', updatedRecipe);
 

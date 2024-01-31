@@ -28,7 +28,7 @@ import MuiAlert from '@mui/material/Alert';
 
 import { measurements, categories } from '../Helpers/RecipeData';
 import { validateName, validateFileExt } from '../Helpers/Validations';
-import { uploadImgCloud } from '../Helpers/CodeHelper';
+import { uploadImgCloud, deleteImgCloud } from '../Helpers/CodeHelper';
 import './RecipeForm.css';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -64,6 +64,7 @@ export default function RecipeEdit({
 	const [ingredients, setIngredients] = useState(recipe.ingredients);
 	const [instructions, setInstructions] = useState(recipe.instructions);
 	const id = recipe.id;
+	const oldImgUrl = recipe.img; // get copy of old Image Url before updating to new
 	const navigate = useNavigate();
 
 	//image preview states
@@ -123,11 +124,14 @@ export default function RecipeEdit({
 			setBadInstr(true);
 			returnVal = false;
 		}
-		//if img is not valid - trigger warning
-		if (!validateFileExt(img.name)) {
-			setBadImg(true);
-			setImg({});
-			returnVal = false;
+		// if image isn't updated don't validate
+		if (oldImgUrl !== img) {
+			//if img is not valid - trigger warning
+			if (!validateFileExt(img.name)) {
+				setBadImg(true);
+				setImg({});
+				returnVal = false;
+			}
 		}
 		return returnVal;
 	};
@@ -160,7 +164,6 @@ export default function RecipeEdit({
 		if (!authUser) navigate('/');
 	}, [navigate, recipe.author, user.username]);
 
-	const oldImgUrl = recipe.img; // get copy of old Image Url before updating to new
 	// recipe edit functions
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -176,11 +179,13 @@ export default function RecipeEdit({
 			instructions: instructions,
 		};
 		if (checkRecipe()) {
-			setIsLoading(true); // set loading to true
-			recipe.img = await uploadImgCloud(img); // upload image to cloudinary
-			setIsLoading(false); // set loading to false
-
-			updateRecipe(recipe, oldImgUrl); // update recipe/ delete old recipe img
+			if (oldImgUrl !== img) {
+				setIsLoading(true); // set loading to true
+				await deleteImgCloud(oldImgUrl); // delete old img from cloudinary
+				recipe.img = await uploadImgCloud(img); // upload new image to cloudinary
+				setIsLoading(false); // set loading to false
+			}
+			updateRecipe(recipe); // update recipe/ delete old recipe img
 			navigate(`/recipes/${id}`); //reroute to new recipe page
 			window.location.reload();
 		} else handleSnackOpen(); //else show what is missing
