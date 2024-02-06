@@ -1,4 +1,3 @@
-import Grid from '@mui/material/Grid';
 import './ErrorPage.css';
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
